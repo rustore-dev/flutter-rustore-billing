@@ -412,7 +412,7 @@ public class Rustore {
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
-  public static class ProductResponse {
+  public static class ProductsResponse {
     private @NonNull Long code;
     public @NonNull Long getCode() { return code; }
     public void setCode(@NonNull Long setterArg) {
@@ -422,30 +422,21 @@ public class Rustore {
       this.code = setterArg;
     }
 
-    private @NonNull String errorMessage;
-    public @NonNull String getErrorMessage() { return errorMessage; }
-    public void setErrorMessage(@NonNull String setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"errorMessage\" is null.");
-      }
+    private @Nullable String errorMessage;
+    public @Nullable String getErrorMessage() { return errorMessage; }
+    public void setErrorMessage(@Nullable String setterArg) {
       this.errorMessage = setterArg;
     }
 
-    private @NonNull String errorDescription;
-    public @NonNull String getErrorDescription() { return errorDescription; }
-    public void setErrorDescription(@NonNull String setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"errorDescription\" is null.");
-      }
+    private @Nullable String errorDescription;
+    public @Nullable String getErrorDescription() { return errorDescription; }
+    public void setErrorDescription(@Nullable String setterArg) {
       this.errorDescription = setterArg;
     }
 
-    private @NonNull String traceId;
-    public @NonNull String getTraceId() { return traceId; }
-    public void setTraceId(@NonNull String setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"traceId\" is null.");
-      }
+    private @Nullable String traceId;
+    public @Nullable String getTraceId() { return traceId; }
+    public void setTraceId(@Nullable String setterArg) {
       this.traceId = setterArg;
     }
 
@@ -459,7 +450,7 @@ public class Rustore {
     }
 
     /**Constructor is private to enforce null safety; use Builder. */
-    private ProductResponse() {}
+    private ProductsResponse() {}
     public static final class Builder {
       private @Nullable Long code;
       public @NonNull Builder setCode(@NonNull Long setterArg) {
@@ -467,17 +458,17 @@ public class Rustore {
         return this;
       }
       private @Nullable String errorMessage;
-      public @NonNull Builder setErrorMessage(@NonNull String setterArg) {
+      public @NonNull Builder setErrorMessage(@Nullable String setterArg) {
         this.errorMessage = setterArg;
         return this;
       }
       private @Nullable String errorDescription;
-      public @NonNull Builder setErrorDescription(@NonNull String setterArg) {
+      public @NonNull Builder setErrorDescription(@Nullable String setterArg) {
         this.errorDescription = setterArg;
         return this;
       }
       private @Nullable String traceId;
-      public @NonNull Builder setTraceId(@NonNull String setterArg) {
+      public @NonNull Builder setTraceId(@Nullable String setterArg) {
         this.traceId = setterArg;
         return this;
       }
@@ -486,8 +477,8 @@ public class Rustore {
         this.products = setterArg;
         return this;
       }
-      public @NonNull ProductResponse build() {
-        ProductResponse pigeonReturn = new ProductResponse();
+      public @NonNull ProductsResponse build() {
+        ProductsResponse pigeonReturn = new ProductsResponse();
         pigeonReturn.setCode(code);
         pigeonReturn.setErrorMessage(errorMessage);
         pigeonReturn.setErrorDescription(errorDescription);
@@ -505,8 +496,8 @@ public class Rustore {
       toMapResult.put("products", products);
       return toMapResult;
     }
-    static @NonNull ProductResponse fromMap(@NonNull Map<String, Object> map) {
-      ProductResponse pigeonResult = new ProductResponse();
+    static @NonNull ProductsResponse fromMap(@NonNull Map<String, Object> map) {
+      ProductsResponse pigeonResult = new ProductsResponse();
       Object code = map.get("code");
       pigeonResult.setCode((code == null) ? null : ((code instanceof Integer) ? (Integer)code : (Long)code));
       Object errorMessage = map.get("errorMessage");
@@ -836,36 +827,76 @@ public class Rustore {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class ConfirmPurchaseResponse {
+    private @NonNull Long code;
+    public @NonNull Long getCode() { return code; }
+    public void setCode(@NonNull Long setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"code\" is null.");
+      }
+      this.code = setterArg;
+    }
+
+    /**Constructor is private to enforce null safety; use Builder. */
+    private ConfirmPurchaseResponse() {}
     public static final class Builder {
+      private @Nullable Long code;
+      public @NonNull Builder setCode(@NonNull Long setterArg) {
+        this.code = setterArg;
+        return this;
+      }
       public @NonNull ConfirmPurchaseResponse build() {
         ConfirmPurchaseResponse pigeonReturn = new ConfirmPurchaseResponse();
+        pigeonReturn.setCode(code);
         return pigeonReturn;
       }
     }
     @NonNull Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("code", code);
       return toMapResult;
     }
     static @NonNull ConfirmPurchaseResponse fromMap(@NonNull Map<String, Object> map) {
       ConfirmPurchaseResponse pigeonResult = new ConfirmPurchaseResponse();
+      Object code = map.get("code");
+      pigeonResult.setCode((code == null) ? null : ((code instanceof Integer) ? (Integer)code : (Long)code));
       return pigeonResult;
     }
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class PaymentResult {
+    private @NonNull Long code;
+    public @NonNull Long getCode() { return code; }
+    public void setCode(@NonNull Long setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"code\" is null.");
+      }
+      this.code = setterArg;
+    }
+
+    /**Constructor is private to enforce null safety; use Builder. */
+    private PaymentResult() {}
     public static final class Builder {
+      private @Nullable Long code;
+      public @NonNull Builder setCode(@NonNull Long setterArg) {
+        this.code = setterArg;
+        return this;
+      }
       public @NonNull PaymentResult build() {
         PaymentResult pigeonReturn = new PaymentResult();
+        pigeonReturn.setCode(code);
         return pigeonReturn;
       }
     }
     @NonNull Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("code", code);
       return toMapResult;
     }
     static @NonNull PaymentResult fromMap(@NonNull Map<String, Object> map) {
       PaymentResult pigeonResult = new PaymentResult();
+      Object code = map.get("code");
+      pigeonResult.setCode((code == null) ? null : ((code instanceof Integer) ? (Integer)code : (Long)code));
       return pigeonResult;
     }
   }
@@ -890,7 +921,7 @@ public class Rustore {
           return Product.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)131:         
-          return ProductResponse.fromMap((Map<String, Object>) readValue(buffer));
+          return ProductsResponse.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)132:         
           return Purchase.fromMap((Map<String, Object>) readValue(buffer));
@@ -923,9 +954,9 @@ public class Rustore {
         stream.write(130);
         writeValue(stream, ((Product) value).toMap());
       } else 
-      if (value instanceof ProductResponse) {
+      if (value instanceof ProductsResponse) {
         stream.write(131);
-        writeValue(stream, ((ProductResponse) value).toMap());
+        writeValue(stream, ((ProductsResponse) value).toMap());
       } else 
       if (value instanceof Purchase) {
         stream.write(132);
@@ -953,7 +984,7 @@ public class Rustore {
   public interface Client {
     void initialize(@NonNull String id, @NonNull String prefix, Result<String> result);
     void available(Result<Boolean> result);
-    void products(@NonNull List<String> ids, Result<ProductResponse> result);
+    void products(@NonNull List<String> ids, Result<ProductsResponse> result);
     void purchases(Result<PurchasesResponse> result);
     void purchase(@NonNull String id, Result<PaymentResult> result);
     void confirm(@NonNull String id, Result<ConfirmPurchaseResponse> result);
@@ -1044,8 +1075,8 @@ public class Rustore {
               if (idsArg == null) {
                 throw new NullPointerException("idsArg unexpectedly null.");
               }
-              Result<ProductResponse> resultCallback = new Result<ProductResponse>() {
-                public void success(ProductResponse result) {
+              Result<ProductsResponse> resultCallback = new Result<ProductsResponse>() {
+                public void success(ProductsResponse result) {
                   wrapped.put("result", result);
                   reply.reply(wrapped);
                 }

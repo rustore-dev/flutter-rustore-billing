@@ -152,19 +152,19 @@ class Product {
   }
 }
 
-class ProductResponse {
-  ProductResponse({
+class ProductsResponse {
+  ProductsResponse({
     required this.code,
-    required this.errorMessage,
-    required this.errorDescription,
-    required this.traceId,
+    this.errorMessage,
+    this.errorDescription,
+    this.traceId,
     required this.products,
   });
 
   int code;
-  String errorMessage;
-  String errorDescription;
-  String traceId;
+  String? errorMessage;
+  String? errorDescription;
+  String? traceId;
   List<Product?> products;
 
   Object encode() {
@@ -177,13 +177,13 @@ class ProductResponse {
     return pigeonMap;
   }
 
-  static ProductResponse decode(Object message) {
+  static ProductsResponse decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
-    return ProductResponse(
+    return ProductsResponse(
       code: pigeonMap['code']! as int,
-      errorMessage: pigeonMap['errorMessage']! as String,
-      errorDescription: pigeonMap['errorDescription']! as String,
-      traceId: pigeonMap['traceId']! as String,
+      errorMessage: pigeonMap['errorMessage'] as String?,
+      errorDescription: pigeonMap['errorDescription'] as String?,
+      traceId: pigeonMap['traceId'] as String?,
       products: (pigeonMap['products'] as List<Object?>?)!.cast<Product?>(),
     );
   }
@@ -293,32 +293,42 @@ class PurchasesResponse {
 
 class ConfirmPurchaseResponse {
   ConfirmPurchaseResponse({
+    required this.code,
   });
+
+  int code;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['code'] = code;
     return pigeonMap;
   }
 
   static ConfirmPurchaseResponse decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return ConfirmPurchaseResponse(
+      code: pigeonMap['code']! as int,
     );
   }
 }
 
 class PaymentResult {
   PaymentResult({
+    required this.code,
   });
+
+  int code;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['code'] = code;
     return pigeonMap;
   }
 
   static PaymentResult decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return PaymentResult(
+      code: pigeonMap['code']! as int,
     );
   }
 }
@@ -339,7 +349,7 @@ class _ClientCodec extends StandardMessageCodec{
       buffer.putUint8(130);
       writeValue(buffer, value.encode());
     } else 
-    if (value is ProductResponse) {
+    if (value is ProductsResponse) {
       buffer.putUint8(131);
       writeValue(buffer, value.encode());
     } else 
@@ -376,7 +386,7 @@ class _ClientCodec extends StandardMessageCodec{
         return Product.decode(readValue(buffer)!);
       
       case 131:       
-        return ProductResponse.decode(readValue(buffer)!);
+        return ProductsResponse.decode(readValue(buffer)!);
       
       case 132:       
         return Purchase.decode(readValue(buffer)!);
@@ -460,7 +470,7 @@ class Client {
     }
   }
 
-  Future<ProductResponse> products(List<String?> arg_ids) async {
+  Future<ProductsResponse> products(List<String?> arg_ids) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.Client.products', codec, binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
@@ -483,7 +493,7 @@ class Client {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (replyMap['result'] as ProductResponse?)!;
+      return (replyMap['result'] as ProductsResponse?)!;
     }
   }
 

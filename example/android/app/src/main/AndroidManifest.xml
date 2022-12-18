@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.rustore.flutter_rustore_billing_example">
+    package="ru.rustore.flutter_rustore_billing_ex">
    <application
         android:label="flutter_rustore_billing_example"
         android:name="${applicationName}"

@@ -30,11 +30,11 @@ class Product {
   late Subscription? subscription;
 }
 
-class ProductResponse {
+class ProductsResponse {
   late int code;
-  late String errorMessage;
-  late String errorDescription;
-  late String traceId;
+  late String? errorMessage;
+  late String? errorDescription;
+  late String? traceId;
   late List<Product?> products;
 }
 
@@ -61,9 +61,13 @@ class PurchasesResponse {
   late List<Purchase?> purchases;
 }
 
-class ConfirmPurchaseResponse {}
+class ConfirmPurchaseResponse {
+  late int code;
+}
 
-class PaymentResult {}
+class PaymentResult {
+  late int code;
+}
 
 @HostApi()
 abstract class Client {
@@ -74,7 +78,7 @@ abstract class Client {
   bool available();
 
   @async
-  ProductResponse products(List<String?> ids);
+  ProductsResponse products(List<String?> ids);
 
   @async
   PurchasesResponse purchases();

@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_rustore_billing/flutter_rustore_billing.dart';
 
 void main() {
@@ -16,34 +15,31 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  final _flutterRustoreBillingPlugin = FlutterRustoreBilling();
-
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    billing();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await _flutterRustoreBillingPlugin.getPlatformVersion() ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
+  Future<void> billing() async {
+    RustoreBillingClient.initialize(
+      "j102RQvuquyaoKnK1uPcGzSorQclWhKd",
+      "yourappscheme://iamback",
+    ).then((value) {
+      print("initialize success: $value");
+      RustoreBillingClient.available().then((value) {
+        print("available $value");
+      });
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
+      RustoreBillingClient.products([]).then((response) {
+        print(response.products);
+      });
+    }, onError: (err) {
+      print("initialize err: $err");
+      RustoreBillingClient.available().then((value) {
+        print("available $value");
+      });
     });
   }
 
@@ -55,7 +51,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Text('Running'),
         ),
       ),
     );
