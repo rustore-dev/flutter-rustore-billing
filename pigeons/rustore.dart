@@ -16,17 +16,17 @@ class Subscription {
 }
 
 class Product {
-  late String id;
-  late String? type;
-  late String status;
-  late String? label;
+  late String productId;
+  late String? productType;
+  late String productStatus;
+  late String? priceLabel;
   late int? price;
   late String? currency;
   late String? language;
   late String? title;
   late String? description;
-  late String? image;
-  late String? promo;
+  late String? imageUrl;
+  late String? promoImageUrl;
   late Subscription? subscription;
 }
 
@@ -36,11 +36,12 @@ class ProductsResponse {
   late String? errorDescription;
   late String? traceId;
   late List<Product?> products;
+  late List<DigitalShopGeneralError?> errors;
 }
 
 class Purchase {
   late String? purchaseId;
-  late String productId;
+  late String? productId;
   late String? description;
   late String? language;
   late String? purchaseTime;
@@ -49,24 +50,63 @@ class Purchase {
   late int? amount;
   late String? currency;
   late int? quantity;
-  late String? state;
-  late String? payload;
+  late String? purchaseState;
+  late String? developerPayload;
 }
 
 class PurchasesResponse {
   late int code;
-  late String errorMessage;
-  late String errorDescription;
-  late String traceId;
+  late String? errorMessage;
+  late String? errorDescription;
+  late String? traceId;
   late List<Purchase?> purchases;
+  late List<DigitalShopGeneralError?> errors;
 }
 
 class ConfirmPurchaseResponse {
   late int code;
+  late String? errorMessage;
+  late String? errorDescription;
+  late String? traceId;
+  late List<DigitalShopGeneralError?> errors;
 }
 
 class PaymentResult {
-  late int code;
+  late SuccessInvoice? successInvoice;
+  late InvalidInvoice? invalidInvoice;
+  late SuccessPurchase? successPurchase;
+  late InvalidPurchase? invalidPurchase;
+}
+
+class SuccessInvoice {
+  late String invoiceId;
+  late String finishCode;
+}
+
+class InvalidInvoice {
+  late String? invoiceId;
+}
+
+class SuccessPurchase {
+  late String finishCode;
+  late String? orderId;
+  late String purchaseId;
+  late String productId;
+}
+
+class InvalidPurchase {
+  late String? purchaseId;
+  late String? invoiceId;
+  late String? orderId;
+  late int? quantity;
+  late String? productId;
+  late int? errorCode;
+}
+
+class DigitalShopGeneralError {
+  late String? name;
+  late int? code;
+  late String? description;
 }
 
 @HostApi()

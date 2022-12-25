@@ -8,15 +8,31 @@ class RustoreBillingClient {
   }
 
   static Future<bool> available() async {
-    // @todo: handle exception
     final result = await _api.available();
 
     return result;
   }
 
   static Future<ProductsResponse> products(List<String?> ids) async {
-    // @todo: handle exception
     final result = await _api.products(ids);
+
+    return result;
+  }
+
+  static Future<PaymentResult> purchase(String id) async {
+    final result = _api.purchase(id);
+
+    return result;
+  }
+
+  static Future<PurchasesResponse> purchases() async {
+    final result = _api.purchases();
+
+    return result;
+  }
+
+  static Future<ConfirmPurchaseResponse> confirm(String id) async {
+    final result = _api.confirm(id);
 
     return result;
   }

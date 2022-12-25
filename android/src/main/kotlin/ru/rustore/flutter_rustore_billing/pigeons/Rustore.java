@@ -207,34 +207,34 @@ public class Rustore {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class Product {
-    private @NonNull String id;
-    public @NonNull String getId() { return id; }
-    public void setId(@NonNull String setterArg) {
+    private @NonNull String productId;
+    public @NonNull String getProductId() { return productId; }
+    public void setProductId(@NonNull String setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"id\" is null.");
+        throw new IllegalStateException("Nonnull field \"productId\" is null.");
       }
-      this.id = setterArg;
+      this.productId = setterArg;
     }
 
-    private @Nullable String type;
-    public @Nullable String getType() { return type; }
-    public void setType(@Nullable String setterArg) {
-      this.type = setterArg;
+    private @Nullable String productType;
+    public @Nullable String getProductType() { return productType; }
+    public void setProductType(@Nullable String setterArg) {
+      this.productType = setterArg;
     }
 
-    private @NonNull String status;
-    public @NonNull String getStatus() { return status; }
-    public void setStatus(@NonNull String setterArg) {
+    private @NonNull String productStatus;
+    public @NonNull String getProductStatus() { return productStatus; }
+    public void setProductStatus(@NonNull String setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"status\" is null.");
+        throw new IllegalStateException("Nonnull field \"productStatus\" is null.");
       }
-      this.status = setterArg;
+      this.productStatus = setterArg;
     }
 
-    private @Nullable String label;
-    public @Nullable String getLabel() { return label; }
-    public void setLabel(@Nullable String setterArg) {
-      this.label = setterArg;
+    private @Nullable String priceLabel;
+    public @Nullable String getPriceLabel() { return priceLabel; }
+    public void setPriceLabel(@Nullable String setterArg) {
+      this.priceLabel = setterArg;
     }
 
     private @Nullable Long price;
@@ -267,16 +267,16 @@ public class Rustore {
       this.description = setterArg;
     }
 
-    private @Nullable String image;
-    public @Nullable String getImage() { return image; }
-    public void setImage(@Nullable String setterArg) {
-      this.image = setterArg;
+    private @Nullable String imageUrl;
+    public @Nullable String getImageUrl() { return imageUrl; }
+    public void setImageUrl(@Nullable String setterArg) {
+      this.imageUrl = setterArg;
     }
 
-    private @Nullable String promo;
-    public @Nullable String getPromo() { return promo; }
-    public void setPromo(@Nullable String setterArg) {
-      this.promo = setterArg;
+    private @Nullable String promoImageUrl;
+    public @Nullable String getPromoImageUrl() { return promoImageUrl; }
+    public void setPromoImageUrl(@Nullable String setterArg) {
+      this.promoImageUrl = setterArg;
     }
 
     private @Nullable Subscription subscription;
@@ -288,24 +288,24 @@ public class Rustore {
     /**Constructor is private to enforce null safety; use Builder. */
     private Product() {}
     public static final class Builder {
-      private @Nullable String id;
-      public @NonNull Builder setId(@NonNull String setterArg) {
-        this.id = setterArg;
+      private @Nullable String productId;
+      public @NonNull Builder setProductId(@NonNull String setterArg) {
+        this.productId = setterArg;
         return this;
       }
-      private @Nullable String type;
-      public @NonNull Builder setType(@Nullable String setterArg) {
-        this.type = setterArg;
+      private @Nullable String productType;
+      public @NonNull Builder setProductType(@Nullable String setterArg) {
+        this.productType = setterArg;
         return this;
       }
-      private @Nullable String status;
-      public @NonNull Builder setStatus(@NonNull String setterArg) {
-        this.status = setterArg;
+      private @Nullable String productStatus;
+      public @NonNull Builder setProductStatus(@NonNull String setterArg) {
+        this.productStatus = setterArg;
         return this;
       }
-      private @Nullable String label;
-      public @NonNull Builder setLabel(@Nullable String setterArg) {
-        this.label = setterArg;
+      private @Nullable String priceLabel;
+      public @NonNull Builder setPriceLabel(@Nullable String setterArg) {
+        this.priceLabel = setterArg;
         return this;
       }
       private @Nullable Long price;
@@ -333,14 +333,14 @@ public class Rustore {
         this.description = setterArg;
         return this;
       }
-      private @Nullable String image;
-      public @NonNull Builder setImage(@Nullable String setterArg) {
-        this.image = setterArg;
+      private @Nullable String imageUrl;
+      public @NonNull Builder setImageUrl(@Nullable String setterArg) {
+        this.imageUrl = setterArg;
         return this;
       }
-      private @Nullable String promo;
-      public @NonNull Builder setPromo(@Nullable String setterArg) {
-        this.promo = setterArg;
+      private @Nullable String promoImageUrl;
+      public @NonNull Builder setPromoImageUrl(@Nullable String setterArg) {
+        this.promoImageUrl = setterArg;
         return this;
       }
       private @Nullable Subscription subscription;
@@ -350,47 +350,47 @@ public class Rustore {
       }
       public @NonNull Product build() {
         Product pigeonReturn = new Product();
-        pigeonReturn.setId(id);
-        pigeonReturn.setType(type);
-        pigeonReturn.setStatus(status);
-        pigeonReturn.setLabel(label);
+        pigeonReturn.setProductId(productId);
+        pigeonReturn.setProductType(productType);
+        pigeonReturn.setProductStatus(productStatus);
+        pigeonReturn.setPriceLabel(priceLabel);
         pigeonReturn.setPrice(price);
         pigeonReturn.setCurrency(currency);
         pigeonReturn.setLanguage(language);
         pigeonReturn.setTitle(title);
         pigeonReturn.setDescription(description);
-        pigeonReturn.setImage(image);
-        pigeonReturn.setPromo(promo);
+        pigeonReturn.setImageUrl(imageUrl);
+        pigeonReturn.setPromoImageUrl(promoImageUrl);
         pigeonReturn.setSubscription(subscription);
         return pigeonReturn;
       }
     }
     @NonNull Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
-      toMapResult.put("id", id);
-      toMapResult.put("type", type);
-      toMapResult.put("status", status);
-      toMapResult.put("label", label);
+      toMapResult.put("productId", productId);
+      toMapResult.put("productType", productType);
+      toMapResult.put("productStatus", productStatus);
+      toMapResult.put("priceLabel", priceLabel);
       toMapResult.put("price", price);
       toMapResult.put("currency", currency);
       toMapResult.put("language", language);
       toMapResult.put("title", title);
       toMapResult.put("description", description);
-      toMapResult.put("image", image);
-      toMapResult.put("promo", promo);
+      toMapResult.put("imageUrl", imageUrl);
+      toMapResult.put("promoImageUrl", promoImageUrl);
       toMapResult.put("subscription", (subscription == null) ? null : subscription.toMap());
       return toMapResult;
     }
     static @NonNull Product fromMap(@NonNull Map<String, Object> map) {
       Product pigeonResult = new Product();
-      Object id = map.get("id");
-      pigeonResult.setId((String)id);
-      Object type = map.get("type");
-      pigeonResult.setType((String)type);
-      Object status = map.get("status");
-      pigeonResult.setStatus((String)status);
-      Object label = map.get("label");
-      pigeonResult.setLabel((String)label);
+      Object productId = map.get("productId");
+      pigeonResult.setProductId((String)productId);
+      Object productType = map.get("productType");
+      pigeonResult.setProductType((String)productType);
+      Object productStatus = map.get("productStatus");
+      pigeonResult.setProductStatus((String)productStatus);
+      Object priceLabel = map.get("priceLabel");
+      pigeonResult.setPriceLabel((String)priceLabel);
       Object price = map.get("price");
       pigeonResult.setPrice((price == null) ? null : ((price instanceof Integer) ? (Integer)price : (Long)price));
       Object currency = map.get("currency");
@@ -401,10 +401,10 @@ public class Rustore {
       pigeonResult.setTitle((String)title);
       Object description = map.get("description");
       pigeonResult.setDescription((String)description);
-      Object image = map.get("image");
-      pigeonResult.setImage((String)image);
-      Object promo = map.get("promo");
-      pigeonResult.setPromo((String)promo);
+      Object imageUrl = map.get("imageUrl");
+      pigeonResult.setImageUrl((String)imageUrl);
+      Object promoImageUrl = map.get("promoImageUrl");
+      pigeonResult.setPromoImageUrl((String)promoImageUrl);
       Object subscription = map.get("subscription");
       pigeonResult.setSubscription((subscription == null) ? null : Subscription.fromMap((Map)subscription));
       return pigeonResult;
@@ -449,6 +449,15 @@ public class Rustore {
       this.products = setterArg;
     }
 
+    private @NonNull List<DigitalShopGeneralError> errors;
+    public @NonNull List<DigitalShopGeneralError> getErrors() { return errors; }
+    public void setErrors(@NonNull List<DigitalShopGeneralError> setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"errors\" is null.");
+      }
+      this.errors = setterArg;
+    }
+
     /**Constructor is private to enforce null safety; use Builder. */
     private ProductsResponse() {}
     public static final class Builder {
@@ -477,6 +486,11 @@ public class Rustore {
         this.products = setterArg;
         return this;
       }
+      private @Nullable List<DigitalShopGeneralError> errors;
+      public @NonNull Builder setErrors(@NonNull List<DigitalShopGeneralError> setterArg) {
+        this.errors = setterArg;
+        return this;
+      }
       public @NonNull ProductsResponse build() {
         ProductsResponse pigeonReturn = new ProductsResponse();
         pigeonReturn.setCode(code);
@@ -484,6 +498,7 @@ public class Rustore {
         pigeonReturn.setErrorDescription(errorDescription);
         pigeonReturn.setTraceId(traceId);
         pigeonReturn.setProducts(products);
+        pigeonReturn.setErrors(errors);
         return pigeonReturn;
       }
     }
@@ -494,6 +509,7 @@ public class Rustore {
       toMapResult.put("errorDescription", errorDescription);
       toMapResult.put("traceId", traceId);
       toMapResult.put("products", products);
+      toMapResult.put("errors", errors);
       return toMapResult;
     }
     static @NonNull ProductsResponse fromMap(@NonNull Map<String, Object> map) {
@@ -508,6 +524,8 @@ public class Rustore {
       pigeonResult.setTraceId((String)traceId);
       Object products = map.get("products");
       pigeonResult.setProducts((List<Product>)products);
+      Object errors = map.get("errors");
+      pigeonResult.setErrors((List<DigitalShopGeneralError>)errors);
       return pigeonResult;
     }
   }
@@ -520,12 +538,9 @@ public class Rustore {
       this.purchaseId = setterArg;
     }
 
-    private @NonNull String productId;
-    public @NonNull String getProductId() { return productId; }
-    public void setProductId(@NonNull String setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"productId\" is null.");
-      }
+    private @Nullable String productId;
+    public @Nullable String getProductId() { return productId; }
+    public void setProductId(@Nullable String setterArg) {
       this.productId = setterArg;
     }
 
@@ -577,20 +592,18 @@ public class Rustore {
       this.quantity = setterArg;
     }
 
-    private @Nullable String state;
-    public @Nullable String getState() { return state; }
-    public void setState(@Nullable String setterArg) {
-      this.state = setterArg;
+    private @Nullable String purchaseState;
+    public @Nullable String getPurchaseState() { return purchaseState; }
+    public void setPurchaseState(@Nullable String setterArg) {
+      this.purchaseState = setterArg;
     }
 
-    private @Nullable String payload;
-    public @Nullable String getPayload() { return payload; }
-    public void setPayload(@Nullable String setterArg) {
-      this.payload = setterArg;
+    private @Nullable String developerPayload;
+    public @Nullable String getDeveloperPayload() { return developerPayload; }
+    public void setDeveloperPayload(@Nullable String setterArg) {
+      this.developerPayload = setterArg;
     }
 
-    /**Constructor is private to enforce null safety; use Builder. */
-    private Purchase() {}
     public static final class Builder {
       private @Nullable String purchaseId;
       public @NonNull Builder setPurchaseId(@Nullable String setterArg) {
@@ -598,7 +611,7 @@ public class Rustore {
         return this;
       }
       private @Nullable String productId;
-      public @NonNull Builder setProductId(@NonNull String setterArg) {
+      public @NonNull Builder setProductId(@Nullable String setterArg) {
         this.productId = setterArg;
         return this;
       }
@@ -642,14 +655,14 @@ public class Rustore {
         this.quantity = setterArg;
         return this;
       }
-      private @Nullable String state;
-      public @NonNull Builder setState(@Nullable String setterArg) {
-        this.state = setterArg;
+      private @Nullable String purchaseState;
+      public @NonNull Builder setPurchaseState(@Nullable String setterArg) {
+        this.purchaseState = setterArg;
         return this;
       }
-      private @Nullable String payload;
-      public @NonNull Builder setPayload(@Nullable String setterArg) {
-        this.payload = setterArg;
+      private @Nullable String developerPayload;
+      public @NonNull Builder setDeveloperPayload(@Nullable String setterArg) {
+        this.developerPayload = setterArg;
         return this;
       }
       public @NonNull Purchase build() {
@@ -664,8 +677,8 @@ public class Rustore {
         pigeonReturn.setAmount(amount);
         pigeonReturn.setCurrency(currency);
         pigeonReturn.setQuantity(quantity);
-        pigeonReturn.setState(state);
-        pigeonReturn.setPayload(payload);
+        pigeonReturn.setPurchaseState(purchaseState);
+        pigeonReturn.setDeveloperPayload(developerPayload);
         return pigeonReturn;
       }
     }
@@ -681,8 +694,8 @@ public class Rustore {
       toMapResult.put("amount", amount);
       toMapResult.put("currency", currency);
       toMapResult.put("quantity", quantity);
-      toMapResult.put("state", state);
-      toMapResult.put("payload", payload);
+      toMapResult.put("purchaseState", purchaseState);
+      toMapResult.put("developerPayload", developerPayload);
       return toMapResult;
     }
     static @NonNull Purchase fromMap(@NonNull Map<String, Object> map) {
@@ -707,10 +720,10 @@ public class Rustore {
       pigeonResult.setCurrency((String)currency);
       Object quantity = map.get("quantity");
       pigeonResult.setQuantity((quantity == null) ? null : ((quantity instanceof Integer) ? (Integer)quantity : (Long)quantity));
-      Object state = map.get("state");
-      pigeonResult.setState((String)state);
-      Object payload = map.get("payload");
-      pigeonResult.setPayload((String)payload);
+      Object purchaseState = map.get("purchaseState");
+      pigeonResult.setPurchaseState((String)purchaseState);
+      Object developerPayload = map.get("developerPayload");
+      pigeonResult.setDeveloperPayload((String)developerPayload);
       return pigeonResult;
     }
   }
@@ -726,30 +739,21 @@ public class Rustore {
       this.code = setterArg;
     }
 
-    private @NonNull String errorMessage;
-    public @NonNull String getErrorMessage() { return errorMessage; }
-    public void setErrorMessage(@NonNull String setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"errorMessage\" is null.");
-      }
+    private @Nullable String errorMessage;
+    public @Nullable String getErrorMessage() { return errorMessage; }
+    public void setErrorMessage(@Nullable String setterArg) {
       this.errorMessage = setterArg;
     }
 
-    private @NonNull String errorDescription;
-    public @NonNull String getErrorDescription() { return errorDescription; }
-    public void setErrorDescription(@NonNull String setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"errorDescription\" is null.");
-      }
+    private @Nullable String errorDescription;
+    public @Nullable String getErrorDescription() { return errorDescription; }
+    public void setErrorDescription(@Nullable String setterArg) {
       this.errorDescription = setterArg;
     }
 
-    private @NonNull String traceId;
-    public @NonNull String getTraceId() { return traceId; }
-    public void setTraceId(@NonNull String setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"traceId\" is null.");
-      }
+    private @Nullable String traceId;
+    public @Nullable String getTraceId() { return traceId; }
+    public void setTraceId(@Nullable String setterArg) {
       this.traceId = setterArg;
     }
 
@@ -762,6 +766,15 @@ public class Rustore {
       this.purchases = setterArg;
     }
 
+    private @NonNull List<DigitalShopGeneralError> errors;
+    public @NonNull List<DigitalShopGeneralError> getErrors() { return errors; }
+    public void setErrors(@NonNull List<DigitalShopGeneralError> setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"errors\" is null.");
+      }
+      this.errors = setterArg;
+    }
+
     /**Constructor is private to enforce null safety; use Builder. */
     private PurchasesResponse() {}
     public static final class Builder {
@@ -771,23 +784,28 @@ public class Rustore {
         return this;
       }
       private @Nullable String errorMessage;
-      public @NonNull Builder setErrorMessage(@NonNull String setterArg) {
+      public @NonNull Builder setErrorMessage(@Nullable String setterArg) {
         this.errorMessage = setterArg;
         return this;
       }
       private @Nullable String errorDescription;
-      public @NonNull Builder setErrorDescription(@NonNull String setterArg) {
+      public @NonNull Builder setErrorDescription(@Nullable String setterArg) {
         this.errorDescription = setterArg;
         return this;
       }
       private @Nullable String traceId;
-      public @NonNull Builder setTraceId(@NonNull String setterArg) {
+      public @NonNull Builder setTraceId(@Nullable String setterArg) {
         this.traceId = setterArg;
         return this;
       }
       private @Nullable List<Purchase> purchases;
       public @NonNull Builder setPurchases(@NonNull List<Purchase> setterArg) {
         this.purchases = setterArg;
+        return this;
+      }
+      private @Nullable List<DigitalShopGeneralError> errors;
+      public @NonNull Builder setErrors(@NonNull List<DigitalShopGeneralError> setterArg) {
+        this.errors = setterArg;
         return this;
       }
       public @NonNull PurchasesResponse build() {
@@ -797,6 +815,7 @@ public class Rustore {
         pigeonReturn.setErrorDescription(errorDescription);
         pigeonReturn.setTraceId(traceId);
         pigeonReturn.setPurchases(purchases);
+        pigeonReturn.setErrors(errors);
         return pigeonReturn;
       }
     }
@@ -807,6 +826,7 @@ public class Rustore {
       toMapResult.put("errorDescription", errorDescription);
       toMapResult.put("traceId", traceId);
       toMapResult.put("purchases", purchases);
+      toMapResult.put("errors", errors);
       return toMapResult;
     }
     static @NonNull PurchasesResponse fromMap(@NonNull Map<String, Object> map) {
@@ -821,6 +841,8 @@ public class Rustore {
       pigeonResult.setTraceId((String)traceId);
       Object purchases = map.get("purchases");
       pigeonResult.setPurchases((List<Purchase>)purchases);
+      Object errors = map.get("errors");
+      pigeonResult.setErrors((List<DigitalShopGeneralError>)errors);
       return pigeonResult;
     }
   }
@@ -836,6 +858,33 @@ public class Rustore {
       this.code = setterArg;
     }
 
+    private @Nullable String errorMessage;
+    public @Nullable String getErrorMessage() { return errorMessage; }
+    public void setErrorMessage(@Nullable String setterArg) {
+      this.errorMessage = setterArg;
+    }
+
+    private @Nullable String errorDescription;
+    public @Nullable String getErrorDescription() { return errorDescription; }
+    public void setErrorDescription(@Nullable String setterArg) {
+      this.errorDescription = setterArg;
+    }
+
+    private @Nullable String traceId;
+    public @Nullable String getTraceId() { return traceId; }
+    public void setTraceId(@Nullable String setterArg) {
+      this.traceId = setterArg;
+    }
+
+    private @NonNull List<DigitalShopGeneralError> errors;
+    public @NonNull List<DigitalShopGeneralError> getErrors() { return errors; }
+    public void setErrors(@NonNull List<DigitalShopGeneralError> setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"errors\" is null.");
+      }
+      this.errors = setterArg;
+    }
+
     /**Constructor is private to enforce null safety; use Builder. */
     private ConfirmPurchaseResponse() {}
     public static final class Builder {
@@ -844,59 +893,484 @@ public class Rustore {
         this.code = setterArg;
         return this;
       }
+      private @Nullable String errorMessage;
+      public @NonNull Builder setErrorMessage(@Nullable String setterArg) {
+        this.errorMessage = setterArg;
+        return this;
+      }
+      private @Nullable String errorDescription;
+      public @NonNull Builder setErrorDescription(@Nullable String setterArg) {
+        this.errorDescription = setterArg;
+        return this;
+      }
+      private @Nullable String traceId;
+      public @NonNull Builder setTraceId(@Nullable String setterArg) {
+        this.traceId = setterArg;
+        return this;
+      }
+      private @Nullable List<DigitalShopGeneralError> errors;
+      public @NonNull Builder setErrors(@NonNull List<DigitalShopGeneralError> setterArg) {
+        this.errors = setterArg;
+        return this;
+      }
       public @NonNull ConfirmPurchaseResponse build() {
         ConfirmPurchaseResponse pigeonReturn = new ConfirmPurchaseResponse();
         pigeonReturn.setCode(code);
+        pigeonReturn.setErrorMessage(errorMessage);
+        pigeonReturn.setErrorDescription(errorDescription);
+        pigeonReturn.setTraceId(traceId);
+        pigeonReturn.setErrors(errors);
         return pigeonReturn;
       }
     }
     @NonNull Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
       toMapResult.put("code", code);
+      toMapResult.put("errorMessage", errorMessage);
+      toMapResult.put("errorDescription", errorDescription);
+      toMapResult.put("traceId", traceId);
+      toMapResult.put("errors", errors);
       return toMapResult;
     }
     static @NonNull ConfirmPurchaseResponse fromMap(@NonNull Map<String, Object> map) {
       ConfirmPurchaseResponse pigeonResult = new ConfirmPurchaseResponse();
       Object code = map.get("code");
       pigeonResult.setCode((code == null) ? null : ((code instanceof Integer) ? (Integer)code : (Long)code));
+      Object errorMessage = map.get("errorMessage");
+      pigeonResult.setErrorMessage((String)errorMessage);
+      Object errorDescription = map.get("errorDescription");
+      pigeonResult.setErrorDescription((String)errorDescription);
+      Object traceId = map.get("traceId");
+      pigeonResult.setTraceId((String)traceId);
+      Object errors = map.get("errors");
+      pigeonResult.setErrors((List<DigitalShopGeneralError>)errors);
       return pigeonResult;
     }
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class PaymentResult {
-    private @NonNull Long code;
-    public @NonNull Long getCode() { return code; }
-    public void setCode(@NonNull Long setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"code\" is null.");
-      }
-      this.code = setterArg;
+    private @Nullable SuccessInvoice successInvoice;
+    public @Nullable SuccessInvoice getSuccessInvoice() { return successInvoice; }
+    public void setSuccessInvoice(@Nullable SuccessInvoice setterArg) {
+      this.successInvoice = setterArg;
     }
 
-    /**Constructor is private to enforce null safety; use Builder. */
-    private PaymentResult() {}
+    private @Nullable InvalidInvoice invalidInvoice;
+    public @Nullable InvalidInvoice getInvalidInvoice() { return invalidInvoice; }
+    public void setInvalidInvoice(@Nullable InvalidInvoice setterArg) {
+      this.invalidInvoice = setterArg;
+    }
+
+    private @Nullable SuccessPurchase successPurchase;
+    public @Nullable SuccessPurchase getSuccessPurchase() { return successPurchase; }
+    public void setSuccessPurchase(@Nullable SuccessPurchase setterArg) {
+      this.successPurchase = setterArg;
+    }
+
+    private @Nullable InvalidPurchase invalidPurchase;
+    public @Nullable InvalidPurchase getInvalidPurchase() { return invalidPurchase; }
+    public void setInvalidPurchase(@Nullable InvalidPurchase setterArg) {
+      this.invalidPurchase = setterArg;
+    }
+
     public static final class Builder {
-      private @Nullable Long code;
-      public @NonNull Builder setCode(@NonNull Long setterArg) {
-        this.code = setterArg;
+      private @Nullable SuccessInvoice successInvoice;
+      public @NonNull Builder setSuccessInvoice(@Nullable SuccessInvoice setterArg) {
+        this.successInvoice = setterArg;
+        return this;
+      }
+      private @Nullable InvalidInvoice invalidInvoice;
+      public @NonNull Builder setInvalidInvoice(@Nullable InvalidInvoice setterArg) {
+        this.invalidInvoice = setterArg;
+        return this;
+      }
+      private @Nullable SuccessPurchase successPurchase;
+      public @NonNull Builder setSuccessPurchase(@Nullable SuccessPurchase setterArg) {
+        this.successPurchase = setterArg;
+        return this;
+      }
+      private @Nullable InvalidPurchase invalidPurchase;
+      public @NonNull Builder setInvalidPurchase(@Nullable InvalidPurchase setterArg) {
+        this.invalidPurchase = setterArg;
         return this;
       }
       public @NonNull PaymentResult build() {
         PaymentResult pigeonReturn = new PaymentResult();
-        pigeonReturn.setCode(code);
+        pigeonReturn.setSuccessInvoice(successInvoice);
+        pigeonReturn.setInvalidInvoice(invalidInvoice);
+        pigeonReturn.setSuccessPurchase(successPurchase);
+        pigeonReturn.setInvalidPurchase(invalidPurchase);
         return pigeonReturn;
       }
     }
     @NonNull Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
-      toMapResult.put("code", code);
+      toMapResult.put("successInvoice", (successInvoice == null) ? null : successInvoice.toMap());
+      toMapResult.put("invalidInvoice", (invalidInvoice == null) ? null : invalidInvoice.toMap());
+      toMapResult.put("successPurchase", (successPurchase == null) ? null : successPurchase.toMap());
+      toMapResult.put("invalidPurchase", (invalidPurchase == null) ? null : invalidPurchase.toMap());
       return toMapResult;
     }
     static @NonNull PaymentResult fromMap(@NonNull Map<String, Object> map) {
       PaymentResult pigeonResult = new PaymentResult();
+      Object successInvoice = map.get("successInvoice");
+      pigeonResult.setSuccessInvoice((successInvoice == null) ? null : SuccessInvoice.fromMap((Map)successInvoice));
+      Object invalidInvoice = map.get("invalidInvoice");
+      pigeonResult.setInvalidInvoice((invalidInvoice == null) ? null : InvalidInvoice.fromMap((Map)invalidInvoice));
+      Object successPurchase = map.get("successPurchase");
+      pigeonResult.setSuccessPurchase((successPurchase == null) ? null : SuccessPurchase.fromMap((Map)successPurchase));
+      Object invalidPurchase = map.get("invalidPurchase");
+      pigeonResult.setInvalidPurchase((invalidPurchase == null) ? null : InvalidPurchase.fromMap((Map)invalidPurchase));
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class SuccessInvoice {
+    private @NonNull String invoiceId;
+    public @NonNull String getInvoiceId() { return invoiceId; }
+    public void setInvoiceId(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"invoiceId\" is null.");
+      }
+      this.invoiceId = setterArg;
+    }
+
+    private @NonNull String finishCode;
+    public @NonNull String getFinishCode() { return finishCode; }
+    public void setFinishCode(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"finishCode\" is null.");
+      }
+      this.finishCode = setterArg;
+    }
+
+    /**Constructor is private to enforce null safety; use Builder. */
+    private SuccessInvoice() {}
+    public static final class Builder {
+      private @Nullable String invoiceId;
+      public @NonNull Builder setInvoiceId(@NonNull String setterArg) {
+        this.invoiceId = setterArg;
+        return this;
+      }
+      private @Nullable String finishCode;
+      public @NonNull Builder setFinishCode(@NonNull String setterArg) {
+        this.finishCode = setterArg;
+        return this;
+      }
+      public @NonNull SuccessInvoice build() {
+        SuccessInvoice pigeonReturn = new SuccessInvoice();
+        pigeonReturn.setInvoiceId(invoiceId);
+        pigeonReturn.setFinishCode(finishCode);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("invoiceId", invoiceId);
+      toMapResult.put("finishCode", finishCode);
+      return toMapResult;
+    }
+    static @NonNull SuccessInvoice fromMap(@NonNull Map<String, Object> map) {
+      SuccessInvoice pigeonResult = new SuccessInvoice();
+      Object invoiceId = map.get("invoiceId");
+      pigeonResult.setInvoiceId((String)invoiceId);
+      Object finishCode = map.get("finishCode");
+      pigeonResult.setFinishCode((String)finishCode);
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class InvalidInvoice {
+    private @Nullable String invoiceId;
+    public @Nullable String getInvoiceId() { return invoiceId; }
+    public void setInvoiceId(@Nullable String setterArg) {
+      this.invoiceId = setterArg;
+    }
+
+    public static final class Builder {
+      private @Nullable String invoiceId;
+      public @NonNull Builder setInvoiceId(@Nullable String setterArg) {
+        this.invoiceId = setterArg;
+        return this;
+      }
+      public @NonNull InvalidInvoice build() {
+        InvalidInvoice pigeonReturn = new InvalidInvoice();
+        pigeonReturn.setInvoiceId(invoiceId);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("invoiceId", invoiceId);
+      return toMapResult;
+    }
+    static @NonNull InvalidInvoice fromMap(@NonNull Map<String, Object> map) {
+      InvalidInvoice pigeonResult = new InvalidInvoice();
+      Object invoiceId = map.get("invoiceId");
+      pigeonResult.setInvoiceId((String)invoiceId);
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class SuccessPurchase {
+    private @NonNull String finishCode;
+    public @NonNull String getFinishCode() { return finishCode; }
+    public void setFinishCode(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"finishCode\" is null.");
+      }
+      this.finishCode = setterArg;
+    }
+
+    private @Nullable String orderId;
+    public @Nullable String getOrderId() { return orderId; }
+    public void setOrderId(@Nullable String setterArg) {
+      this.orderId = setterArg;
+    }
+
+    private @NonNull String purchaseId;
+    public @NonNull String getPurchaseId() { return purchaseId; }
+    public void setPurchaseId(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"purchaseId\" is null.");
+      }
+      this.purchaseId = setterArg;
+    }
+
+    private @NonNull String productId;
+    public @NonNull String getProductId() { return productId; }
+    public void setProductId(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"productId\" is null.");
+      }
+      this.productId = setterArg;
+    }
+
+    /**Constructor is private to enforce null safety; use Builder. */
+    private SuccessPurchase() {}
+    public static final class Builder {
+      private @Nullable String finishCode;
+      public @NonNull Builder setFinishCode(@NonNull String setterArg) {
+        this.finishCode = setterArg;
+        return this;
+      }
+      private @Nullable String orderId;
+      public @NonNull Builder setOrderId(@Nullable String setterArg) {
+        this.orderId = setterArg;
+        return this;
+      }
+      private @Nullable String purchaseId;
+      public @NonNull Builder setPurchaseId(@NonNull String setterArg) {
+        this.purchaseId = setterArg;
+        return this;
+      }
+      private @Nullable String productId;
+      public @NonNull Builder setProductId(@NonNull String setterArg) {
+        this.productId = setterArg;
+        return this;
+      }
+      public @NonNull SuccessPurchase build() {
+        SuccessPurchase pigeonReturn = new SuccessPurchase();
+        pigeonReturn.setFinishCode(finishCode);
+        pigeonReturn.setOrderId(orderId);
+        pigeonReturn.setPurchaseId(purchaseId);
+        pigeonReturn.setProductId(productId);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("finishCode", finishCode);
+      toMapResult.put("orderId", orderId);
+      toMapResult.put("purchaseId", purchaseId);
+      toMapResult.put("productId", productId);
+      return toMapResult;
+    }
+    static @NonNull SuccessPurchase fromMap(@NonNull Map<String, Object> map) {
+      SuccessPurchase pigeonResult = new SuccessPurchase();
+      Object finishCode = map.get("finishCode");
+      pigeonResult.setFinishCode((String)finishCode);
+      Object orderId = map.get("orderId");
+      pigeonResult.setOrderId((String)orderId);
+      Object purchaseId = map.get("purchaseId");
+      pigeonResult.setPurchaseId((String)purchaseId);
+      Object productId = map.get("productId");
+      pigeonResult.setProductId((String)productId);
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class InvalidPurchase {
+    private @Nullable String purchaseId;
+    public @Nullable String getPurchaseId() { return purchaseId; }
+    public void setPurchaseId(@Nullable String setterArg) {
+      this.purchaseId = setterArg;
+    }
+
+    private @Nullable String invoiceId;
+    public @Nullable String getInvoiceId() { return invoiceId; }
+    public void setInvoiceId(@Nullable String setterArg) {
+      this.invoiceId = setterArg;
+    }
+
+    private @Nullable String orderId;
+    public @Nullable String getOrderId() { return orderId; }
+    public void setOrderId(@Nullable String setterArg) {
+      this.orderId = setterArg;
+    }
+
+    private @Nullable Long quantity;
+    public @Nullable Long getQuantity() { return quantity; }
+    public void setQuantity(@Nullable Long setterArg) {
+      this.quantity = setterArg;
+    }
+
+    private @Nullable String productId;
+    public @Nullable String getProductId() { return productId; }
+    public void setProductId(@Nullable String setterArg) {
+      this.productId = setterArg;
+    }
+
+    private @Nullable Long errorCode;
+    public @Nullable Long getErrorCode() { return errorCode; }
+    public void setErrorCode(@Nullable Long setterArg) {
+      this.errorCode = setterArg;
+    }
+
+    public static final class Builder {
+      private @Nullable String purchaseId;
+      public @NonNull Builder setPurchaseId(@Nullable String setterArg) {
+        this.purchaseId = setterArg;
+        return this;
+      }
+      private @Nullable String invoiceId;
+      public @NonNull Builder setInvoiceId(@Nullable String setterArg) {
+        this.invoiceId = setterArg;
+        return this;
+      }
+      private @Nullable String orderId;
+      public @NonNull Builder setOrderId(@Nullable String setterArg) {
+        this.orderId = setterArg;
+        return this;
+      }
+      private @Nullable Long quantity;
+      public @NonNull Builder setQuantity(@Nullable Long setterArg) {
+        this.quantity = setterArg;
+        return this;
+      }
+      private @Nullable String productId;
+      public @NonNull Builder setProductId(@Nullable String setterArg) {
+        this.productId = setterArg;
+        return this;
+      }
+      private @Nullable Long errorCode;
+      public @NonNull Builder setErrorCode(@Nullable Long setterArg) {
+        this.errorCode = setterArg;
+        return this;
+      }
+      public @NonNull InvalidPurchase build() {
+        InvalidPurchase pigeonReturn = new InvalidPurchase();
+        pigeonReturn.setPurchaseId(purchaseId);
+        pigeonReturn.setInvoiceId(invoiceId);
+        pigeonReturn.setOrderId(orderId);
+        pigeonReturn.setQuantity(quantity);
+        pigeonReturn.setProductId(productId);
+        pigeonReturn.setErrorCode(errorCode);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("purchaseId", purchaseId);
+      toMapResult.put("invoiceId", invoiceId);
+      toMapResult.put("orderId", orderId);
+      toMapResult.put("quantity", quantity);
+      toMapResult.put("productId", productId);
+      toMapResult.put("errorCode", errorCode);
+      return toMapResult;
+    }
+    static @NonNull InvalidPurchase fromMap(@NonNull Map<String, Object> map) {
+      InvalidPurchase pigeonResult = new InvalidPurchase();
+      Object purchaseId = map.get("purchaseId");
+      pigeonResult.setPurchaseId((String)purchaseId);
+      Object invoiceId = map.get("invoiceId");
+      pigeonResult.setInvoiceId((String)invoiceId);
+      Object orderId = map.get("orderId");
+      pigeonResult.setOrderId((String)orderId);
+      Object quantity = map.get("quantity");
+      pigeonResult.setQuantity((quantity == null) ? null : ((quantity instanceof Integer) ? (Integer)quantity : (Long)quantity));
+      Object productId = map.get("productId");
+      pigeonResult.setProductId((String)productId);
+      Object errorCode = map.get("errorCode");
+      pigeonResult.setErrorCode((errorCode == null) ? null : ((errorCode instanceof Integer) ? (Integer)errorCode : (Long)errorCode));
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class DigitalShopGeneralError {
+    private @Nullable String name;
+    public @Nullable String getName() { return name; }
+    public void setName(@Nullable String setterArg) {
+      this.name = setterArg;
+    }
+
+    private @Nullable Long code;
+    public @Nullable Long getCode() { return code; }
+    public void setCode(@Nullable Long setterArg) {
+      this.code = setterArg;
+    }
+
+    private @Nullable String description;
+    public @Nullable String getDescription() { return description; }
+    public void setDescription(@Nullable String setterArg) {
+      this.description = setterArg;
+    }
+
+    public static final class Builder {
+      private @Nullable String name;
+      public @NonNull Builder setName(@Nullable String setterArg) {
+        this.name = setterArg;
+        return this;
+      }
+      private @Nullable Long code;
+      public @NonNull Builder setCode(@Nullable Long setterArg) {
+        this.code = setterArg;
+        return this;
+      }
+      private @Nullable String description;
+      public @NonNull Builder setDescription(@Nullable String setterArg) {
+        this.description = setterArg;
+        return this;
+      }
+      public @NonNull DigitalShopGeneralError build() {
+        DigitalShopGeneralError pigeonReturn = new DigitalShopGeneralError();
+        pigeonReturn.setName(name);
+        pigeonReturn.setCode(code);
+        pigeonReturn.setDescription(description);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("name", name);
+      toMapResult.put("code", code);
+      toMapResult.put("description", description);
+      return toMapResult;
+    }
+    static @NonNull DigitalShopGeneralError fromMap(@NonNull Map<String, Object> map) {
+      DigitalShopGeneralError pigeonResult = new DigitalShopGeneralError();
+      Object name = map.get("name");
+      pigeonResult.setName((String)name);
       Object code = map.get("code");
       pigeonResult.setCode((code == null) ? null : ((code instanceof Integer) ? (Integer)code : (Long)code));
+      Object description = map.get("description");
+      pigeonResult.setDescription((String)description);
       return pigeonResult;
     }
   }
@@ -915,25 +1389,40 @@ public class Rustore {
           return ConfirmPurchaseResponse.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)129:         
-          return PaymentResult.fromMap((Map<String, Object>) readValue(buffer));
+          return DigitalShopGeneralError.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)130:         
-          return Product.fromMap((Map<String, Object>) readValue(buffer));
+          return InvalidInvoice.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)131:         
-          return ProductsResponse.fromMap((Map<String, Object>) readValue(buffer));
+          return InvalidPurchase.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)132:         
-          return Purchase.fromMap((Map<String, Object>) readValue(buffer));
+          return PaymentResult.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)133:         
-          return PurchasesResponse.fromMap((Map<String, Object>) readValue(buffer));
+          return Product.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)134:         
-          return Subscription.fromMap((Map<String, Object>) readValue(buffer));
+          return ProductsResponse.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)135:         
+          return Purchase.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)136:         
+          return PurchasesResponse.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)137:         
+          return Subscription.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)138:         
           return SubscriptionPeriod.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)139:         
+          return SuccessInvoice.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)140:         
+          return SuccessPurchase.fromMap((Map<String, Object>) readValue(buffer));
         
         default:        
           return super.readValueOfType(type, buffer);
@@ -946,33 +1435,53 @@ public class Rustore {
         stream.write(128);
         writeValue(stream, ((ConfirmPurchaseResponse) value).toMap());
       } else 
-      if (value instanceof PaymentResult) {
+      if (value instanceof DigitalShopGeneralError) {
         stream.write(129);
+        writeValue(stream, ((DigitalShopGeneralError) value).toMap());
+      } else 
+      if (value instanceof InvalidInvoice) {
+        stream.write(130);
+        writeValue(stream, ((InvalidInvoice) value).toMap());
+      } else 
+      if (value instanceof InvalidPurchase) {
+        stream.write(131);
+        writeValue(stream, ((InvalidPurchase) value).toMap());
+      } else 
+      if (value instanceof PaymentResult) {
+        stream.write(132);
         writeValue(stream, ((PaymentResult) value).toMap());
       } else 
       if (value instanceof Product) {
-        stream.write(130);
+        stream.write(133);
         writeValue(stream, ((Product) value).toMap());
       } else 
       if (value instanceof ProductsResponse) {
-        stream.write(131);
+        stream.write(134);
         writeValue(stream, ((ProductsResponse) value).toMap());
       } else 
       if (value instanceof Purchase) {
-        stream.write(132);
+        stream.write(135);
         writeValue(stream, ((Purchase) value).toMap());
       } else 
       if (value instanceof PurchasesResponse) {
-        stream.write(133);
+        stream.write(136);
         writeValue(stream, ((PurchasesResponse) value).toMap());
       } else 
       if (value instanceof Subscription) {
-        stream.write(134);
+        stream.write(137);
         writeValue(stream, ((Subscription) value).toMap());
       } else 
       if (value instanceof SubscriptionPeriod) {
-        stream.write(135);
+        stream.write(138);
         writeValue(stream, ((SubscriptionPeriod) value).toMap());
+      } else 
+      if (value instanceof SuccessInvoice) {
+        stream.write(139);
+        writeValue(stream, ((SuccessInvoice) value).toMap());
+      } else 
+      if (value instanceof SuccessPurchase) {
+        stream.write(140);
+        writeValue(stream, ((SuccessPurchase) value).toMap());
       } else 
 {
         super.writeValue(stream, value);

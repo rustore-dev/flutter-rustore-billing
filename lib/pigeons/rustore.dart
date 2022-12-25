@@ -87,46 +87,46 @@ class Subscription {
 
 class Product {
   Product({
-    required this.id,
-    this.type,
-    required this.status,
-    this.label,
+    required this.productId,
+    this.productType,
+    required this.productStatus,
+    this.priceLabel,
     this.price,
     this.currency,
     this.language,
     this.title,
     this.description,
-    this.image,
-    this.promo,
+    this.imageUrl,
+    this.promoImageUrl,
     this.subscription,
   });
 
-  String id;
-  String? type;
-  String status;
-  String? label;
+  String productId;
+  String? productType;
+  String productStatus;
+  String? priceLabel;
   int? price;
   String? currency;
   String? language;
   String? title;
   String? description;
-  String? image;
-  String? promo;
+  String? imageUrl;
+  String? promoImageUrl;
   Subscription? subscription;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
-    pigeonMap['id'] = id;
-    pigeonMap['type'] = type;
-    pigeonMap['status'] = status;
-    pigeonMap['label'] = label;
+    pigeonMap['productId'] = productId;
+    pigeonMap['productType'] = productType;
+    pigeonMap['productStatus'] = productStatus;
+    pigeonMap['priceLabel'] = priceLabel;
     pigeonMap['price'] = price;
     pigeonMap['currency'] = currency;
     pigeonMap['language'] = language;
     pigeonMap['title'] = title;
     pigeonMap['description'] = description;
-    pigeonMap['image'] = image;
-    pigeonMap['promo'] = promo;
+    pigeonMap['imageUrl'] = imageUrl;
+    pigeonMap['promoImageUrl'] = promoImageUrl;
     pigeonMap['subscription'] = subscription?.encode();
     return pigeonMap;
   }
@@ -134,17 +134,17 @@ class Product {
   static Product decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return Product(
-      id: pigeonMap['id']! as String,
-      type: pigeonMap['type'] as String?,
-      status: pigeonMap['status']! as String,
-      label: pigeonMap['label'] as String?,
+      productId: pigeonMap['productId']! as String,
+      productType: pigeonMap['productType'] as String?,
+      productStatus: pigeonMap['productStatus']! as String,
+      priceLabel: pigeonMap['priceLabel'] as String?,
       price: pigeonMap['price'] as int?,
       currency: pigeonMap['currency'] as String?,
       language: pigeonMap['language'] as String?,
       title: pigeonMap['title'] as String?,
       description: pigeonMap['description'] as String?,
-      image: pigeonMap['image'] as String?,
-      promo: pigeonMap['promo'] as String?,
+      imageUrl: pigeonMap['imageUrl'] as String?,
+      promoImageUrl: pigeonMap['promoImageUrl'] as String?,
       subscription: pigeonMap['subscription'] != null
           ? Subscription.decode(pigeonMap['subscription']!)
           : null,
@@ -159,6 +159,7 @@ class ProductsResponse {
     this.errorDescription,
     this.traceId,
     required this.products,
+    required this.errors,
   });
 
   int code;
@@ -166,6 +167,7 @@ class ProductsResponse {
   String? errorDescription;
   String? traceId;
   List<Product?> products;
+  List<DigitalShopGeneralError?> errors;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
@@ -174,6 +176,7 @@ class ProductsResponse {
     pigeonMap['errorDescription'] = errorDescription;
     pigeonMap['traceId'] = traceId;
     pigeonMap['products'] = products;
+    pigeonMap['errors'] = errors;
     return pigeonMap;
   }
 
@@ -185,6 +188,7 @@ class ProductsResponse {
       errorDescription: pigeonMap['errorDescription'] as String?,
       traceId: pigeonMap['traceId'] as String?,
       products: (pigeonMap['products'] as List<Object?>?)!.cast<Product?>(),
+      errors: (pigeonMap['errors'] as List<Object?>?)!.cast<DigitalShopGeneralError?>(),
     );
   }
 }
@@ -192,7 +196,7 @@ class ProductsResponse {
 class Purchase {
   Purchase({
     this.purchaseId,
-    required this.productId,
+    this.productId,
     this.description,
     this.language,
     this.purchaseTime,
@@ -201,12 +205,12 @@ class Purchase {
     this.amount,
     this.currency,
     this.quantity,
-    this.state,
-    this.payload,
+    this.purchaseState,
+    this.developerPayload,
   });
 
   String? purchaseId;
-  String productId;
+  String? productId;
   String? description;
   String? language;
   String? purchaseTime;
@@ -215,8 +219,8 @@ class Purchase {
   int? amount;
   String? currency;
   int? quantity;
-  String? state;
-  String? payload;
+  String? purchaseState;
+  String? developerPayload;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
@@ -230,8 +234,8 @@ class Purchase {
     pigeonMap['amount'] = amount;
     pigeonMap['currency'] = currency;
     pigeonMap['quantity'] = quantity;
-    pigeonMap['state'] = state;
-    pigeonMap['payload'] = payload;
+    pigeonMap['purchaseState'] = purchaseState;
+    pigeonMap['developerPayload'] = developerPayload;
     return pigeonMap;
   }
 
@@ -239,7 +243,7 @@ class Purchase {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return Purchase(
       purchaseId: pigeonMap['purchaseId'] as String?,
-      productId: pigeonMap['productId']! as String,
+      productId: pigeonMap['productId'] as String?,
       description: pigeonMap['description'] as String?,
       language: pigeonMap['language'] as String?,
       purchaseTime: pigeonMap['purchaseTime'] as String?,
@@ -248,8 +252,8 @@ class Purchase {
       amount: pigeonMap['amount'] as int?,
       currency: pigeonMap['currency'] as String?,
       quantity: pigeonMap['quantity'] as int?,
-      state: pigeonMap['state'] as String?,
-      payload: pigeonMap['payload'] as String?,
+      purchaseState: pigeonMap['purchaseState'] as String?,
+      developerPayload: pigeonMap['developerPayload'] as String?,
     );
   }
 }
@@ -257,17 +261,19 @@ class Purchase {
 class PurchasesResponse {
   PurchasesResponse({
     required this.code,
-    required this.errorMessage,
-    required this.errorDescription,
-    required this.traceId,
+    this.errorMessage,
+    this.errorDescription,
+    this.traceId,
     required this.purchases,
+    required this.errors,
   });
 
   int code;
-  String errorMessage;
-  String errorDescription;
-  String traceId;
+  String? errorMessage;
+  String? errorDescription;
+  String? traceId;
   List<Purchase?> purchases;
+  List<DigitalShopGeneralError?> errors;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
@@ -276,6 +282,7 @@ class PurchasesResponse {
     pigeonMap['errorDescription'] = errorDescription;
     pigeonMap['traceId'] = traceId;
     pigeonMap['purchases'] = purchases;
+    pigeonMap['errors'] = errors;
     return pigeonMap;
   }
 
@@ -283,10 +290,11 @@ class PurchasesResponse {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return PurchasesResponse(
       code: pigeonMap['code']! as int,
-      errorMessage: pigeonMap['errorMessage']! as String,
-      errorDescription: pigeonMap['errorDescription']! as String,
-      traceId: pigeonMap['traceId']! as String,
+      errorMessage: pigeonMap['errorMessage'] as String?,
+      errorDescription: pigeonMap['errorDescription'] as String?,
+      traceId: pigeonMap['traceId'] as String?,
       purchases: (pigeonMap['purchases'] as List<Object?>?)!.cast<Purchase?>(),
+      errors: (pigeonMap['errors'] as List<Object?>?)!.cast<DigitalShopGeneralError?>(),
     );
   }
 }
@@ -294,13 +302,25 @@ class PurchasesResponse {
 class ConfirmPurchaseResponse {
   ConfirmPurchaseResponse({
     required this.code,
+    this.errorMessage,
+    this.errorDescription,
+    this.traceId,
+    required this.errors,
   });
 
   int code;
+  String? errorMessage;
+  String? errorDescription;
+  String? traceId;
+  List<DigitalShopGeneralError?> errors;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
     pigeonMap['code'] = code;
+    pigeonMap['errorMessage'] = errorMessage;
+    pigeonMap['errorDescription'] = errorDescription;
+    pigeonMap['traceId'] = traceId;
+    pigeonMap['errors'] = errors;
     return pigeonMap;
   }
 
@@ -308,27 +328,200 @@ class ConfirmPurchaseResponse {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return ConfirmPurchaseResponse(
       code: pigeonMap['code']! as int,
+      errorMessage: pigeonMap['errorMessage'] as String?,
+      errorDescription: pigeonMap['errorDescription'] as String?,
+      traceId: pigeonMap['traceId'] as String?,
+      errors: (pigeonMap['errors'] as List<Object?>?)!.cast<DigitalShopGeneralError?>(),
     );
   }
 }
 
 class PaymentResult {
   PaymentResult({
-    required this.code,
+    this.successInvoice,
+    this.invalidInvoice,
+    this.successPurchase,
+    this.invalidPurchase,
   });
 
-  int code;
+  SuccessInvoice? successInvoice;
+  InvalidInvoice? invalidInvoice;
+  SuccessPurchase? successPurchase;
+  InvalidPurchase? invalidPurchase;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
-    pigeonMap['code'] = code;
+    pigeonMap['successInvoice'] = successInvoice?.encode();
+    pigeonMap['invalidInvoice'] = invalidInvoice?.encode();
+    pigeonMap['successPurchase'] = successPurchase?.encode();
+    pigeonMap['invalidPurchase'] = invalidPurchase?.encode();
     return pigeonMap;
   }
 
   static PaymentResult decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return PaymentResult(
-      code: pigeonMap['code']! as int,
+      successInvoice: pigeonMap['successInvoice'] != null
+          ? SuccessInvoice.decode(pigeonMap['successInvoice']!)
+          : null,
+      invalidInvoice: pigeonMap['invalidInvoice'] != null
+          ? InvalidInvoice.decode(pigeonMap['invalidInvoice']!)
+          : null,
+      successPurchase: pigeonMap['successPurchase'] != null
+          ? SuccessPurchase.decode(pigeonMap['successPurchase']!)
+          : null,
+      invalidPurchase: pigeonMap['invalidPurchase'] != null
+          ? InvalidPurchase.decode(pigeonMap['invalidPurchase']!)
+          : null,
+    );
+  }
+}
+
+class SuccessInvoice {
+  SuccessInvoice({
+    required this.invoiceId,
+    required this.finishCode,
+  });
+
+  String invoiceId;
+  String finishCode;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['invoiceId'] = invoiceId;
+    pigeonMap['finishCode'] = finishCode;
+    return pigeonMap;
+  }
+
+  static SuccessInvoice decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return SuccessInvoice(
+      invoiceId: pigeonMap['invoiceId']! as String,
+      finishCode: pigeonMap['finishCode']! as String,
+    );
+  }
+}
+
+class InvalidInvoice {
+  InvalidInvoice({
+    this.invoiceId,
+  });
+
+  String? invoiceId;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['invoiceId'] = invoiceId;
+    return pigeonMap;
+  }
+
+  static InvalidInvoice decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return InvalidInvoice(
+      invoiceId: pigeonMap['invoiceId'] as String?,
+    );
+  }
+}
+
+class SuccessPurchase {
+  SuccessPurchase({
+    required this.finishCode,
+    this.orderId,
+    required this.purchaseId,
+    required this.productId,
+  });
+
+  String finishCode;
+  String? orderId;
+  String purchaseId;
+  String productId;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['finishCode'] = finishCode;
+    pigeonMap['orderId'] = orderId;
+    pigeonMap['purchaseId'] = purchaseId;
+    pigeonMap['productId'] = productId;
+    return pigeonMap;
+  }
+
+  static SuccessPurchase decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return SuccessPurchase(
+      finishCode: pigeonMap['finishCode']! as String,
+      orderId: pigeonMap['orderId'] as String?,
+      purchaseId: pigeonMap['purchaseId']! as String,
+      productId: pigeonMap['productId']! as String,
+    );
+  }
+}
+
+class InvalidPurchase {
+  InvalidPurchase({
+    this.purchaseId,
+    this.invoiceId,
+    this.orderId,
+    this.quantity,
+    this.productId,
+    this.errorCode,
+  });
+
+  String? purchaseId;
+  String? invoiceId;
+  String? orderId;
+  int? quantity;
+  String? productId;
+  int? errorCode;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['purchaseId'] = purchaseId;
+    pigeonMap['invoiceId'] = invoiceId;
+    pigeonMap['orderId'] = orderId;
+    pigeonMap['quantity'] = quantity;
+    pigeonMap['productId'] = productId;
+    pigeonMap['errorCode'] = errorCode;
+    return pigeonMap;
+  }
+
+  static InvalidPurchase decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return InvalidPurchase(
+      purchaseId: pigeonMap['purchaseId'] as String?,
+      invoiceId: pigeonMap['invoiceId'] as String?,
+      orderId: pigeonMap['orderId'] as String?,
+      quantity: pigeonMap['quantity'] as int?,
+      productId: pigeonMap['productId'] as String?,
+      errorCode: pigeonMap['errorCode'] as int?,
+    );
+  }
+}
+
+class DigitalShopGeneralError {
+  DigitalShopGeneralError({
+    this.name,
+    this.code,
+    this.description,
+  });
+
+  String? name;
+  int? code;
+  String? description;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['name'] = name;
+    pigeonMap['code'] = code;
+    pigeonMap['description'] = description;
+    return pigeonMap;
+  }
+
+  static DigitalShopGeneralError decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return DigitalShopGeneralError(
+      name: pigeonMap['name'] as String?,
+      code: pigeonMap['code'] as int?,
+      description: pigeonMap['description'] as String?,
     );
   }
 }
@@ -341,32 +534,52 @@ class _ClientCodec extends StandardMessageCodec{
       buffer.putUint8(128);
       writeValue(buffer, value.encode());
     } else 
-    if (value is PaymentResult) {
+    if (value is DigitalShopGeneralError) {
       buffer.putUint8(129);
       writeValue(buffer, value.encode());
     } else 
-    if (value is Product) {
+    if (value is InvalidInvoice) {
       buffer.putUint8(130);
       writeValue(buffer, value.encode());
     } else 
-    if (value is ProductsResponse) {
+    if (value is InvalidPurchase) {
       buffer.putUint8(131);
       writeValue(buffer, value.encode());
     } else 
-    if (value is Purchase) {
+    if (value is PaymentResult) {
       buffer.putUint8(132);
       writeValue(buffer, value.encode());
     } else 
-    if (value is PurchasesResponse) {
+    if (value is Product) {
       buffer.putUint8(133);
       writeValue(buffer, value.encode());
     } else 
-    if (value is Subscription) {
+    if (value is ProductsResponse) {
       buffer.putUint8(134);
       writeValue(buffer, value.encode());
     } else 
-    if (value is SubscriptionPeriod) {
+    if (value is Purchase) {
       buffer.putUint8(135);
+      writeValue(buffer, value.encode());
+    } else 
+    if (value is PurchasesResponse) {
+      buffer.putUint8(136);
+      writeValue(buffer, value.encode());
+    } else 
+    if (value is Subscription) {
+      buffer.putUint8(137);
+      writeValue(buffer, value.encode());
+    } else 
+    if (value is SubscriptionPeriod) {
+      buffer.putUint8(138);
+      writeValue(buffer, value.encode());
+    } else 
+    if (value is SuccessInvoice) {
+      buffer.putUint8(139);
+      writeValue(buffer, value.encode());
+    } else 
+    if (value is SuccessPurchase) {
+      buffer.putUint8(140);
       writeValue(buffer, value.encode());
     } else 
 {
@@ -380,25 +593,40 @@ class _ClientCodec extends StandardMessageCodec{
         return ConfirmPurchaseResponse.decode(readValue(buffer)!);
       
       case 129:       
-        return PaymentResult.decode(readValue(buffer)!);
+        return DigitalShopGeneralError.decode(readValue(buffer)!);
       
       case 130:       
-        return Product.decode(readValue(buffer)!);
+        return InvalidInvoice.decode(readValue(buffer)!);
       
       case 131:       
-        return ProductsResponse.decode(readValue(buffer)!);
+        return InvalidPurchase.decode(readValue(buffer)!);
       
       case 132:       
-        return Purchase.decode(readValue(buffer)!);
+        return PaymentResult.decode(readValue(buffer)!);
       
       case 133:       
-        return PurchasesResponse.decode(readValue(buffer)!);
+        return Product.decode(readValue(buffer)!);
       
       case 134:       
-        return Subscription.decode(readValue(buffer)!);
+        return ProductsResponse.decode(readValue(buffer)!);
       
       case 135:       
+        return Purchase.decode(readValue(buffer)!);
+      
+      case 136:       
+        return PurchasesResponse.decode(readValue(buffer)!);
+      
+      case 137:       
+        return Subscription.decode(readValue(buffer)!);
+      
+      case 138:       
         return SubscriptionPeriod.decode(readValue(buffer)!);
+      
+      case 139:       
+        return SuccessInvoice.decode(readValue(buffer)!);
+      
+      case 140:       
+        return SuccessPurchase.decode(readValue(buffer)!);
       
       default:      
         return super.readValueOfType(type, buffer);
