@@ -1,15 +1,11 @@
 # flutter_rustore_billing
 
-A new Flutter plugin project.
+Flutter RuStoreSDK для подключения платежей
 
-## Getting Started
+Для работы проведения платежей необходимо соблюдение всех условий:
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
-
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
+- На устройстве пользователя установлено приложение RuStore.
+- Приложение RuStore поддерживает функциональность платежей.
+- Пользователь авторизован в приложении RuStore.
+- Пользователь и приложение не должны быть заблокированы в RuStore.
+- Для приложения включена возможность покупок в системе RuStore Консоль.
