@@ -16,7 +16,7 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Client
         RuStoreBillingClient.init(
             application = app,
             consoleApplicationId = id,
-            deeplinkPrefix = prefix,
+            deeplinkScheme = prefix,
             debugLogs = true
         )
 
