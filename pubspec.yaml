@@ -1,7 +1,8 @@
 name: flutter_rustore_billing
 description: Flutter RuStore Billing SDK.
 version: 0.0.1
-homepage:
+homepage: https://rustore.ru
+repository: https://gitflic.ru/project/rustore/flutter-rustore-push
 
 environment:
   sdk: '>=2.18.5 <3.0.0'

@@ -2,6 +2,8 @@
 
 Flutter RuStoreSDK для подключения платежей
 
+Документация по настройкe [RuStore SDK для подключения платежей](https://help.rustore.ru/rustore/for_developers/developer-documentation/sdk_payments).
+
 Для работы проведения платежей необходимо соблюдение всех условий:
 
 - На устройстве пользователя установлено приложение RuStore.
