@@ -46,6 +46,8 @@ class _MyAppState extends State<MyApp> {
       print("initialize success: $value");
       RustoreBillingClient.available().then((value) {
         print("available $value");
+      }, onError: (err) {
+        print("available err: $err");
       });
 
       // products
