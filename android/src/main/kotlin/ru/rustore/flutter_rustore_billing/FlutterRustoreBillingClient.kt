@@ -58,7 +58,6 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Client
                     response.setCode(result.code.toLong())
                     response.setErrorMessage(result.errorMessage)
                     response.setErrorDescription(result.errorDescription)
-                    response.setTraceId(result.traceId)
 
                     val products = mutableListOf<Rustore.Product>()
 
@@ -185,7 +184,6 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Client
                     response.setCode(result.code.toLong())
                     response.setErrorMessage(result.errorMessage)
                     response.setErrorDescription(result.errorDescription)
-                    response.setTraceId(result.traceId)
 
                     val purchases = mutableListOf<Rustore.Purchase>()
 
@@ -239,7 +237,6 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Client
                     response.setCode(result.code.toLong())
                     response.setErrorMessage(result.errorMessage)
                     response.setErrorDescription(result.errorDescription)
-                    response.setTraceId(result.traceId)
 
                     val errors = mutableListOf<Rustore.DigitalShopGeneralError>()
 
