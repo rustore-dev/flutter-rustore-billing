@@ -8,6 +8,7 @@ import ru.rustore.sdk.billingclient.model.product.SubscriptionPeriod
 import ru.rustore.sdk.billingclient.model.purchase.PaymentResult
 import ru.rustore.sdk.billingclient.model.purchase.response.ConfirmPurchaseResponse
 import ru.rustore.sdk.billingclient.model.purchase.response.PurchasesResponse
+import ru.rustore.sdk.core.config.SdkType
 import ru.rustore.sdk.core.feature.model.FeatureAvailabilityResult
 import ru.rustore.sdk.core.tasks.OnCompleteListener
 
@@ -17,7 +18,8 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Client
             application = app,
             consoleApplicationId = id,
             deeplinkScheme = prefix,
-            debugLogs = true
+            debugLogs = true,
+            internalConfig = mapOf("type" to SdkType.FLUTTER)
         )
 
         result?.success("")
