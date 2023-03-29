@@ -12,7 +12,7 @@ import ru.rustore.sdk.core.config.SdkType
 import ru.rustore.sdk.core.feature.model.FeatureAvailabilityResult
 import ru.rustore.sdk.core.tasks.OnCompleteListener
 
-class FlutterRustoreBillingClient(private val app: Application) : Rustore.Client {
+class FlutterRustoreBillingClient(private val app: Application) : Rustore.RustoreBilling {
     override fun initialize(id: String, prefix: String, result: Rustore.Result<String>?) {
         RuStoreBillingClient.init(
             application = app,

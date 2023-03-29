@@ -1,3 +1,7 @@
+## 0.0.5
+
+* Fixed error on using with review library.
+
 ## 0.0.4
 
 * Updated RuStore billing SDK to 0.1.8.

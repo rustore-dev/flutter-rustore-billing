@@ -110,7 +110,7 @@ class DigitalShopGeneralError {
 }
 
 @HostApi()
-abstract class Client {
+abstract class RustoreBilling {
   @async
   String initialize(String id, String prefix);
 
