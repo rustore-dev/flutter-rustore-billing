@@ -3,6 +3,7 @@ package ru.rustore.flutter_rustore_billing
 import android.app.Application
 import ru.rustore.flutter_rustore_billing.pigeons.Rustore
 import ru.rustore.sdk.billingclient.RuStoreBillingClient
+import ru.rustore.sdk.billingclient.RuStoreBillingClientFactory
 import ru.rustore.sdk.billingclient.model.product.ProductsResponse
 import ru.rustore.sdk.billingclient.model.product.SubscriptionPeriod
 import ru.rustore.sdk.billingclient.model.purchase.PaymentResult
@@ -13,9 +14,11 @@ import ru.rustore.sdk.core.feature.model.FeatureAvailabilityResult
 import ru.rustore.sdk.core.tasks.OnCompleteListener
 
 class FlutterRustoreBillingClient(private val app: Application) : Rustore.RustoreBilling {
+    lateinit var client: RuStoreBillingClient
+
     override fun initialize(id: String, prefix: String, result: Rustore.Result<String>?) {
-        RuStoreBillingClient.init(
-            application = app,
+        client = RuStoreBillingClientFactory.create(
+            context = app,
             consoleApplicationId = id,
             deeplinkScheme = prefix,
             debugLogs = true,
@@ -26,7 +29,7 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
     }
 
     override fun available(result: Rustore.Result<Boolean>?) {
-        RuStoreBillingClient.purchases.checkPurchasesAvailability()
+        client.purchases.checkPurchasesAvailability()
             .addOnCompleteListener(object : OnCompleteListener<FeatureAvailabilityResult> {
                 override fun onFailure(throwable: Throwable) {
                     result?.error(throwable)
@@ -49,7 +52,7 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
         ids: MutableList<String>,
         out: Rustore.Result<Rustore.ProductsResponse>?
     ) {
-        RuStoreBillingClient.products.getProducts(productIds = ids.toList())
+        client.products.getProducts(productIds = ids.toList())
             .addOnCompleteListener(object : OnCompleteListener<ProductsResponse> {
                 override fun onFailure(throwable: Throwable) {
                     out?.error(throwable)
@@ -115,7 +118,7 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
     }
 
     override fun purchase(id: String, out: Rustore.Result<Rustore.PaymentResult>?) {
-        RuStoreBillingClient.purchases.purchaseProduct(
+        client.purchases.purchaseProduct(
             productId = id
         ).addOnCompleteListener(object : OnCompleteListener<PaymentResult> {
             override fun onFailure(throwable: Throwable) {
@@ -175,7 +178,7 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
     }
 
     override fun purchases(out: Rustore.Result<Rustore.PurchasesResponse>?) {
-        RuStoreBillingClient.purchases.getPurchases()
+        client.purchases.getPurchases()
             .addOnCompleteListener(object : OnCompleteListener<PurchasesResponse> {
                 override fun onFailure(throwable: Throwable) {
                     out?.error(throwable)
@@ -228,7 +231,7 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
     }
 
     override fun confirm(id: String, out: Rustore.Result<Rustore.ConfirmPurchaseResponse>?) {
-        RuStoreBillingClient.purchases.confirmPurchase(purchaseId = id)
+        client.purchases.confirmPurchase(purchaseId = id)
             .addOnCompleteListener(object : OnCompleteListener<ConfirmPurchaseResponse> {
                 override fun onFailure(throwable: Throwable) {
                     out?.error(throwable)
