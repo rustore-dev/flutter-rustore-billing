@@ -6,12 +6,8 @@ import 'package:flutter_rustore_billing/flutter_rustore_billing.dart';
 import 'package:flutter_rustore_billing/pigeons/rustore.dart';
 
 final List<String?> ids = [
-  'RuStore_sdk_flutter_sub_201222_1',
-  'RuStore_sdk_flutter_sub_201222_2',
-  'RuStore_sdk_flutter_con_201222_1',
-  'RuStore_sdk_flutter_con_201222_2',
-  'RuStore_sdk_flutter_nonCon_201222_1',
-  'RuStore_sdk_flutter_nonCon_201222_2',
+  '1000_franklin_ver1',
+  '10_tomatoes_ver1'
 ];
 
 void main() {
@@ -40,7 +36,7 @@ class _MyAppState extends State<MyApp> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> billing() async {
     RustoreBillingClient.initialize(
-      "835521215",
+      "184047",
       "yourappscheme://iamback",
     ).then((value) {
       print("initialize success: $value");
@@ -139,7 +135,7 @@ class _MyAppState extends State<MyApp> {
               if (payment?.successPurchase != null) Text("successPurchase: ${payment?.successPurchase?.purchaseId ?? '0'}"),
               if (payment?.invalidPurchase != null) Text("invalidPurchase: ${payment?.invalidPurchase?.purchaseId ?? '0'}"),
               const Text('Confirm'),
-              if (confirmPurchaseResponse != null) Text("${confirmPurchaseResponse?.code}"),
+              if (confirmPurchaseResponse != null) Text("${confirmPurchaseResponse?.errorMessage}"),
               const Text('Products'),
               for (var product in products) ...[
                 Text("${product?.title ?? ""}: ${product?.productId ?? ""}"),

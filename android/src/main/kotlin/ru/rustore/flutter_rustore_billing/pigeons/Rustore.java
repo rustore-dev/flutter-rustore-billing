@@ -413,12 +413,9 @@ public class Rustore {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class ProductsResponse {
-    private @NonNull Long code;
-    public @NonNull Long getCode() { return code; }
-    public void setCode(@NonNull Long setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"code\" is null.");
-      }
+    private @Nullable Long code;
+    public @Nullable Long getCode() { return code; }
+    public void setCode(@Nullable Long setterArg) {
       this.code = setterArg;
     }
 
@@ -462,7 +459,7 @@ public class Rustore {
     private ProductsResponse() {}
     public static final class Builder {
       private @Nullable Long code;
-      public @NonNull Builder setCode(@NonNull Long setterArg) {
+      public @NonNull Builder setCode(@Nullable Long setterArg) {
         this.code = setterArg;
         return this;
       }
@@ -849,13 +846,13 @@ public class Rustore {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class ConfirmPurchaseResponse {
-    private @NonNull Long code;
-    public @NonNull Long getCode() { return code; }
-    public void setCode(@NonNull Long setterArg) {
+    private @NonNull Boolean success;
+    public @NonNull Boolean getSuccess() { return success; }
+    public void setSuccess(@NonNull Boolean setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"code\" is null.");
+        throw new IllegalStateException("Nonnull field \"success\" is null.");
       }
-      this.code = setterArg;
+      this.success = setterArg;
     }
 
     private @Nullable String errorMessage;
@@ -864,33 +861,12 @@ public class Rustore {
       this.errorMessage = setterArg;
     }
 
-    private @Nullable String errorDescription;
-    public @Nullable String getErrorDescription() { return errorDescription; }
-    public void setErrorDescription(@Nullable String setterArg) {
-      this.errorDescription = setterArg;
-    }
-
-    private @Nullable String traceId;
-    public @Nullable String getTraceId() { return traceId; }
-    public void setTraceId(@Nullable String setterArg) {
-      this.traceId = setterArg;
-    }
-
-    private @NonNull List<DigitalShopGeneralError> errors;
-    public @NonNull List<DigitalShopGeneralError> getErrors() { return errors; }
-    public void setErrors(@NonNull List<DigitalShopGeneralError> setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"errors\" is null.");
-      }
-      this.errors = setterArg;
-    }
-
     /**Constructor is private to enforce null safety; use Builder. */
     private ConfirmPurchaseResponse() {}
     public static final class Builder {
-      private @Nullable Long code;
-      public @NonNull Builder setCode(@NonNull Long setterArg) {
-        this.code = setterArg;
+      private @Nullable Boolean success;
+      public @NonNull Builder setSuccess(@NonNull Boolean setterArg) {
+        this.success = setterArg;
         return this;
       }
       private @Nullable String errorMessage;
@@ -898,52 +874,25 @@ public class Rustore {
         this.errorMessage = setterArg;
         return this;
       }
-      private @Nullable String errorDescription;
-      public @NonNull Builder setErrorDescription(@Nullable String setterArg) {
-        this.errorDescription = setterArg;
-        return this;
-      }
-      private @Nullable String traceId;
-      public @NonNull Builder setTraceId(@Nullable String setterArg) {
-        this.traceId = setterArg;
-        return this;
-      }
-      private @Nullable List<DigitalShopGeneralError> errors;
-      public @NonNull Builder setErrors(@NonNull List<DigitalShopGeneralError> setterArg) {
-        this.errors = setterArg;
-        return this;
-      }
       public @NonNull ConfirmPurchaseResponse build() {
         ConfirmPurchaseResponse pigeonReturn = new ConfirmPurchaseResponse();
-        pigeonReturn.setCode(code);
+        pigeonReturn.setSuccess(success);
         pigeonReturn.setErrorMessage(errorMessage);
-        pigeonReturn.setErrorDescription(errorDescription);
-        pigeonReturn.setTraceId(traceId);
-        pigeonReturn.setErrors(errors);
         return pigeonReturn;
       }
     }
     @NonNull ArrayList<Object> toList() {
-      ArrayList<Object> toListResult = new ArrayList<Object>(5);
-      toListResult.add(code);
+      ArrayList<Object> toListResult = new ArrayList<Object>(2);
+      toListResult.add(success);
       toListResult.add(errorMessage);
-      toListResult.add(errorDescription);
-      toListResult.add(traceId);
-      toListResult.add(errors);
       return toListResult;
     }
     static @NonNull ConfirmPurchaseResponse fromList(@NonNull ArrayList<Object> list) {
       ConfirmPurchaseResponse pigeonResult = new ConfirmPurchaseResponse();
-      Object code = list.get(0);
-      pigeonResult.setCode((code == null) ? null : ((code instanceof Integer) ? (Integer)code : (Long)code));
+      Object success = list.get(0);
+      pigeonResult.setSuccess((Boolean)success);
       Object errorMessage = list.get(1);
       pigeonResult.setErrorMessage((String)errorMessage);
-      Object errorDescription = list.get(2);
-      pigeonResult.setErrorDescription((String)errorDescription);
-      Object traceId = list.get(3);
-      pigeonResult.setTraceId((String)traceId);
-      Object errors = list.get(4);
-      pigeonResult.setErrors((List<DigitalShopGeneralError>)errors);
       return pigeonResult;
     }
   }
@@ -1117,12 +1066,9 @@ public class Rustore {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class SuccessPurchase {
-    private @NonNull String finishCode;
-    public @NonNull String getFinishCode() { return finishCode; }
-    public void setFinishCode(@NonNull String setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"finishCode\" is null.");
-      }
+    private @Nullable String finishCode;
+    public @Nullable String getFinishCode() { return finishCode; }
+    public void setFinishCode(@Nullable String setterArg) {
       this.finishCode = setterArg;
     }
 
@@ -1154,7 +1100,7 @@ public class Rustore {
     private SuccessPurchase() {}
     public static final class Builder {
       private @Nullable String finishCode;
-      public @NonNull Builder setFinishCode(@NonNull String setterArg) {
+      public @NonNull Builder setFinishCode(@Nullable String setterArg) {
         this.finishCode = setterArg;
         return this;
       }

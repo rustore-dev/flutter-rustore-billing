@@ -172,7 +172,7 @@ class Product {
 
 class ProductsResponse {
   ProductsResponse({
-    required this.code,
+    this.code,
     this.errorMessage,
     this.errorDescription,
     this.traceId,
@@ -180,7 +180,7 @@ class ProductsResponse {
     required this.errors,
   });
 
-  int code;
+  int? code;
 
   String? errorMessage;
 
@@ -206,7 +206,7 @@ class ProductsResponse {
   static ProductsResponse decode(Object result) {
     result as List<Object?>;
     return ProductsResponse(
-      code: result[0]! as int,
+      code: result[0] as int?,
       errorMessage: result[1] as String?,
       errorDescription: result[2] as String?,
       traceId: result[3] as String?,
@@ -340,41 +340,26 @@ class PurchasesResponse {
 
 class ConfirmPurchaseResponse {
   ConfirmPurchaseResponse({
-    required this.code,
+    required this.success,
     this.errorMessage,
-    this.errorDescription,
-    this.traceId,
-    required this.errors,
   });
 
-  int code;
+  bool success;
 
   String? errorMessage;
 
-  String? errorDescription;
-
-  String? traceId;
-
-  List<DigitalShopGeneralError?> errors;
-
   Object encode() {
     return <Object?>[
-      code,
+      success,
       errorMessage,
-      errorDescription,
-      traceId,
-      errors,
     ];
   }
 
   static ConfirmPurchaseResponse decode(Object result) {
     result as List<Object?>;
     return ConfirmPurchaseResponse(
-      code: result[0]! as int,
+      success: result[0]! as bool,
       errorMessage: result[1] as String?,
-      errorDescription: result[2] as String?,
-      traceId: result[3] as String?,
-      errors: (result[4] as List<Object?>?)!.cast<DigitalShopGeneralError?>(),
     );
   }
 }
@@ -472,13 +457,13 @@ class InvalidInvoice {
 
 class SuccessPurchase {
   SuccessPurchase({
-    required this.finishCode,
+    this.finishCode,
     this.orderId,
     required this.purchaseId,
     required this.productId,
   });
 
-  String finishCode;
+  String? finishCode;
 
   String? orderId;
 
@@ -498,7 +483,7 @@ class SuccessPurchase {
   static SuccessPurchase decode(Object result) {
     result as List<Object?>;
     return SuccessPurchase(
-      finishCode: result[0]! as String,
+      finishCode: result[0] as String?,
       orderId: result[1] as String?,
       purchaseId: result[2]! as String,
       productId: result[3]! as String,

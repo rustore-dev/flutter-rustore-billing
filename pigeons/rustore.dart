@@ -31,7 +31,7 @@ class Product {
 }
 
 class ProductsResponse {
-  late int code;
+  late int? code;
   late String? errorMessage;
   late String? errorDescription;
   late String? traceId;
@@ -64,11 +64,8 @@ class PurchasesResponse {
 }
 
 class ConfirmPurchaseResponse {
-  late int code;
+  late bool success;
   late String? errorMessage;
-  late String? errorDescription;
-  late String? traceId;
-  late List<DigitalShopGeneralError?> errors;
 }
 
 class PaymentResult {
@@ -88,7 +85,7 @@ class InvalidInvoice {
 }
 
 class SuccessPurchase {
-  late String finishCode;
+  late String? finishCode;
   late String? orderId;
   late String purchaseId;
   late String productId;
