@@ -136,6 +136,9 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
                         purchase.setOrderId(result.orderId)
                         purchase.setPurchaseId(result.purchaseId)
                         purchase.setProductId(result.productId)
+                        purchase.setInvoiceId(result.invoiceId)
+                        purchase.setSubscriptionToken(result.subscriptionToken)
+
 
                         response.setSuccessPurchase(purchase.build())
                     }
@@ -175,6 +178,8 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
                             .setQuantity(item.quantity?.toLong())
                             .setPurchaseState(item.purchaseState.toString())
                             .setDeveloperPayload(item.developerPayload)
+                            .setInvoiceId(item.invoiceId)
+                            .setSubscriptionToken(item.subscriptionToken)
 
                         purchases.add(purchase.build())
                     }

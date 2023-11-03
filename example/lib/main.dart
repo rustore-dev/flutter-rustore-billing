@@ -149,6 +149,7 @@ class _MyAppState extends State<MyApp> {
               const Text('Purchases'),
               for (var purchase in purchases) ...[
                 Text("${purchase?.description ?? ""}: ${purchase?.purchaseId ?? ""} - ${purchase?.purchaseState ?? ""}"),
+                Text("${purchase?.description ?? ""}: ${purchase?.invoiceId ?? ""} - ${purchase?.subscriptionToken ?? ""}"),
                 if ((purchase?.purchaseState ?? "") == PurchaseState.PAID)
                   OutlinedButton(
                     onPressed: () {
