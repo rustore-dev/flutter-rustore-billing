@@ -277,7 +277,7 @@ class Purchase {
       purchaseState,
       developerPayload,
       invoiceId,
-      subscriptionToken
+      subscriptionToken,
     ];
   }
 
@@ -297,7 +297,7 @@ class Purchase {
       purchaseState: result[10] as String?,
       developerPayload: result[11] as String?,
       invoiceId: result[12] as String?,
-      subscriptionToken: result[13] as String?
+      subscriptionToken: result[13] as String?,
     );
   }
 }
@@ -471,6 +471,8 @@ class SuccessPurchase {
     this.orderId,
     required this.purchaseId,
     required this.productId,
+    this.invoiceId,
+    this.subscriptionToken,
   });
 
   String? finishCode;
@@ -481,12 +483,18 @@ class SuccessPurchase {
 
   String productId;
 
+  String? invoiceId;
+
+  String? subscriptionToken;
+
   Object encode() {
     return <Object?>[
       finishCode,
       orderId,
       purchaseId,
       productId,
+      invoiceId,
+      subscriptionToken,
     ];
   }
 
@@ -497,6 +505,8 @@ class SuccessPurchase {
       orderId: result[1] as String?,
       purchaseId: result[2]! as String,
       productId: result[3]! as String,
+      invoiceId: result[4] as String?,
+      subscriptionToken: result[5] as String?,
     );
   }
 }

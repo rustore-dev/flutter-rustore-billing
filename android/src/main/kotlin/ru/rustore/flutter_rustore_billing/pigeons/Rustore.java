@@ -601,6 +601,18 @@ public class Rustore {
       this.developerPayload = setterArg;
     }
 
+    private @Nullable String invoiceId;
+    public @Nullable String getInvoiceId() { return invoiceId; }
+    public void setInvoiceId(@Nullable String setterArg) {
+      this.invoiceId = setterArg;
+    }
+
+    private @Nullable String subscriptionToken;
+    public @Nullable String getSubscriptionToken() { return subscriptionToken; }
+    public void setSubscriptionToken(@Nullable String setterArg) {
+      this.subscriptionToken = setterArg;
+    }
+
     public static final class Builder {
       private @Nullable String purchaseId;
       public @NonNull Builder setPurchaseId(@Nullable String setterArg) {
@@ -662,6 +674,16 @@ public class Rustore {
         this.developerPayload = setterArg;
         return this;
       }
+      private @Nullable String invoiceId;
+      public @NonNull Builder setInvoiceId(@Nullable String setterArg) {
+        this.invoiceId = setterArg;
+        return this;
+      }
+      private @Nullable String subscriptionToken;
+      public @NonNull Builder setSubscriptionToken(@Nullable String setterArg) {
+        this.subscriptionToken = setterArg;
+        return this;
+      }
       public @NonNull Purchase build() {
         Purchase pigeonReturn = new Purchase();
         pigeonReturn.setPurchaseId(purchaseId);
@@ -676,11 +698,13 @@ public class Rustore {
         pigeonReturn.setQuantity(quantity);
         pigeonReturn.setPurchaseState(purchaseState);
         pigeonReturn.setDeveloperPayload(developerPayload);
+        pigeonReturn.setInvoiceId(invoiceId);
+        pigeonReturn.setSubscriptionToken(subscriptionToken);
         return pigeonReturn;
       }
     }
     @NonNull ArrayList<Object> toList() {
-      ArrayList<Object> toListResult = new ArrayList<Object>(12);
+      ArrayList<Object> toListResult = new ArrayList<Object>(14);
       toListResult.add(purchaseId);
       toListResult.add(productId);
       toListResult.add(description);
@@ -693,6 +717,8 @@ public class Rustore {
       toListResult.add(quantity);
       toListResult.add(purchaseState);
       toListResult.add(developerPayload);
+      toListResult.add(invoiceId);
+      toListResult.add(subscriptionToken);
       return toListResult;
     }
     static @NonNull Purchase fromList(@NonNull ArrayList<Object> list) {
@@ -721,6 +747,10 @@ public class Rustore {
       pigeonResult.setPurchaseState((String)purchaseState);
       Object developerPayload = list.get(11);
       pigeonResult.setDeveloperPayload((String)developerPayload);
+      Object invoiceId = list.get(12);
+      pigeonResult.setInvoiceId((String)invoiceId);
+      Object subscriptionToken = list.get(13);
+      pigeonResult.setSubscriptionToken((String)subscriptionToken);
       return pigeonResult;
     }
   }
@@ -1096,6 +1126,18 @@ public class Rustore {
       this.productId = setterArg;
     }
 
+    private @Nullable String invoiceId;
+    public @Nullable String getInvoiceId() { return invoiceId; }
+    public void setInvoiceId(@Nullable String setterArg) {
+      this.invoiceId = setterArg;
+    }
+
+    private @Nullable String subscriptionToken;
+    public @Nullable String getSubscriptionToken() { return subscriptionToken; }
+    public void setSubscriptionToken(@Nullable String setterArg) {
+      this.subscriptionToken = setterArg;
+    }
+
     /**Constructor is private to enforce null safety; use Builder. */
     private SuccessPurchase() {}
     public static final class Builder {
@@ -1119,21 +1161,35 @@ public class Rustore {
         this.productId = setterArg;
         return this;
       }
+      private @Nullable String invoiceId;
+      public @NonNull Builder setInvoiceId(@Nullable String setterArg) {
+        this.invoiceId = setterArg;
+        return this;
+      }
+      private @Nullable String subscriptionToken;
+      public @NonNull Builder setSubscriptionToken(@Nullable String setterArg) {
+        this.subscriptionToken = setterArg;
+        return this;
+      }
       public @NonNull SuccessPurchase build() {
         SuccessPurchase pigeonReturn = new SuccessPurchase();
         pigeonReturn.setFinishCode(finishCode);
         pigeonReturn.setOrderId(orderId);
         pigeonReturn.setPurchaseId(purchaseId);
         pigeonReturn.setProductId(productId);
+        pigeonReturn.setInvoiceId(invoiceId);
+        pigeonReturn.setSubscriptionToken(subscriptionToken);
         return pigeonReturn;
       }
     }
     @NonNull ArrayList<Object> toList() {
-      ArrayList<Object> toListResult = new ArrayList<Object>(4);
+      ArrayList<Object> toListResult = new ArrayList<Object>(6);
       toListResult.add(finishCode);
       toListResult.add(orderId);
       toListResult.add(purchaseId);
       toListResult.add(productId);
+      toListResult.add(invoiceId);
+      toListResult.add(subscriptionToken);
       return toListResult;
     }
     static @NonNull SuccessPurchase fromList(@NonNull ArrayList<Object> list) {
@@ -1146,6 +1202,10 @@ public class Rustore {
       pigeonResult.setPurchaseId((String)purchaseId);
       Object productId = list.get(3);
       pigeonResult.setProductId((String)productId);
+      Object invoiceId = list.get(4);
+      pigeonResult.setInvoiceId((String)invoiceId);
+      Object subscriptionToken = list.get(5);
+      pigeonResult.setSubscriptionToken((String)subscriptionToken);
       return pigeonResult;
     }
   }
