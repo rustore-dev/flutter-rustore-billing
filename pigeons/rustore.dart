@@ -52,6 +52,8 @@ class Purchase {
   late int? quantity;
   late String? purchaseState;
   late String? developerPayload;
+  late String? invoiceId;
+  late String? subscriptionToken;
 }
 
 class PurchasesResponse {
@@ -89,6 +91,8 @@ class SuccessPurchase {
   late String? orderId;
   late String purchaseId;
   late String productId;
+  late String? invoiceId;
+  late String? subscriptionToken;
 }
 
 class InvalidPurchase {
