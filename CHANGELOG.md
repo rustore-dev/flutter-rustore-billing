@@ -1,3 +1,7 @@
+## 3.0.0
+
+* Updated RuStore billing SDK to 3.0.0.
+
 ## 2.0.0
 
 * Updated RuStore billing SDK to 2.2.0.
