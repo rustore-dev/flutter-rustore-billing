@@ -2,6 +2,8 @@
 
 Flutter RuStoreSDK для подключения платежей
 
+## [Документация RuStore](https://help.rustore.ru/rustore/for_developers/developer-documentation/sdk_payments/sdk_payments_flutter)
+
 ## Общее
 
 ### Пример реализации
