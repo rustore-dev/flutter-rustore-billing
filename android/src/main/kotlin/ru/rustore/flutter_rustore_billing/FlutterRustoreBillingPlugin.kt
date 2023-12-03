@@ -7,7 +7,7 @@ import androidx.annotation.NonNull
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import ru.rustore.flutter_rustore_billing.pigeons.Rustore
+import ru.rustore.flutter_rustore_billing.pigeons.RustoreBilling
 import ru.rustore.flutter_rustore_billing.utils.Log
 
 /** FlutterRustoreBillingPlugin */
@@ -23,7 +23,7 @@ class FlutterRustoreBillingPlugin: FlutterPlugin, ActivityAware {
     application = context as Application
 
     val client = FlutterRustoreBillingClient(application)
-    Rustore.RustoreBilling.setup(binding.binaryMessenger, client)
+    RustoreBilling.setUp(binding.binaryMessenger, client)
   }
 
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {

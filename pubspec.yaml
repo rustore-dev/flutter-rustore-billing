@@ -1,6 +1,6 @@
 name: flutter_rustore_billing
 description: Flutter RuStore Billing SDK.
-version: 3.0.0+1
+version: 3.1.0
 homepage: https://rustore.ru
 repository: https://gitflic.ru/project/rustore/flutter-rustore-push
 
@@ -17,7 +17,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  pigeon: ^4.2.3
+  pigeon: ^14.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

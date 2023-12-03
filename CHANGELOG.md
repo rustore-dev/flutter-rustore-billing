@@ -1,3 +1,9 @@
+## 3.1.0
+
+* Updated RuStore billing SDK to 3.1.0.
+* Added debug params
+* Updated Pigeon to ^14.0.0
+
 ## 3.0.0
 
 * Updated RuStore billing SDK to 3.0.0.
