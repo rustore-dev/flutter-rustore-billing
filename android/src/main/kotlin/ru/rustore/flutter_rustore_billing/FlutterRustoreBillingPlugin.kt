@@ -2,13 +2,13 @@ package ru.rustore.flutter_rustore_billing
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import ru.rustore.flutter_rustore_billing.pigeons.Rustore
-import ru.rustore.flutter_rustore_billing.utils.Log
 
 /** FlutterRustoreBillingPlugin */
 class FlutterRustoreBillingPlugin: FlutterPlugin, ActivityAware {
@@ -18,7 +18,7 @@ class FlutterRustoreBillingPlugin: FlutterPlugin, ActivityAware {
   override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
     context = binding.applicationContext
 
-    Log.d("Trying to resolve Application from Context: ${context.javaClass.name}")
+    Log.d("RuStoreBillingPlugin","Trying to resolve Application from Context: ${context.javaClass.name}")
 
     application = context as Application
 

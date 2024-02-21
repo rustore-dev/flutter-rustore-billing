@@ -113,7 +113,7 @@ class DigitalShopGeneralError {
 @HostApi()
 abstract class RustoreBilling {
   @async
-  String initialize(String id, String prefix);
+  String initialize(String id, String prefix, bool debugLogs);
 
   @async
   bool available();

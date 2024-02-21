@@ -1497,7 +1497,7 @@ public class Rustore {
 
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
   public interface RustoreBilling {
-    void initialize(@NonNull String id, @NonNull String prefix, Result<String> result);
+    void initialize(@NonNull String id, @NonNull String prefix, @NonNull Boolean debugLogs, Result<String> result);
     void available(Result<Boolean> result);
     void products(@NonNull List<String> ids, Result<ProductsResponse> result);
     void purchases(Result<PurchasesResponse> result);
@@ -1527,6 +1527,10 @@ public class Rustore {
               if (prefixArg == null) {
                 throw new NullPointerException("prefixArg unexpectedly null.");
               }
+              Boolean debugLogsArg = (Boolean)args.get(2);
+              if (debugLogsArg == null) {
+                throw new NullPointerException("debugLogsArg unexpectedly null.");
+              }
               Result<String> resultCallback = new Result<String>() {
                 public void success(String result) {
                   wrapped.add(0, result);
@@ -1538,7 +1542,7 @@ public class Rustore {
                 }
               };
 
-              api.initialize(idArg, prefixArg, resultCallback);
+              api.initialize(idArg, prefixArg, debugLogsArg, resultCallback);
             }
             catch (Error | RuntimeException exception) {
               ArrayList<Object> wrappedError = wrapError(exception);

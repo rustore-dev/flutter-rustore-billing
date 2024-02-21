@@ -696,12 +696,12 @@ class RustoreBilling {
 
   static const MessageCodec<Object?> codec = _RustoreBillingCodec();
 
-  Future<String> initialize(String arg_id, String arg_prefix) async {
+  Future<String> initialize(String arg_id, String arg_prefix, bool arg_debugLogs) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.RustoreBilling.initialize', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
-        await channel.send(<Object?>[arg_id, arg_prefix]) as List<Object?>?;
+        await channel.send(<Object?>[arg_id, arg_prefix, arg_debugLogs]) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',

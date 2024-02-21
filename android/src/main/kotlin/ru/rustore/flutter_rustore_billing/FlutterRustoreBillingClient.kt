@@ -2,10 +2,13 @@ package ru.rustore.flutter_rustore_billing
 
 import android.app.Application
 import ru.rustore.flutter_rustore_billing.pigeons.Rustore
+import ru.rustore.flutter_rustore_billing.utils.BillingClientThemeProviderImpl
+import ru.rustore.flutter_rustore_billing.utils.PaymentLogger
 import ru.rustore.sdk.billingclient.RuStoreBillingClient
 import ru.rustore.sdk.billingclient.RuStoreBillingClientFactory
 import ru.rustore.sdk.billingclient.model.product.SubscriptionPeriod
 import ru.rustore.sdk.billingclient.model.purchase.PaymentResult
+import ru.rustore.sdk.billingclient.provider.logger.ExternalPaymentLogger
 import ru.rustore.sdk.core.config.SdkType
 import ru.rustore.sdk.core.feature.model.FeatureAvailabilityResult
 
@@ -13,12 +16,14 @@ import ru.rustore.sdk.core.feature.model.FeatureAvailabilityResult
 class FlutterRustoreBillingClient(private val app: Application) : Rustore.RustoreBilling {
     private lateinit var client: RuStoreBillingClient
 
-    override fun initialize(id: String, prefix: String, result: Rustore.Result<String>?) {
+    override fun initialize(id: String, prefix: String, debugLogs: Boolean, result: Rustore.Result<String>?) {
         client = RuStoreBillingClientFactory.create(
             context = app,
             consoleApplicationId = id,
             deeplinkScheme = prefix,
-            debugLogs = true,
+            debugLogs = debugLogs,
+            externalPaymentLoggerFactory = { PaymentLogger("RuStoreFlutterBillingPlugin") },
+            themeProvider = BillingClientThemeProviderImpl(app.applicationContext),
             internalConfig = mapOf("type" to SdkType.FLUTTER)
         )
 

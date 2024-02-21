@@ -39,6 +39,7 @@ class _MyAppState extends State<MyApp> {
     RustoreBillingClient.initialize(
       "184047",
       "yourappscheme://iamback",
+      true
     ).then((value) {
       print("initialize success: $value");
       RustoreBillingClient.available().then((value) {
