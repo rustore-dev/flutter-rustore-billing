@@ -1,17 +1,14 @@
 package ru.rustore.flutter_rustore_billing
 
 import android.app.Application
-import android.util.Log
 import ru.rustore.flutter_rustore_billing.pigeons.Rustore
 import ru.rustore.sdk.billingclient.RuStoreBillingClient
 import ru.rustore.sdk.billingclient.RuStoreBillingClientFactory
-import ru.rustore.sdk.billingclient.model.product.Product
 import ru.rustore.sdk.billingclient.model.product.SubscriptionPeriod
 import ru.rustore.sdk.billingclient.model.purchase.PaymentResult
-import ru.rustore.sdk.billingclient.model.purchase.Purchase
 import ru.rustore.sdk.core.config.SdkType
 import ru.rustore.sdk.core.feature.model.FeatureAvailabilityResult
-import ru.rustore.sdk.core.tasks.OnCompleteListener
+
 
 class FlutterRustoreBillingClient(private val app: Application) : Rustore.RustoreBilling {
     private lateinit var client: RuStoreBillingClient
@@ -30,22 +27,19 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
 
     override fun available(result: Rustore.Result<Boolean>?) {
         client.purchases.checkPurchasesAvailability()
-            .addOnCompleteListener(object : OnCompleteListener<FeatureAvailabilityResult> {
-                override fun onFailure(throwable: Throwable) {
-                    result?.error(throwable)
-                }
-
-                override fun onSuccess(value: FeatureAvailabilityResult) {
-                    when (value) {
-                        is FeatureAvailabilityResult.Available -> {
-                            result?.success(true)
-                        }
-                        is FeatureAvailabilityResult.Unavailable -> {
-                            result?.success(false)
-                        }
+            .addOnFailureListener { throwable ->
+                result?.error(throwable)
+            }
+            .addOnSuccessListener { value ->
+                when (value) {
+                    is FeatureAvailabilityResult.Available -> {
+                        result?.success(true)
+                    }
+                    is FeatureAvailabilityResult.Unavailable -> {
+                        result?.success(false)
                     }
                 }
-            })
+            }
     }
 
     override fun products(
@@ -53,72 +47,68 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
         out: Rustore.Result<Rustore.ProductsResponse>?
     ) {
         client.products.getProducts(productIds = ids.toList())
-            .addOnCompleteListener(object : OnCompleteListener<List<Product>> {
-                override fun onFailure(throwable: Throwable) {
-                    out?.error(throwable)
-                }
+            .addOnFailureListener { throwable ->
+                out?.error(throwable)
+            }
+            .addOnSuccessListener { result ->
+                val response = Rustore.ProductsResponse.Builder()
 
-                override fun onSuccess(result: List<Product>) {
-                    val response = Rustore.ProductsResponse.Builder()
+                val products = mutableListOf<Rustore.Product>()
 
-                    val products = mutableListOf<Rustore.Product>()
-
-                    for (item in result) {
-                        val product = Rustore.Product.Builder()
-                            .setProductId(item.productId)
-                            .setProductType(item.productType?.toString())
-                            .setProductStatus(item.productStatus.toString())
-                            .setPriceLabel(item.priceLabel)
-                            .setPrice(item.price?.toLong())
-                            .setCurrency(item.currency)
-                            .setLanguage(item.language)
-                            .setTitle(item.title)
-                            .setDescription(item.description)
-                            .setImageUrl(item.imageUrl.toString())
-                            .setPromoImageUrl(item.promoImageUrl.toString())
+                for (item in result) {
+                    val product = Rustore.Product.Builder()
+                        .setProductId(item.productId)
+                        .setProductType(item.productType?.toString())
+                        .setProductStatus(item.productStatus.toString())
+                        .setPriceLabel(item.priceLabel)
+                        .setPrice(item.price?.toLong())
+                        .setCurrency(item.currency)
+                        .setLanguage(item.language)
+                        .setTitle(item.title)
+                        .setDescription(item.description)
+                        .setImageUrl(item.imageUrl.toString())
+                        .setPromoImageUrl(item.promoImageUrl.toString())
 
 
-                        if (item.subscription != null) {
-                            val subscription = Rustore.Subscription.Builder()
+                    if (item.subscription != null) {
+                        val subscription = Rustore.Subscription.Builder()
 
-                            subscription.setSubscriptionPeriod(period(item.subscription?.subscriptionPeriod))
-                            subscription.setFreeTrialPeriod(period(item.subscription?.freeTrialPeriod))
-                            subscription.setGracePeriod(period(item.subscription?.gracePeriod))
-                            subscription.setIntroductoryPricePeriod(period(item.subscription?.introductoryPricePeriod))
-                            subscription.setIntroductoryPrice(item.subscription?.introductoryPrice)
-                            subscription.setIntroductoryPriceAmount(item.subscription?.introductoryPriceAmount)
+                        subscription.setSubscriptionPeriod(period(item.subscription?.subscriptionPeriod))
+                        subscription.setFreeTrialPeriod(period(item.subscription?.freeTrialPeriod))
+                        subscription.setGracePeriod(period(item.subscription?.gracePeriod))
+                        subscription.setIntroductoryPricePeriod(period(item.subscription?.introductoryPricePeriod))
+                        subscription.setIntroductoryPrice(item.subscription?.introductoryPrice)
+                        subscription.setIntroductoryPriceAmount(item.subscription?.introductoryPriceAmount)
 
-                            product.setSubscription(subscription.build())
-                        }
-
-                        products.add(product.build())
+                        product.setSubscription(subscription.build())
                     }
 
-                    val errors = mutableListOf<Rustore.DigitalShopGeneralError>()
-
-                    response.setProducts(products)
-                    response.setErrors(errors)
-
-                    out?.success(response.build())
+                    products.add(product.build())
                 }
-            })
+
+                val errors = mutableListOf<Rustore.DigitalShopGeneralError>()
+
+                response.setProducts(products)
+                response.setErrors(errors)
+
+                out?.success(response.build())
+            }
     }
 
     override fun purchase(id: String, out: Rustore.Result<Rustore.PaymentResult>?) {
         client.purchases.purchaseProduct(
             productId = id
-        ).addOnCompleteListener(object : OnCompleteListener<PaymentResult> {
-            override fun onFailure(throwable: Throwable) {
-                out?.error(throwable)
+        )
+            .addOnFailureListener { throwable ->
+            out?.error(throwable)
             }
-
-            override fun onSuccess(result: PaymentResult) {
+            .addOnSuccessListener { result ->
                 val response = Rustore.PaymentResult.Builder()
 
                 when (result) {
                     is PaymentResult.Cancelled -> {
                         out?.error(Throwable(message = result.toString()))
-                        return
+                        return@addOnSuccessListener
                     }
                     is PaymentResult.Failure -> {
                         val purchase = Rustore.InvalidPurchase.Builder()
@@ -148,50 +138,77 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
 
                 out?.success(response.build())
             }
-        })
     }
 
     override fun purchases(out: Rustore.Result<Rustore.PurchasesResponse>?) {
         client.purchases.getPurchases()
-            .addOnCompleteListener(object : OnCompleteListener<List<Purchase>> {
-                override fun onFailure(throwable: Throwable) {
-                    out?.error(throwable)
+            .addOnFailureListener { throwable ->
+                out?.error(throwable)
+            }
+            .addOnSuccessListener { result ->
+                val response = Rustore.PurchasesResponse.Builder()
+                response.setCode(200)
+
+                val purchases = mutableListOf<Rustore.Purchase>()
+
+                for (item in result) {
+                    val purchase = Rustore.Purchase.Builder()
+                        .setPurchaseId(item.purchaseId)
+                        .setProductId(item.productId)
+                        .setDescription(item.description)
+                        .setLanguage(item.language)
+                        .setPurchaseTime(item.purchaseTime.toString())
+                        .setOrderId(item.orderId)
+                        .setAmountLabel(item.amountLabel)
+                        .setAmount(item.amount?.toLong())
+                        .setCurrency(item.currency)
+                        .setQuantity(item.quantity?.toLong())
+                        .setPurchaseState(item.purchaseState.toString())
+                        .setDeveloperPayload(item.developerPayload)
+                        .setInvoiceId(item.invoiceId)
+                        .setSubscriptionToken(item.subscriptionToken)
+
+                    purchases.add(purchase.build())
                 }
 
-                override fun onSuccess(result: List<Purchase>) {
-                    val response = Rustore.PurchasesResponse.Builder()
-                    response.setCode(200)
+                val errors = mutableListOf<Rustore.DigitalShopGeneralError>()
 
-                    val purchases = mutableListOf<Rustore.Purchase>()
+                response.setErrors(errors)
+                response.setPurchases(purchases)
 
-                    for (item in result) {
-                        val purchase = Rustore.Purchase.Builder()
-                            .setPurchaseId(item.purchaseId)
-                            .setProductId(item.productId)
-                            .setDescription(item.description)
-                            .setLanguage(item.language)
-                            .setPurchaseTime(item.purchaseTime.toString())
-                            .setOrderId(item.orderId)
-                            .setAmountLabel(item.amountLabel)
-                            .setAmount(item.amount?.toLong())
-                            .setCurrency(item.currency)
-                            .setQuantity(item.quantity?.toLong())
-                            .setPurchaseState(item.purchaseState.toString())
-                            .setDeveloperPayload(item.developerPayload)
-                            .setInvoiceId(item.invoiceId)
-                            .setSubscriptionToken(item.subscriptionToken)
+                out?.success(response.build())
+            }
+    }
 
-                        purchases.add(purchase.build())
-                    }
+    override fun purchaseInfo(
+        id: String,
+        out: Rustore.Result<Rustore.Purchase>?
+    ) {
+        client.purchases.getPurchaseInfo(id)
+            .addOnSuccessListener{ result ->
 
-                    val errors = mutableListOf<Rustore.DigitalShopGeneralError>()
+                val purchase = Rustore.Purchase.Builder()
+                    .setPurchaseId(result.purchaseId)
+                    .setProductId(result.productId)
+                    .setDescription(result.description)
+                    .setLanguage(result.language)
+                    .setPurchaseTime(result.purchaseTime.toString())
+                    .setOrderId(result.orderId)
+                    .setAmountLabel(result.amountLabel)
+                    .setAmount(result.amount?.toLong())
+                    .setCurrency(result.currency)
+                    .setQuantity(result.quantity?.toLong())
+                    .setPurchaseState(result.purchaseState.toString())
+                    .setDeveloperPayload(result.developerPayload)
+                    .setInvoiceId(result.invoiceId)
+                    .setSubscriptionToken(result.subscriptionToken)
 
-                    response.setErrors(errors)
-                    response.setPurchases(purchases)
+                out?.success(purchase.build())
+            }
 
-                    out?.success(response.build())
-                }
-            })
+            .addOnFailureListener {
+                out?.error(it)
+            }
     }
 
     override fun confirm(id: String, out: Rustore.Result<Rustore.ConfirmPurchaseResponse>?) {

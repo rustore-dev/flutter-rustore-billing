@@ -26,6 +26,7 @@ class _MyAppState extends State<MyApp> {
   List<Purchase?> purchases = [];
   PaymentResult? payment;
   ConfirmPurchaseResponse? confirmPurchaseResponse;
+  Purchase? purchaseInformation;
 
   @override
   void initState() {
@@ -66,6 +67,16 @@ class _MyAppState extends State<MyApp> {
       });
     }, onError: (err) {
       print("purchase err: $err");
+    });
+  }
+
+  void purchaseInfo(String id) {
+    RustoreBillingClient.purchaseInfo(id).then((value) {
+      setState(() {
+        purchaseInformation = value;
+      });
+    }, onError: (err) {
+      print("Error getPurchaseInfo: $err");
     });
   }
 
@@ -136,6 +147,8 @@ class _MyAppState extends State<MyApp> {
               if (payment?.invalidPurchase != null) Text("invalidPurchase: ${payment?.invalidPurchase?.purchaseId ?? '0'}"),
               const Text('Confirm'),
               if (confirmPurchaseResponse != null) Text("${confirmPurchaseResponse?.errorMessage}"),
+              const Text('Purchase info(Purchase state)'),
+              if (purchaseInformation != null) Text("${purchaseInformation?.purchaseState}"),
               const Text('Products'),
               for (var product in products) ...[
                 Text("${product?.title ?? ""}: ${product?.productId ?? ""}"),
@@ -151,11 +164,22 @@ class _MyAppState extends State<MyApp> {
                 Text("${purchase?.description ?? ""}: ${purchase?.purchaseId ?? ""} - ${purchase?.purchaseState ?? ""}"),
                 Text("${purchase?.description ?? ""}: ${purchase?.invoiceId ?? ""} - ${purchase?.subscriptionToken ?? ""}"),
                 if ((purchase?.purchaseState ?? "") == PurchaseState.PAID)
-                  OutlinedButton(
-                    onPressed: () {
-                      confirm(purchase?.purchaseId ?? "");
-                    },
-                    child: const Text('Confirm'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      OutlinedButton(
+                        onPressed: () {
+                          confirm(purchase?.purchaseId ?? "");
+                        },
+                        child: const Text('Confirm'),
+                      ),
+                      OutlinedButton(
+                          onPressed: () {
+                            purchaseInfo(purchase?.purchaseId ?? "");
+                          },
+                          child: const Text('Purchase Info')
+                      ),
+                    ],
                   ),
               ],
             ],

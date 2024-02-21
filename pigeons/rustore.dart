@@ -128,5 +128,8 @@ abstract class RustoreBilling {
   PaymentResult purchase(String id);
 
   @async
+  Purchase purchaseInfo(String id);
+
+  @async
   ConfirmPurchaseResponse confirm(String id);
 }

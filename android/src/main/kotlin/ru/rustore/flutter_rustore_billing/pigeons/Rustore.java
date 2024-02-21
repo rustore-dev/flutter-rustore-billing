@@ -1502,6 +1502,7 @@ public class Rustore {
     void products(@NonNull List<String> ids, Result<ProductsResponse> result);
     void purchases(Result<PurchasesResponse> result);
     void purchase(@NonNull String id, Result<PaymentResult> result);
+    void purchaseInfo(@NonNull String id, Result<Purchase> result);
     void confirm(@NonNull String id, Result<ConfirmPurchaseResponse> result);
 
     /** The codec used by RustoreBilling. */
@@ -1666,6 +1667,41 @@ public class Rustore {
               };
 
               api.purchase(idArg, resultCallback);
+            }
+            catch (Error | RuntimeException exception) {
+              ArrayList<Object> wrappedError = wrapError(exception);
+              reply.reply(wrappedError);
+            }
+          });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.RustoreBilling.purchaseInfo", getCodec());
+        if (api != null) {
+          channel.setMessageHandler((message, reply) -> {
+            ArrayList wrapped = new ArrayList<>();
+            try {
+              ArrayList<Object> args = (ArrayList<Object>)message;
+              assert args != null;
+              String idArg = (String)args.get(0);
+              if (idArg == null) {
+                throw new NullPointerException("idArg unexpectedly null.");
+              }
+              Result<Purchase> resultCallback = new Result<Purchase>() {
+                public void success(Purchase result) {
+                  wrapped.add(0, result);
+                  reply.reply(wrapped);
+                }
+                public void error(Throwable error) {
+                  ArrayList<Object> wrappedError = wrapError(error);
+                  reply.reply(wrappedError);
+                }
+              };
+
+              api.purchaseInfo(idArg, resultCallback);
             }
             catch (Error | RuntimeException exception) {
               ArrayList<Object> wrappedError = wrapError(exception);

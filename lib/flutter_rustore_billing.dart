@@ -36,4 +36,9 @@ class RustoreBillingClient {
 
     return result;
   }
+
+  static Future<Purchase> purchaseInfo(String id) async {
+    final result = _api.purchaseInfo(id);
+    return result;
+  }
 }
