@@ -9,14 +9,21 @@ import ru.rustore.sdk.billingclient.RuStoreBillingClientFactory
 import ru.rustore.sdk.billingclient.model.product.SubscriptionPeriod
 import ru.rustore.sdk.billingclient.model.purchase.PaymentResult
 import ru.rustore.sdk.billingclient.provider.logger.ExternalPaymentLogger
+import ru.rustore.sdk.billingclient.utils.resolveForBilling
 import ru.rustore.sdk.core.config.SdkType
+import ru.rustore.sdk.core.exception.RuStoreException
 import ru.rustore.sdk.core.feature.model.FeatureAvailabilityResult
 
 
 class FlutterRustoreBillingClient(private val app: Application) : Rustore.RustoreBilling {
     private lateinit var client: RuStoreBillingClient
 
-    override fun initialize(id: String, prefix: String, debugLogs: Boolean, result: Rustore.Result<String>?) {
+    override fun initialize(
+        id: String,
+        prefix: String,
+        debugLogs: Boolean,
+        result: Rustore.Result<String>?
+    ) {
         client = RuStoreBillingClientFactory.create(
             context = app,
             consoleApplicationId = id,
@@ -40,6 +47,7 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
                     is FeatureAvailabilityResult.Available -> {
                         result?.success(true)
                     }
+
                     is FeatureAvailabilityResult.Unavailable -> {
                         result?.success(false)
                     }
@@ -100,12 +108,18 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
             }
     }
 
-    override fun purchase(id: String, out: Rustore.Result<Rustore.PaymentResult>?) {
+    override fun purchase(
+        id: String,
+        developerPayload: String?,
+        out: Rustore.Result<Rustore.PaymentResult>?
+    ) {
         client.purchases.purchaseProduct(
-            productId = id
+            productId = id,
+            developerPayload = developerPayload
         )
             .addOnFailureListener { throwable ->
-            out?.error(throwable)
+                out?.error(throwable)
+                RuStoreException(throwable.message.toString()).resolveForBilling(this.app.applicationContext)
             }
             .addOnSuccessListener { result ->
                 val response = Rustore.PaymentResult.Builder()
@@ -115,6 +129,7 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
                         out?.error(Throwable(message = result.toString()))
                         return@addOnSuccessListener
                     }
+
                     is PaymentResult.Failure -> {
                         val purchase = Rustore.InvalidPurchase.Builder()
                         purchase.setPurchaseId(result.purchaseId)
@@ -126,6 +141,7 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
 
                         response.setInvalidPurchase(purchase.build())
                     }
+
                     is PaymentResult.Success -> {
                         val purchase = Rustore.SuccessPurchase.Builder()
                         purchase.setOrderId(result.orderId)
@@ -134,12 +150,12 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
                         purchase.setInvoiceId(result.invoiceId)
                         purchase.setSubscriptionToken(result.subscriptionToken)
 
-
                         response.setSuccessPurchase(purchase.build())
                     }
 
                     is PaymentResult.InvalidPaymentState -> TODO()
                 }
+                RuStoreException("HOOHO").resolveForBilling(this.app.applicationContext)
 
                 out?.success(response.build())
             }
@@ -190,7 +206,7 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
         out: Rustore.Result<Rustore.Purchase>?
     ) {
         client.purchases.getPurchaseInfo(id)
-            .addOnSuccessListener{ result ->
+            .addOnSuccessListener { result ->
 
                 val purchase = Rustore.Purchase.Builder()
                     .setPurchaseId(result.purchaseId)

@@ -1,3 +1,4 @@
+import 'package:flutter_rustore_billing/flutter_rustore_billing.dart';
 import 'package:pigeon/pigeon.dart';
 
 class SubscriptionPeriod {
@@ -125,7 +126,7 @@ abstract class RustoreBilling {
   PurchasesResponse purchases();
 
   @async
-  PaymentResult purchase(String id);
+  PaymentResult purchase(String id, String? developerPayload);
 
   @async
   Purchase purchaseInfo(String id);

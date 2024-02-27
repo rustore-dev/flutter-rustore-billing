@@ -8,40 +8,53 @@ import androidx.annotation.NonNull
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
+import io.flutter.plugin.common.PluginRegistry.NewIntentListener
 import ru.rustore.flutter_rustore_billing.pigeons.Rustore
 
 /** FlutterRustoreBillingPlugin */
-class FlutterRustoreBillingPlugin: FlutterPlugin, ActivityAware {
-  private lateinit var context: Context
-  private lateinit var application: Application
+class FlutterRustoreBillingPlugin : FlutterPlugin, ActivityAware {
+    private lateinit var context: Context
+    private lateinit var application: Application
 
-  override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-    context = binding.applicationContext
+    override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+        context = binding.applicationContext
 
-    Log.d("RuStoreBillingPlugin","Trying to resolve Application from Context: ${context.javaClass.name}")
+        Log.d(
+            "RuStoreBillingPlugin",
+            "Trying to resolve Application from Context: ${context.javaClass.name}"
+        )
 
-    application = context as Application
+        application = context as Application
 
-    val client = FlutterRustoreBillingClient(application)
-    Rustore.RustoreBilling.setup(binding.binaryMessenger, client)
-  }
+        val client = FlutterRustoreBillingClient(application)
+        Rustore.RustoreBilling.setup(binding.binaryMessenger, client)
 
-  override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+//    activity = binding.applicationContext.startActivity()
 
-  }
 
-  override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+    }
 
-  }
+    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
 
-  override fun onDetachedFromActivityForConfigChanges() {
+    }
 
-  }
+    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+        val client = FlutterRustoreBillingClient(application)
+        var activity = binding.activity
+        // TODO()
+        binding.addOnNewIntentListener {
+            it.let { intent -> client.onNewIntent(intent) }
+        }
+    }
 
-  override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+    override fun onDetachedFromActivityForConfigChanges() {
 
-  }
+    }
 
-  override fun onDetachedFromActivity() {
-  }
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+
+    }
+
+    override fun onDetachedFromActivity() {
+    }
 }

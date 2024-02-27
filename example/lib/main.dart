@@ -61,8 +61,8 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void purchase(String id) {
-    RustoreBillingClient.purchase(id).then((value) {
+  void purchase(String id, String? developerPayload) {
+    RustoreBillingClient.purchase(id, developerPayload).then((value) {
       setState(() {
         payment = value;
       });
@@ -155,7 +155,7 @@ class _MyAppState extends State<MyApp> {
                 Text("${product?.title ?? ""}: ${product?.productId ?? ""}"),
                 OutlinedButton(
                   onPressed: () {
-                    purchase(product?.productId ?? "");
+                    purchase(product?.productId ?? "", "developer");
                   },
                   child: const Text('Buy'),
                 ),

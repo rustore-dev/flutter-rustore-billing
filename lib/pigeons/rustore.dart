@@ -804,12 +804,12 @@ class RustoreBilling {
     }
   }
 
-  Future<PaymentResult> purchase(String arg_id) async {
+  Future<PaymentResult> purchase(String arg_id, String? arg_developerPayload) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.RustoreBilling.purchase', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
-        await channel.send(<Object?>[arg_id]) as List<Object?>?;
+        await channel.send(<Object?>[arg_id, arg_developerPayload]) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',

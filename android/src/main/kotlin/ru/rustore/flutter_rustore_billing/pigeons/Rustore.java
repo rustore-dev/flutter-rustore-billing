@@ -1501,7 +1501,7 @@ public class Rustore {
     void available(Result<Boolean> result);
     void products(@NonNull List<String> ids, Result<ProductsResponse> result);
     void purchases(Result<PurchasesResponse> result);
-    void purchase(@NonNull String id, Result<PaymentResult> result);
+    void purchase(@NonNull String id, @Nullable String developerPayload, Result<PaymentResult> result);
     void purchaseInfo(@NonNull String id, Result<Purchase> result);
     void confirm(@NonNull String id, Result<ConfirmPurchaseResponse> result);
 
@@ -1659,6 +1659,7 @@ public class Rustore {
               if (idArg == null) {
                 throw new NullPointerException("idArg unexpectedly null.");
               }
+              String developerPayloadArg = (String)args.get(1);
               Result<PaymentResult> resultCallback = new Result<PaymentResult>() {
                 public void success(PaymentResult result) {
                   wrapped.add(0, result);
@@ -1670,7 +1671,7 @@ public class Rustore {
                 }
               };
 
-              api.purchase(idArg, resultCallback);
+              api.purchase(idArg, developerPayloadArg, resultCallback);
             }
             catch (Error | RuntimeException exception) {
               ArrayList<Object> wrappedError = wrapError(exception);
