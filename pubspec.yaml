@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   go_router: ^13.2.0
   plugin_platform_interface: ^2.0.2
+  receive_intent: ^0.2.5
 
 dev_dependencies:
   flutter_test:

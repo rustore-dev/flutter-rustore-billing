@@ -1,6 +1,7 @@
 package ru.rustore.flutter_rustore_billing
 
 import android.app.Application
+import android.content.Intent
 import ru.rustore.flutter_rustore_billing.pigeons.Rustore
 import ru.rustore.flutter_rustore_billing.utils.BillingClientThemeProviderImpl
 import ru.rustore.flutter_rustore_billing.utils.PaymentLogger
@@ -243,6 +244,10 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
             .addOnFailureListener {
                 out?.error(it)
             }
+    }
+
+    fun onNewIntent(intent: Intent) {
+        client.onNewIntent(intent)
     }
 
     fun period(sub: SubscriptionPeriod?): Rustore.SubscriptionPeriod {

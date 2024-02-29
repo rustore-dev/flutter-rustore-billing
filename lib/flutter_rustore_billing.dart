@@ -1,9 +1,12 @@
+import 'dart:async';
+import 'package:receive_intent/receive_intent.dart';
 import 'package:flutter_rustore_billing/pigeons/rustore.dart';
 
 class RustoreBillingClient {
-  static RustoreBilling _api = RustoreBilling();
+  static final RustoreBilling _api = RustoreBilling();
 
-  static Future<String> initialize(String id, String prefix, bool debugLogs) async {
+  static Future<String> initialize(
+      String id, String prefix, bool debugLogs) async {
     return _api.initialize(id, prefix, debugLogs);
   }
 
@@ -19,7 +22,8 @@ class RustoreBillingClient {
     return result;
   }
 
-  static Future<PaymentResult> purchase(String id, String? developerPayload) async {
+  static Future<PaymentResult> purchase(
+      String id, String? developerPayload) async {
     final result = _api.purchase(id, developerPayload);
 
     return result;
@@ -40,5 +44,15 @@ class RustoreBillingClient {
   static Future<Purchase> purchaseInfo(String id) async {
     final result = _api.purchaseInfo(id);
     return result;
+  }
+
+  StreamSubscription? sub;
+
+  Future<void> onNewIntent() async {
+    // final receivedIntent = await ReceiveIntent.getInitialIntent();
+
+    sub = ReceiveIntent.receivedIntentStream.listen((Intent? intent) {
+      _api.onNewIntent(intent.action);
+    }, onError: (err) {});
   }
 }
