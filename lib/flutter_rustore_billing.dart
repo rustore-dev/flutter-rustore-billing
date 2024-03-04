@@ -3,8 +3,9 @@ import 'package:flutter_rustore_billing/pigeons/rustore.dart';
 class RustoreBillingClient {
   static RustoreBilling _api = RustoreBilling();
 
-  static Future<String> initialize(String id, String prefix, {bool debug = false}) async {
-    return _api.initialize(id, prefix, debug);
+  static Future<String> initialize(String id, String prefix, bool debugLogs,
+      bool allowNativeErrorHadling) async {
+    return _api.initialize(id, prefix, debugLogs, allowNativeErrorHadling);
   }
 
   static Future<bool> available() async {
@@ -19,8 +20,11 @@ class RustoreBillingClient {
     return result;
   }
 
-  static Future<PaymentResult> purchase(String id) async {
-    return _api.purchase(id);
+  static Future<PaymentResult> purchase(
+      String id, String? developerPayload) async {
+    final result = _api.purchase(id, developerPayload);
+
+    return result;
   }
 
   static Future<PurchasesResponse> purchases() async {
@@ -32,6 +36,11 @@ class RustoreBillingClient {
   static Future<ConfirmPurchaseResponse> confirm(String id) async {
     final result = _api.confirm(id);
 
+    return result;
+  }
+
+  static Future<Purchase> purchaseInfo(String id) async {
+    final result = _api.purchaseInfo(id);
     return result;
   }
 }

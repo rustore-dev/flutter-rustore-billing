@@ -6,6 +6,7 @@ class PurchaseState {
   static const CANCELLED = "CANCELLED";
   static const CONSUMED = "CONSUMED";
   static const CLOSED = "CLOSED";
+  static const PAUSED = "PAUSED";
 }
 
 class PaymentFinishCode {

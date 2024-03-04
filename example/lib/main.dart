@@ -5,10 +5,7 @@ import 'package:flutter_rustore_billing/const.dart';
 import 'package:flutter_rustore_billing/flutter_rustore_billing.dart';
 import 'package:flutter_rustore_billing/pigeons/rustore.dart';
 
-final List<String?> ids = [
-  '1000_franklin_ver1',
-  '10_tomatoes_ver1'
-];
+final List<String?> ids = ['1000_franklin_ver1', '10_tomatoes_ver1'];
 
 void main() {
   runApp(const MyApp());
@@ -26,6 +23,7 @@ class _MyAppState extends State<MyApp> {
   List<Purchase?> purchases = [];
   PaymentResult? payment;
   ConfirmPurchaseResponse? confirmPurchaseResponse;
+  Purchase? purchaseInformation;
 
   @override
   void initState() {
@@ -36,9 +34,8 @@ class _MyAppState extends State<MyApp> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> billing() async {
     RustoreBillingClient.initialize(
-      "184047",
-      "yourappscheme://iamback",
-    ).then((value) {
+            "184047", "yourappscheme://iamback", true, true)
+        .then((value) {
       print("initialize success: $value");
       RustoreBillingClient.available().then((value) {
         print("available $value");
@@ -59,13 +56,23 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void purchase(String id) {
-    RustoreBillingClient.purchase(id).then((value) {
+  void purchase(String id, String? developerPayload) {
+    RustoreBillingClient.purchase(id, developerPayload).then((value) {
       setState(() {
         payment = value;
       });
     }, onError: (err) {
       print("purchase err: $err");
+    });
+  }
+
+  void purchaseInfo(String id) {
+    RustoreBillingClient.purchaseInfo(id).then((value) {
+      setState(() {
+        purchaseInformation = value;
+      });
+    }, onError: (err) {
+      print("Error getPurchaseInfo: $err");
     });
   }
 
@@ -130,32 +137,56 @@ class _MyAppState extends State<MyApp> {
                 ],
               ),
               const Text('Payment'),
-              if (payment?.successInvoice != null) Text("successInvoice: ${payment?.successInvoice?.invoiceId ?? '0'}"),
-              if (payment?.invalidInvoice != null) Text("invalidInvoice: ${payment?.invalidInvoice?.invoiceId ?? '0'}"),
-              if (payment?.successPurchase != null) Text("successPurchase: ${payment?.successPurchase?.purchaseId ?? '0'}"),
-              if (payment?.invalidPurchase != null) Text("invalidPurchase: ${payment?.invalidPurchase?.purchaseId ?? '0'}"),
+              if (payment?.successInvoice != null)
+                Text(
+                    "successInvoice: ${payment?.successInvoice?.invoiceId ?? '0'}"),
+              if (payment?.invalidInvoice != null)
+                Text(
+                    "invalidInvoice: ${payment?.invalidInvoice?.invoiceId ?? '0'}"),
+              if (payment?.successPurchase != null)
+                Text(
+                    "successPurchase: ${payment?.successPurchase?.purchaseId ?? '0'}"),
+              if (payment?.invalidPurchase != null)
+                Text(
+                    "invalidPurchase: ${payment?.invalidPurchase?.purchaseId ?? '0'}"),
               const Text('Confirm'),
-              if (confirmPurchaseResponse != null) Text("${confirmPurchaseResponse?.errorMessage}"),
+              if (confirmPurchaseResponse != null)
+                Text("${confirmPurchaseResponse?.errorMessage}"),
+              const Text('Purchase info(Purchase state)'),
+              if (purchaseInformation != null)
+                Text("${purchaseInformation?.purchaseState}"),
               const Text('Products'),
               for (var product in products) ...[
                 Text("${product?.title ?? ""}: ${product?.productId ?? ""}"),
                 OutlinedButton(
                   onPressed: () {
-                    purchase(product?.productId ?? "");
+                    purchase(product?.productId ?? "", "developer");
                   },
                   child: const Text('Buy'),
                 ),
               ],
               const Text('Purchases'),
               for (var purchase in purchases) ...[
-                Text("${purchase?.description ?? ""}: ${purchase?.purchaseId ?? ""} - ${purchase?.purchaseState ?? ""}"),
-                Text("${purchase?.description ?? ""}: ${purchase?.invoiceId ?? ""} - ${purchase?.subscriptionToken ?? ""}"),
+                Text(
+                    "${purchase?.description ?? ""}: ${purchase?.purchaseId ?? ""} - ${purchase?.purchaseState ?? ""}"),
+                Text(
+                    "${purchase?.description ?? ""}: ${purchase?.invoiceId ?? ""} - ${purchase?.subscriptionToken ?? ""}"),
                 if ((purchase?.purchaseState ?? "") == PurchaseState.PAID)
-                  OutlinedButton(
-                    onPressed: () {
-                      confirm(purchase?.purchaseId ?? "");
-                    },
-                    child: const Text('Confirm'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      OutlinedButton(
+                        onPressed: () {
+                          confirm(purchase?.purchaseId ?? "");
+                        },
+                        child: const Text('Confirm'),
+                      ),
+                      OutlinedButton(
+                          onPressed: () {
+                            purchaseInfo(purchase?.purchaseId ?? "");
+                          },
+                          child: const Text('Purchase Info')),
+                    ],
                   ),
               ],
             ],

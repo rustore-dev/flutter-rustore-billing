@@ -2,46 +2,53 @@ package ru.rustore.flutter_rustore_billing
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import ru.rustore.flutter_rustore_billing.pigeons.RustoreBilling
-import ru.rustore.flutter_rustore_billing.utils.Log
+import io.flutter.plugin.common.PluginRegistry.NewIntentListener
+import ru.rustore.flutter_rustore_billing.pigeons.Rustore
 
 /** FlutterRustoreBillingPlugin */
-class FlutterRustoreBillingPlugin: FlutterPlugin, ActivityAware {
+class FlutterRustoreBillingPlugin: FlutterPlugin, ActivityAware, NewIntentListener {
   private lateinit var context: Context
   private lateinit var application: Application
 
-  override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-    context = binding.applicationContext
+    override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+        context = binding.applicationContext
 
     Log.d("Trying to resolve Application from Context: ${context.javaClass.name}")
 
-    application = context as Application
+        application = context as Application
+        Rustore.RustoreBilling.setup(binding.binaryMessenger, client)
 
-    val client = FlutterRustoreBillingClient(application)
-    RustoreBilling.setUp(binding.binaryMessenger, client)
-  }
+    }
 
-  override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
 
-  }
+    }
 
-  override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+    override fun onNewIntent(intent: Intent): Boolean {
+        val client = FlutterRustoreBillingClient(application)
+        client.onNewIntent(intent)
+        return true
+    }
 
-  }
+    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
 
-  override fun onDetachedFromActivityForConfigChanges() {
+    }
 
-  }
+    override fun onDetachedFromActivityForConfigChanges() {
 
-  override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+    }
 
-  }
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
 
-  override fun onDetachedFromActivity() {
-  }
+    }
+
+    override fun onDetachedFromActivity() {
+    }
 }

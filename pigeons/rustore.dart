@@ -1,14 +1,5 @@
 import 'package:pigeon/pigeon.dart';
 
-@ConfigurePigeon(PigeonOptions(
-  dartOut: 'lib/pigeons/rustore.dart',
-  dartOptions: DartOptions(),
-  kotlinOut: 'android/src/main/kotlin/ru/rustore/flutter_rustore_billing/pigeons/Rustore.kt',
-  kotlinOptions: KotlinOptions(
-    package: 'ru.rustore.flutter_rustore_billing.pigeons',
-  ),
-  dartPackageName: 'flutter_rustore_billing',
-))
 class SubscriptionPeriod {
   late int years;
   late int months;
@@ -122,7 +113,8 @@ class DigitalShopGeneralError {
 @HostApi()
 abstract class RustoreBilling {
   @async
-  String initialize(String id, String prefix, bool debug);
+  String initialize(
+      String id, String prefix, bool debugLogs, bool allowNativeErrorHadling);
 
   @async
   bool available();
@@ -134,7 +126,10 @@ abstract class RustoreBilling {
   PurchasesResponse purchases();
 
   @async
-  PaymentResult purchase(String id);
+  PaymentResult purchase(String id, String? developerPayload);
+
+  @async
+  Purchase purchaseInfo(String id);
 
   @async
   ConfirmPurchaseResponse confirm(String id);
