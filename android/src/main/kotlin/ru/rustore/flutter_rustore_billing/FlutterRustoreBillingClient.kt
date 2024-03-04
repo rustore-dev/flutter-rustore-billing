@@ -9,7 +9,6 @@ import ru.rustore.sdk.billingclient.RuStoreBillingClient
 import ru.rustore.sdk.billingclient.RuStoreBillingClientFactory
 import ru.rustore.sdk.billingclient.model.product.SubscriptionPeriod
 import ru.rustore.sdk.billingclient.model.purchase.PaymentResult
-import ru.rustore.sdk.billingclient.provider.logger.ExternalPaymentLogger
 import ru.rustore.sdk.billingclient.utils.resolveForBilling
 import ru.rustore.sdk.core.config.SdkType
 import ru.rustore.sdk.core.exception.RuStoreException
@@ -19,10 +18,13 @@ import ru.rustore.sdk.core.feature.model.FeatureAvailabilityResult
 class FlutterRustoreBillingClient(private val app: Application) : Rustore.RustoreBilling {
     private lateinit var client: RuStoreBillingClient
 
+    private var allowNativeErrorHandling: Boolean = false
+
     override fun initialize(
         id: String,
         prefix: String,
         debugLogs: Boolean,
+        allowNativeErrorHandling: Boolean,
         result: Rustore.Result<String>?
     ) {
         client = RuStoreBillingClientFactory.create(
@@ -34,13 +36,14 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
             themeProvider = BillingClientThemeProviderImpl(app.applicationContext),
             internalConfig = mapOf("type" to SdkType.FLUTTER)
         )
-
+        this.allowNativeErrorHandling = allowNativeErrorHandling
         result?.success("")
     }
 
     override fun available(result: Rustore.Result<Boolean>?) {
         client.purchases.checkPurchasesAvailability()
             .addOnFailureListener { throwable ->
+                handleError(throwable)
                 result?.error(throwable)
             }
             .addOnSuccessListener { value ->
@@ -51,6 +54,7 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
 
                     is FeatureAvailabilityResult.Unavailable -> {
                         result?.success(false)
+                        value.cause.resolveForBilling(this.app.applicationContext)
                     }
                 }
             }
@@ -62,6 +66,7 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
     ) {
         client.products.getProducts(productIds = ids.toList())
             .addOnFailureListener { throwable ->
+                handleError(throwable)
                 out?.error(throwable)
             }
             .addOnSuccessListener { result ->
@@ -104,7 +109,6 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
 
                 response.setProducts(products)
                 response.setErrors(errors)
-
                 out?.success(response.build())
             }
     }
@@ -120,7 +124,6 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
         )
             .addOnFailureListener { throwable ->
                 out?.error(throwable)
-                RuStoreException(throwable.message.toString()).resolveForBilling(this.app.applicationContext)
             }
             .addOnSuccessListener { result ->
                 val response = Rustore.PaymentResult.Builder()
@@ -156,8 +159,6 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
 
                     is PaymentResult.InvalidPaymentState -> TODO()
                 }
-                RuStoreException("HOOHO").resolveForBilling(this.app.applicationContext)
-
                 out?.success(response.build())
             }
     }
@@ -165,6 +166,7 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
     override fun purchases(out: Rustore.Result<Rustore.PurchasesResponse>?) {
         client.purchases.getPurchases()
             .addOnFailureListener { throwable ->
+                handleError(throwable)
                 out?.error(throwable)
             }
             .addOnSuccessListener { result ->
@@ -208,7 +210,6 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
     ) {
         client.purchases.getPurchaseInfo(id)
             .addOnSuccessListener { result ->
-
                 val purchase = Rustore.Purchase.Builder()
                     .setPurchaseId(result.purchaseId)
                     .setProductId(result.productId)
@@ -228,8 +229,9 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
                 out?.success(purchase.build())
             }
 
-            .addOnFailureListener {
-                out?.error(it)
+            .addOnFailureListener { throwable ->
+                handleError(throwable)
+                out?.error(throwable)
             }
     }
 
@@ -241,8 +243,9 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
 
                 out?.success(response.build())
             }
-            .addOnFailureListener {
-                out?.error(it)
+            .addOnFailureListener { throwable ->
+                handleError(throwable)
+                out?.error(throwable)
             }
     }
 
@@ -250,7 +253,13 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
         client.onNewIntent(intent)
     }
 
-    fun period(sub: SubscriptionPeriod?): Rustore.SubscriptionPeriod {
+    private fun handleError(throwable: Throwable) {
+        if (allowNativeErrorHandling && throwable is RuStoreException) {
+            throwable.resolveForBilling(this.app.baseContext)
+        }
+    }
+
+    private fun period(sub: SubscriptionPeriod?): Rustore.SubscriptionPeriod {
         val period = Rustore.SubscriptionPeriod.Builder()
         period.setDays(sub?.days?.toLong() ?: 0)
         period.setMonths(sub?.months?.toLong() ?: 0)

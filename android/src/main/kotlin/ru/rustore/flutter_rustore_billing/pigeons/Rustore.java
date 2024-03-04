@@ -1497,14 +1497,13 @@ public class Rustore {
 
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
   public interface RustoreBilling {
-    void initialize(@NonNull String id, @NonNull String prefix, @NonNull Boolean debugLogs, Result<String> result);
+    void initialize(@NonNull String id, @NonNull String prefix, @NonNull Boolean debugLogs, @NonNull Boolean allowNativeErrorHadling, Result<String> result);
     void available(Result<Boolean> result);
     void products(@NonNull List<String> ids, Result<ProductsResponse> result);
     void purchases(Result<PurchasesResponse> result);
     void purchase(@NonNull String id, @Nullable String developerPayload, Result<PaymentResult> result);
     void purchaseInfo(@NonNull String id, Result<Purchase> result);
     void confirm(@NonNull String id, Result<ConfirmPurchaseResponse> result);
-    void onNewIntent(@NonNull Object intent, Result<String> result);
 
     /** The codec used by RustoreBilling. */
     static MessageCodec<Object> getCodec() {
@@ -1532,6 +1531,10 @@ public class Rustore {
               if (debugLogsArg == null) {
                 throw new NullPointerException("debugLogsArg unexpectedly null.");
               }
+              Boolean allowNativeErrorHadlingArg = (Boolean)args.get(3);
+              if (allowNativeErrorHadlingArg == null) {
+                throw new NullPointerException("allowNativeErrorHadlingArg unexpectedly null.");
+              }
               Result<String> resultCallback = new Result<String>() {
                 public void success(String result) {
                   wrapped.add(0, result);
@@ -1543,7 +1546,7 @@ public class Rustore {
                 }
               };
 
-              api.initialize(idArg, prefixArg, debugLogsArg, resultCallback);
+              api.initialize(idArg, prefixArg, debugLogsArg, allowNativeErrorHadlingArg, resultCallback);
             }
             catch (Error | RuntimeException exception) {
               ArrayList<Object> wrappedError = wrapError(exception);
@@ -1743,41 +1746,6 @@ public class Rustore {
               };
 
               api.confirm(idArg, resultCallback);
-            }
-            catch (Error | RuntimeException exception) {
-              ArrayList<Object> wrappedError = wrapError(exception);
-              reply.reply(wrappedError);
-            }
-          });
-        } else {
-          channel.setMessageHandler(null);
-        }
-      }
-      {
-        BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.RustoreBilling.onNewIntent", getCodec());
-        if (api != null) {
-          channel.setMessageHandler((message, reply) -> {
-            ArrayList wrapped = new ArrayList<>();
-            try {
-              ArrayList<Object> args = (ArrayList<Object>)message;
-              assert args != null;
-              Object intentArg = args.get(0);
-              if (intentArg == null) {
-                throw new NullPointerException("intentArg unexpectedly null.");
-              }
-              Result<String> resultCallback = new Result<String>() {
-                public void success(String result) {
-                  wrapped.add(0, result);
-                  reply.reply(wrapped);
-                }
-                public void error(Throwable error) {
-                  ArrayList<Object> wrappedError = wrapError(error);
-                  reply.reply(wrappedError);
-                }
-              };
-
-              api.onNewIntent(intentArg, resultCallback);
             }
             catch (Error | RuntimeException exception) {
               ArrayList<Object> wrappedError = wrapError(exception);

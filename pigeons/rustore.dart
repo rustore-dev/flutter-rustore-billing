@@ -113,7 +113,8 @@ class DigitalShopGeneralError {
 @HostApi()
 abstract class RustoreBilling {
   @async
-  String initialize(String id, String prefix, bool debugLogs);
+  String initialize(
+      String id, String prefix, bool debugLogs, bool allowNativeErrorHadling);
 
   @async
   bool available();
@@ -132,7 +133,4 @@ abstract class RustoreBilling {
 
   @async
   ConfirmPurchaseResponse confirm(String id);
-
-  @async
-  String onNewIntent(Intent? intent);
 }

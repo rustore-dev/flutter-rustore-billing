@@ -2,6 +2,7 @@ package ru.rustore.flutter_rustore_billing
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.annotation.NonNull
 
@@ -12,9 +13,10 @@ import io.flutter.plugin.common.PluginRegistry.NewIntentListener
 import ru.rustore.flutter_rustore_billing.pigeons.Rustore
 
 /** FlutterRustoreBillingPlugin */
-class FlutterRustoreBillingPlugin : FlutterPlugin, ActivityAware {
+class FlutterRustoreBillingPlugin : FlutterPlugin, ActivityAware, NewIntentListener {
     private lateinit var context: Context
     private lateinit var application: Application
+    private var client = FlutterRustoreBillingClient(application)
 
     override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         context = binding.applicationContext
@@ -25,12 +27,7 @@ class FlutterRustoreBillingPlugin : FlutterPlugin, ActivityAware {
         )
 
         application = context as Application
-
-        val client = FlutterRustoreBillingClient(application)
         Rustore.RustoreBilling.setup(binding.binaryMessenger, client)
-
-//    activity = binding.applicationContext.startActivity()
-
 
     }
 
@@ -38,13 +35,14 @@ class FlutterRustoreBillingPlugin : FlutterPlugin, ActivityAware {
 
     }
 
-    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+    override fun onNewIntent(intent: Intent): Boolean {
         val client = FlutterRustoreBillingClient(application)
-        var activity = binding.activity
-        // TODO()
-        binding.addOnNewIntentListener {
-            it.let { intent -> client.onNewIntent(intent) }
-        }
+        client.onNewIntent(intent)
+        return true
+    }
+
+    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+
     }
 
     override fun onDetachedFromActivityForConfigChanges() {

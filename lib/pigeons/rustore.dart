@@ -696,12 +696,12 @@ class RustoreBilling {
 
   static const MessageCodec<Object?> codec = _RustoreBillingCodec();
 
-  Future<String> initialize(String arg_id, String arg_prefix, bool arg_debugLogs) async {
+  Future<String> initialize(String arg_id, String arg_prefix, bool arg_debugLogs, bool arg_allowNativeErrorHadling) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.RustoreBilling.initialize', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
-        await channel.send(<Object?>[arg_id, arg_prefix, arg_debugLogs]) as List<Object?>?;
+        await channel.send(<Object?>[arg_id, arg_prefix, arg_debugLogs, arg_allowNativeErrorHadling]) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -882,33 +882,6 @@ class RustoreBilling {
       );
     } else {
       return (replyList[0] as ConfirmPurchaseResponse?)!;
-    }
-  }
-
-  Future<String> onNewIntent(Object arg_intent) async {
-    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.RustoreBilling.onNewIntent', codec,
-        binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList =
-        await channel.send(<Object?>[arg_intent]) as List<Object?>?;
-    if (replyList == null) {
-      throw PlatformException(
-        code: 'channel-error',
-        message: 'Unable to establish connection on channel.',
-      );
-    } else if (replyList.length > 1) {
-      throw PlatformException(
-        code: replyList[0]! as String,
-        message: replyList[1] as String?,
-        details: replyList[2],
-      );
-    } else if (replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
-    } else {
-      return (replyList[0] as String?)!;
     }
   }
 }
