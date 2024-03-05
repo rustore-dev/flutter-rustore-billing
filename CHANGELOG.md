@@ -1,3 +1,10 @@
+## 4.0.0
+
+* Updated RuStore billing SDK to 5.0.0
+* Addded new method purchaseInfo
+* Added onNewIntent logic for deeplinks
+* Added native RuStore billing SDK error-handling  
+
 ## 3.1.0
 
 * Updated RuStore billing SDK to 3.1.0.
