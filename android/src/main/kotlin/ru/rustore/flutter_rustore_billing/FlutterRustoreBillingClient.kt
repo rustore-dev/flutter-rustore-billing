@@ -18,13 +18,13 @@ import ru.rustore.sdk.core.feature.model.FeatureAvailabilityResult
 class FlutterRustoreBillingClient(private val app: Application) : Rustore.RustoreBilling {
     private lateinit var client: RuStoreBillingClient
 
-    private var allowNativeErrorHandling: Boolean = false
+    private var allowNativeErrorHandling: Boolean? = false
 
     override fun initialize(
         id: String,
         prefix: String,
         debugLogs: Boolean,
-        allowNativeErrorHandling: Boolean,
+        allowNativeErrorHandling: Boolean?,
         result: Rustore.Result<String>?
     ) {
         client = RuStoreBillingClientFactory.create(
@@ -161,7 +161,6 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
                 }
                 out?.success(response.build())
             }
-        })
     }
 
     override fun purchases(out: Rustore.Result<Rustore.PurchasesResponse>?) {
@@ -255,7 +254,7 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
     }
 
     private fun handleError(throwable: Throwable) {
-        if (allowNativeErrorHandling && throwable is RuStoreException) {
+        if (allowNativeErrorHandling == true && throwable is RuStoreException) {
             throwable.resolveForBilling(this.app.baseContext)
         }
     }

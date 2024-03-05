@@ -1,7 +1,8 @@
+import 'dart:async';
 import 'package:flutter_rustore_billing/pigeons/rustore.dart';
 
 class RustoreBillingClient {
-  static RustoreBilling _api = RustoreBilling();
+  static final RustoreBilling _api = RustoreBilling();
 
   static Future<String> initialize(String id, String prefix, bool debugLogs,
       bool allowNativeErrorHadling) async {

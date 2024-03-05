@@ -1497,7 +1497,7 @@ public class Rustore {
 
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
   public interface RustoreBilling {
-    void initialize(@NonNull String id, @NonNull String prefix, @NonNull Boolean debugLogs, @NonNull Boolean allowNativeErrorHadling, Result<String> result);
+    void initialize(@NonNull String id, @NonNull String prefix, @NonNull Boolean debugLogs, @Nullable Boolean allowNativeErrorHadling, Result<String> result);
     void available(Result<Boolean> result);
     void products(@NonNull List<String> ids, Result<ProductsResponse> result);
     void purchases(Result<PurchasesResponse> result);
@@ -1532,9 +1532,6 @@ public class Rustore {
                 throw new NullPointerException("debugLogsArg unexpectedly null.");
               }
               Boolean allowNativeErrorHadlingArg = (Boolean)args.get(3);
-              if (allowNativeErrorHadlingArg == null) {
-                throw new NullPointerException("allowNativeErrorHadlingArg unexpectedly null.");
-              }
               Result<String> resultCallback = new Result<String>() {
                 public void success(String result) {
                   wrapped.add(0, result);

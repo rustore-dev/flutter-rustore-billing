@@ -696,7 +696,7 @@ class RustoreBilling {
 
   static const MessageCodec<Object?> codec = _RustoreBillingCodec();
 
-  Future<String> initialize(String arg_id, String arg_prefix, bool arg_debugLogs, bool arg_allowNativeErrorHadling) async {
+  Future<String> initialize(String arg_id, String arg_prefix, bool arg_debugLogs, bool? arg_allowNativeErrorHadling) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.RustoreBilling.initialize', codec,
         binaryMessenger: _binaryMessenger);

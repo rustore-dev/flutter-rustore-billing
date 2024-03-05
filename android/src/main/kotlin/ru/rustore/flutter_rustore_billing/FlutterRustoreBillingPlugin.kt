@@ -13,18 +13,21 @@ import io.flutter.plugin.common.PluginRegistry.NewIntentListener
 import ru.rustore.flutter_rustore_billing.pigeons.Rustore
 
 /** FlutterRustoreBillingPlugin */
-class FlutterRustoreBillingPlugin: FlutterPlugin, ActivityAware, NewIntentListener {
-  private lateinit var context: Context
-  private lateinit var application: Application
+class FlutterRustoreBillingPlugin : FlutterPlugin, ActivityAware, NewIntentListener {
+    private lateinit var context: Context
+    private lateinit var application: Application
 
     override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         context = binding.applicationContext
 
-    Log.d("Trying to resolve Application from Context: ${context.javaClass.name}")
+        Log.d(
+            "RuStoreBillingPlugin",
+            "Trying to resolve Application from Context: ${context.javaClass.name}"
+        )
 
         application = context as Application
+        val client = FlutterRustoreBillingClient(application)
         Rustore.RustoreBilling.setup(binding.binaryMessenger, client)
-
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {

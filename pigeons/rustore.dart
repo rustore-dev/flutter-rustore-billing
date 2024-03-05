@@ -114,7 +114,7 @@ class DigitalShopGeneralError {
 abstract class RustoreBilling {
   @async
   String initialize(
-      String id, String prefix, bool debugLogs, bool allowNativeErrorHadling);
+      String id, String prefix, bool debugLogs, bool? allowNativeErrorHadling);
 
   @async
   bool available();
