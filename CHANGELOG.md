@@ -1,3 +1,9 @@
+
+## 5.0.0
+
+* Internal fixes
+* Updated version to 5.0.0
+
 ## 4.0.0
 
 * Updated RuStore billing SDK to 5.0.0
