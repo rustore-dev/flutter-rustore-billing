@@ -2094,7 +2094,7 @@ public class Rustore {
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
   public interface RustoreBilling {
 
-    void initialize(@NonNull String id, @NonNull String prefix, @NonNull Boolean debugLogs, @Nullable Boolean allowNativeErrorHadling, @NonNull Result<String> result);
+    void initialize(@NonNull String id, @NonNull String prefix, @NonNull Boolean debugLogs, @NonNull Result<String> result);
 
     void available(@NonNull Result<Boolean> result);
 
@@ -2126,7 +2126,6 @@ public class Rustore {
                 String idArg = (String) args.get(0);
                 String prefixArg = (String) args.get(1);
                 Boolean debugLogsArg = (Boolean) args.get(2);
-                Boolean allowNativeErrorHadlingArg = (Boolean) args.get(3);
                 Result<String> resultCallback =
                     new Result<String>() {
                       public void success(String result) {
@@ -2140,7 +2139,7 @@ public class Rustore {
                       }
                     };
 
-                api.initialize(idArg, prefixArg, debugLogsArg, allowNativeErrorHadlingArg, resultCallback);
+                api.initialize(idArg, prefixArg, debugLogsArg, resultCallback);
               });
         } else {
           channel.setMessageHandler(null);

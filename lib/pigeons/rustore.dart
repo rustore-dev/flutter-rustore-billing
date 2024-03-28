@@ -689,7 +689,7 @@ class RustoreBilling {
 
   static const MessageCodec<Object?> pigeonChannelCodec = _RustoreBillingCodec();
 
-  Future<String> initialize(String id, String prefix, bool debugLogs, bool? allowNativeErrorHadling) async {
+  Future<String> initialize(String id, String prefix, bool debugLogs) async {
     const String __pigeon_channelName = 'dev.flutter.pigeon.flutter_rustore_billing.RustoreBilling.initialize';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -697,7 +697,7 @@ class RustoreBilling {
       binaryMessenger: __pigeon_binaryMessenger,
     );
     final List<Object?>? __pigeon_replyList =
-        await __pigeon_channel.send(<Object?>[id, prefix, debugLogs, allowNativeErrorHadling]) as List<Object?>?;
+        await __pigeon_channel.send(<Object?>[id, prefix, debugLogs]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {

@@ -27,7 +27,8 @@ class FlutterRustoreBillingPlugin : FlutterPlugin, ActivityAware, NewIntentListe
 
         application = context as Application
         val client = FlutterRustoreBillingClient(application)
-        Rustore.RustoreBilling.setup(binding.binaryMessenger, client)
+        Rustore.RustoreBilling.setUp(binding.binaryMessenger, client)
+//        Rustore.RustoreBilling.setup(binding.binaryMessenger, client)
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {

@@ -1,3 +1,10 @@
+## 5.0.2
+
+* Fix crash while rustore unauthorized
+
+## 5.0.1
+
+* Fixes with build and error handling
 
 ## 5.0.0
 

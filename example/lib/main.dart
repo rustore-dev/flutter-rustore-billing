@@ -33,8 +33,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> billing() async {
-    RustoreBillingClient.initialize(
-            "184047", "yourappscheme://iamback", true, true)
+    RustoreBillingClient.initialize("184047", "yourappscheme://iamback", true)
         .then((value) {
       print("initialize success: $value");
       RustoreBillingClient.available().then((value) {
