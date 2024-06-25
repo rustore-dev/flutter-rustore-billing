@@ -228,7 +228,7 @@ class Purchase {
   Purchase({
     this.purchaseId,
     this.productId,
-    this.description,
+    this.productType,
     this.language,
     this.purchaseTime,
     this.orderId,
@@ -246,7 +246,7 @@ class Purchase {
 
   String? productId;
 
-  String? description;
+  String? productType;
 
   String? language;
 
@@ -274,7 +274,7 @@ class Purchase {
     return <Object?>[
       purchaseId,
       productId,
-      description,
+      productType,
       language,
       purchaseTime,
       orderId,
@@ -294,7 +294,7 @@ class Purchase {
     return Purchase(
       purchaseId: result[0] as String?,
       productId: result[1] as String?,
-      description: result[2] as String?,
+      productType: result[2] as String?,
       language: result[3] as String?,
       purchaseTime: result[4] as String?,
       orderId: result[5] as String?,

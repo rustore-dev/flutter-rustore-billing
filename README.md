@@ -31,7 +31,7 @@ flutter pub add flutter_rustore_billing
 
 ```
 dependencies:
-    flutter_rustore_billing: ^5.0.2
+    flutter_rustore_billing: ^6.0.0
 ```
 
 ### Обработка deeplink
@@ -269,11 +269,11 @@ class DigitalShopGeneralError {
 
 
 Структура покупки `Purchase`:
-
+```
 class Purchase {
     String? purchaseId;
     String? productId;
-    String? description;
+    String? productType;
     String? language;
     String? purchaseTime;
     String? orderId;
@@ -284,7 +284,7 @@ class Purchase {
     String? purchaseState;
     String? developerPayload;
 }
-
+```
 - purchaseId - идентификатор покупки.
 - productId - идентификатор продукта.
 - description - описание покупки.

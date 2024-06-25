@@ -1,3 +1,9 @@
+## 6.0.0
+
+* Upgrade SDK version to 6.0.0
+* Deleted field desciption from Purchase
+* Added field productType to Purchase
+
 ## 5.0.2
 
 * Fix crash while rustore unauthorized
