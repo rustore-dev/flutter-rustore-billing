@@ -13,5 +13,5 @@ tasks:
 
   client:
     cmds:
-      - flutter pub run pigeon
+      - dart run pigeon
         --input pigeons/rustore.dart

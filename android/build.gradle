@@ -16,9 +16,9 @@ buildscript {
 
 rootProject.allprojects {
     repositories {
-        maven {
-            url = uri("https://artifactory-external.vkpartner.ru/artifactory/maven")
-        }
+         maven {
+             url = uri("https://artifactory-external.vkpartner.ru/artifactory/maven")
+         }
         google()
         mavenCentral()
         mavenLocal()
@@ -29,7 +29,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -50,5 +50,5 @@ android {
 }
 
 dependencies {
-    implementation("ru.rustore.sdk:billingclient:5.0.0")
+    implementation("ru.rustore.sdk:billingclient: 6.0.0")
 }

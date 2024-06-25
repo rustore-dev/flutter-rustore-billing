@@ -10,7 +10,6 @@ import ru.rustore.sdk.billingclient.RuStoreBillingClientFactory
 import ru.rustore.sdk.billingclient.model.product.SubscriptionPeriod
 import ru.rustore.sdk.billingclient.model.purchase.PaymentResult
 import ru.rustore.sdk.core.config.SdkType
-import ru.rustore.sdk.core.exception.RuStoreException
 import ru.rustore.sdk.core.feature.model.FeatureAvailabilityResult
 
 
@@ -172,7 +171,6 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
                     val purchase = Rustore.Purchase.Builder()
                         .setPurchaseId(item.purchaseId)
                         .setProductId(item.productId)
-                        .setDescription(item.description)
                         .setLanguage(item.language)
                         .setPurchaseTime(item.purchaseTime.toString())
                         .setOrderId(item.orderId)
@@ -206,7 +204,6 @@ class FlutterRustoreBillingClient(private val app: Application) : Rustore.Rustor
                 val purchase = Rustore.Purchase.Builder()
                     .setPurchaseId(result.purchaseId)
                     .setProductId(result.productId)
-                    .setDescription(result.description)
                     .setLanguage(result.language)
                     .setPurchaseTime(result.purchaseTime.toString())
                     .setOrderId(result.orderId)

@@ -84,7 +84,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "4.0.0"
+    version: "5.0.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -183,14 +183,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-  receive_intent:
-    dependency: transitive
-    description:
-      name: receive_intent
-      sha256: "59afac5bcac8a0c6fc5067d03b4daeb260399cc8485256d6fe40a26640512cda"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.5"
   sky_engine:
     dependency: transitive
     description: flutter

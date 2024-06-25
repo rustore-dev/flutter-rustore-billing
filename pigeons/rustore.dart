@@ -1,5 +1,11 @@
 import 'package:pigeon/pigeon.dart';
 
+@ConfigurePigeon(PigeonOptions(
+    dartOut: 'lib/pigeons/rustore.dart',
+    dartOptions: DartOptions(),
+    kotlinOut:
+        'android/src/main/kotlin/ru/rustore/flutter_rustore_billing/pigeons/Rustore.kt',
+    kotlinOptions: KotlinOptions()))
 class SubscriptionPeriod {
   late int years;
   late int months;
@@ -42,7 +48,7 @@ class ProductsResponse {
 class Purchase {
   late String? purchaseId;
   late String? productId;
-  late String? description;
+  late String? productType;
   late String? language;
   late String? purchaseTime;
   late String? orderId;
