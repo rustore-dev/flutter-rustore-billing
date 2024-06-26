@@ -481,6 +481,7 @@ class SuccessPurchase {
     required this.productId,
     this.invoiceId,
     this.subscriptionToken,
+    this.sandbox,
   });
 
   String? finishCode;
@@ -495,6 +496,8 @@ class SuccessPurchase {
 
   String? subscriptionToken;
 
+  bool? sandbox;
+
   Object encode() {
     return <Object?>[
       finishCode,
@@ -503,6 +506,7 @@ class SuccessPurchase {
       productId,
       invoiceId,
       subscriptionToken,
+      sandbox,
     ];
   }
 
@@ -515,6 +519,7 @@ class SuccessPurchase {
       productId: result[3]! as String,
       invoiceId: result[4] as String?,
       subscriptionToken: result[5] as String?,
+      sandbox: result[6] as bool?,
     );
   }
 }
@@ -527,6 +532,7 @@ class InvalidPurchase {
     this.quantity,
     this.productId,
     this.errorCode,
+    this.sandbox,
   });
 
   String? purchaseId;
@@ -541,6 +547,8 @@ class InvalidPurchase {
 
   int? errorCode;
 
+  bool? sandbox;
+
   Object encode() {
     return <Object?>[
       purchaseId,
@@ -549,6 +557,7 @@ class InvalidPurchase {
       quantity,
       productId,
       errorCode,
+      sandbox,
     ];
   }
 
@@ -561,6 +570,7 @@ class InvalidPurchase {
       quantity: result[3] as int?,
       productId: result[4] as String?,
       errorCode: result[5] as int?,
+      sandbox: result[6] as bool?,
     );
   }
 }

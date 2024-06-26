@@ -99,6 +99,7 @@ class SuccessPurchase {
   late String productId;
   late String? invoiceId;
   late String? subscriptionToken;
+  late bool? sandbox;
 }
 
 class InvalidPurchase {
@@ -108,6 +109,7 @@ class InvalidPurchase {
   late int? quantity;
   late String? productId;
   late int? errorCode;
+  late bool? sandbox;
 }
 
 class DigitalShopGeneralError {

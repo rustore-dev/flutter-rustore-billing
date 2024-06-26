@@ -395,7 +395,8 @@ data class SuccessPurchase (
   val purchaseId: String,
   val productId: String,
   val invoiceId: String? = null,
-  val subscriptionToken: String? = null
+  val subscriptionToken: String? = null,
+  val sandbox: Boolean? = null
 
 ) {
   companion object {
@@ -407,7 +408,8 @@ data class SuccessPurchase (
       val productId = list[3] as String
       val invoiceId = list[4] as String?
       val subscriptionToken = list[5] as String?
-      return SuccessPurchase(finishCode, orderId, purchaseId, productId, invoiceId, subscriptionToken)
+      val sandbox = list[6] as Boolean?
+      return SuccessPurchase(finishCode, orderId, purchaseId, productId, invoiceId, subscriptionToken, sandbox)
     }
   }
   fun toList(): List<Any?> {
@@ -418,6 +420,7 @@ data class SuccessPurchase (
       productId,
       invoiceId,
       subscriptionToken,
+      sandbox,
     )
   }
 }
@@ -429,7 +432,8 @@ data class InvalidPurchase (
   val orderId: String? = null,
   val quantity: Long? = null,
   val productId: String? = null,
-  val errorCode: Long? = null
+  val errorCode: Long? = null,
+  val sandbox: Boolean? = null
 
 ) {
   companion object {
@@ -441,7 +445,8 @@ data class InvalidPurchase (
       val quantity = list[3].let { if (it is Int) it.toLong() else it as Long? }
       val productId = list[4] as String?
       val errorCode = list[5].let { if (it is Int) it.toLong() else it as Long? }
-      return InvalidPurchase(purchaseId, invoiceId, orderId, quantity, productId, errorCode)
+      val sandbox = list[6] as Boolean?
+      return InvalidPurchase(purchaseId, invoiceId, orderId, quantity, productId, errorCode, sandbox)
     }
   }
   fun toList(): List<Any?> {
@@ -452,6 +457,7 @@ data class InvalidPurchase (
       quantity,
       productId,
       errorCode,
+      sandbox,
     )
   }
 }
