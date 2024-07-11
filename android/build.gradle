@@ -50,5 +50,5 @@ android {
 }
 
 dependencies {
-    implementation("ru.rustore.sdk:billingclient:6.+")
+    implementation("ru.rustore.sdk:billingclient:6.0.0")
 }

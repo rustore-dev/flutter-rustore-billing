@@ -1,3 +1,8 @@
+## 6.0.1
+
+* Updated RuStore billing SDK to 6.0.0
+* Fix dynamic version
+
 ## 6.0.0
 
 * Upgrade SDK version to 6.0.0
