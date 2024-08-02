@@ -5,8 +5,8 @@ class RustoreBillingClient {
   static final RustoreBilling _api = RustoreBilling();
 
   static Future<String> initialize(
-      String id, String prefix, bool debugLogs) async {
-    return _api.initialize(id, prefix, debugLogs);
+      String id, String deeplinkScheme, bool debugLogs) async {
+    return _api.initialize(id, deeplinkScheme, debugLogs);
   }
 
   static Future<bool> available() async {
@@ -43,5 +43,13 @@ class RustoreBillingClient {
   static Future<Purchase> purchaseInfo(String id) async {
     final result = _api.purchaseInfo(id);
     return result;
+  }
+
+  static Future<void> deletePurchase(String id) async {
+    return _api.deletePurchase(id);
+  }
+
+  static Future<void> offNativeErrorHandling() async {
+    return _api.offNativeErrorHandling();
   }
 }

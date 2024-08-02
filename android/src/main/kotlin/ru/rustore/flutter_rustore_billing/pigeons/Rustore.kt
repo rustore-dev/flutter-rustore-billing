@@ -627,6 +627,8 @@ interface RustoreBilling {
   fun purchase(id: String, developerPayload: String?, callback: (Result<PaymentResult>) -> Unit)
   fun purchaseInfo(id: String, callback: (Result<Purchase>) -> Unit)
   fun confirm(id: String, callback: (Result<ConfirmPurchaseResponse>) -> Unit)
+  fun deletePurchase(purchaseId: String, callback: (Result<Unit>) -> Unit)
+  fun offNativeErrorHandling()
 
   companion object {
     /** The codec used by RustoreBilling. */
@@ -770,6 +772,42 @@ interface RustoreBilling {
                 reply.reply(wrapResult(data))
               }
             }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.flutter_rustore_billing.RustoreBilling.deletePurchase", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val purchaseIdArg = args[0] as String
+            api.deletePurchase(purchaseIdArg) { result: Result<Unit> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                reply.reply(wrapResult(null))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.flutter_rustore_billing.RustoreBilling.offNativeErrorHandling", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            var wrapped: List<Any?>
+            try {
+              api.offNativeErrorHandling()
+              wrapped = listOf<Any?>(null)
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
           }
         } else {
           channel.setMessageHandler(null)

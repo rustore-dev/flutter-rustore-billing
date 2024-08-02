@@ -10,12 +10,13 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.PluginRegistry.NewIntentListener
-import ru.rustore.flutter_rustore_billing.pigeons.Rustore
+import RustoreBilling
 
 /** FlutterRustoreBillingPlugin */
 class FlutterRustoreBillingPlugin : FlutterPlugin, ActivityAware, NewIntentListener {
     private lateinit var context: Context
     private lateinit var application: Application
+    private var client: FlutterRustoreBillingClient? = null
 
     override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         context = binding.applicationContext
@@ -26,32 +27,31 @@ class FlutterRustoreBillingPlugin : FlutterPlugin, ActivityAware, NewIntentListe
         )
 
         application = context as Application
-        val client = FlutterRustoreBillingClient(application)
-        Rustore.RustoreBilling.setUp(binding.binaryMessenger, client)
+        client = FlutterRustoreBillingClient(application)
+        RustoreBilling.setUp(binding.binaryMessenger, client)
     }
 
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-
-    }
+    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {}
 
     override fun onNewIntent(intent: Intent): Boolean {
-        val client = FlutterRustoreBillingClient(application)
-        client.onNewIntent(intent)
+        client = FlutterRustoreBillingClient(application)
+        client?.onNewIntent(intent)
         return true
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-
+        client?.setActivityContext(binding.activity)
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
-
+        client?.resetActivityContext()
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-
+        client?.setActivityContext(binding.activity)
     }
 
     override fun onDetachedFromActivity() {
+        client?.resetActivityContext()
     }
 }

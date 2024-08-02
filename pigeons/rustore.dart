@@ -140,4 +140,9 @@ abstract class RustoreBilling {
 
   @async
   ConfirmPurchaseResponse confirm(String id);
+
+  @async
+  void deletePurchase(String purchaseId);
+
+  void offNativeErrorHandling();
 }

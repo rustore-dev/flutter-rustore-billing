@@ -1,11 +1,22 @@
+import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_rustore_billing/const.dart';
 import 'package:flutter_rustore_billing/flutter_rustore_billing.dart';
 import 'package:flutter_rustore_billing/pigeons/rustore.dart';
+import 'package:flutter_rustore_billing_ex/PurchaseWidget.dart';
+import 'package:flutter_rustore_billing_ex/ProductWidget.dart';
 
-final List<String?> ids = ['1000_franklin_ver1', '10_tomatoes_ver1'];
+final List<String?> ids = [
+  "KebabSub2",
+  "KebabSub3",
+  "KebabSub4",
+  "KebabSub5",
+  "KebabCon1",
+  "KebabCon2",
+  "KebabCon3",
+  "KebabNonCon5",
+  "KebabNonCon6",
+];
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +29,11 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp>
+    with SingleTickerProviderStateMixin {
+  // define your tab controller here
+  late TabController _tabController;
+
   List<Product?> products = [];
   List<Purchase?> purchases = [];
   PaymentResult? payment;
@@ -27,13 +42,16 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    // initialise your tab controller here
+    _tabController = TabController(length: 2, vsync: this);
     super.initState();
     billing();
+   // RustoreBillingClient.offNativeErrorHandling();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> billing() async {
-    RustoreBillingClient.initialize("184047", "yourappscheme://iamback", true)
+    RustoreBillingClient.initialize("3405520", "rustore.sdk.kebab.scheme", true)
         .then((value) {
       print("initialize success: $value");
       RustoreBillingClient.available().then((value) {
@@ -41,12 +59,6 @@ class _MyAppState extends State<MyApp> {
       }, onError: (err) {
         print("available err: $err");
       });
-
-      // products
-      reloadProducts();
-
-      // purchases
-      reloadPurchases();
     }, onError: (err) {
       print("initialize err: $err");
       RustoreBillingClient.available().then((value) {
@@ -55,143 +67,58 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void purchase(String id, String? developerPayload) {
-    RustoreBillingClient.purchase(id, developerPayload).then((value) {
-      setState(() {
-        payment = value;
-      });
-    }, onError: (err) {
-      print("purchase err: $err");
-    });
-  }
-
-  void purchaseInfo(String id) {
-    RustoreBillingClient.purchaseInfo(id).then((value) {
-      setState(() {
-        purchaseInformation = value;
-      });
-    }, onError: (err) {
-      print("Error getPurchaseInfo: $err");
-    });
-  }
-
-  void confirm(String id) {
-    RustoreBillingClient.confirm(id).then((value) {
-      setState(() {
-        confirmPurchaseResponse = value;
-      });
-    }, onError: (err) {
-      print("confirm err: $err");
-    });
-  }
-
-  void reloadProducts() {
-    RustoreBillingClient.products(ids).then((response) {
-      setState(() {
-        products = response.products ?? [];
-      });
-
-      for (final product in response.products) {
-        print(product?.productId);
-      }
-    });
-  }
-
-  void reloadPurchases() {
-    RustoreBillingClient.purchases().then((response) {
-      setState(() {
-        purchases = response.purchases ?? [];
-      });
-
-      for (final product in response.purchases) {
-        print(product?.purchaseId);
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      reloadProducts();
-                    },
-                    child: const Text('Products'),
+        home: Scaffold(
+          appBar: AppBar(
+            leading: const Icon(
+              Icons.menu,
+              color: Colors.black,
+            ),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            title: const Text(
+              'Flutter RuStore Billing',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          body: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                child: TabBar(
+                  controller: _tabController,
+                  labelColor: Colors.green,
+                  isScrollable: true,
+                  indicatorColor: Colors.transparent,
+                  unselectedLabelColor: Colors.grey,
+                  unselectedLabelStyle: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w700,
                   ),
-                  OutlinedButton(
-                    onPressed: () {
-                      reloadPurchases();
-                    },
-                    child: const Text('Purchases'),
+                  labelStyle: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
                   ),
-                ],
-              ),
-              const Text('Payment'),
-              if (payment?.successInvoice != null)
-                Text(
-                    "successInvoice: ${payment?.successInvoice?.invoiceId ?? '0'}"),
-              if (payment?.invalidInvoice != null)
-                Text(
-                    "invalidInvoice: ${payment?.invalidInvoice?.invoiceId ?? '0'}"),
-              if (payment?.successPurchase != null)
-                Text(
-                    "successPurchase: ${payment?.successPurchase?.purchaseId ?? '0'}"),
-              if (payment?.invalidPurchase != null)
-                Text(
-                    "invalidPurchase: ${payment?.invalidPurchase?.purchaseId ?? '0'}"),
-              const Text('Confirm'),
-              if (confirmPurchaseResponse != null)
-                Text("${confirmPurchaseResponse?.errorMessage}"),
-              const Text('Purchase info(Purchase state)'),
-              if (purchaseInformation != null)
-                Text("${purchaseInformation?.purchaseState}"),
-              const Text('Products'),
-              for (var product in products) ...[
-                Text("${product?.title ?? ""}: ${product?.productId ?? ""}"),
-                OutlinedButton(
-                  onPressed: () {
-                    purchase(product?.productId ?? "", "developer");
-                  },
-                  child: const Text('Buy'),
+                  tabs: const <Widget>[
+                    Text('PRODUCTS'),
+                    Text('PURCHASES'),
+                  ],
                 ),
-              ],
-              const Text('Purchases'),
-              for (var purchase in purchases) ...[
-                Text(
-                    "${purchase?.productType ?? ""}: ${purchase?.purchaseId ?? ""} - ${purchase?.purchaseState ?? ""}"),
-                Text(
-                    "${purchase?.productType ?? ""}: ${purchase?.invoiceId ?? ""} - ${purchase?.subscriptionToken ?? ""}"),
-                if ((purchase?.purchaseState ?? "") == PurchaseState.PAID)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      OutlinedButton(
-                        onPressed: () {
-                          confirm(purchase?.purchaseId ?? "");
-                        },
-                        child: const Text('Confirm'),
-                      ),
-                      OutlinedButton(
-                          onPressed: () {
-                            purchaseInfo(purchase?.purchaseId ?? "");
-                          },
-                          child: const Text('Purchase Info')),
-                    ],
-                  ),
-              ],
+              ),
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: const <Widget>[
+                    ProductWidget(),
+                    PurchaseWidget()
+                  ],
+                ),
+              ),
             ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
