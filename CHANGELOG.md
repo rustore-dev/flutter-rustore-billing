@@ -1,3 +1,8 @@
+## 6.0.2
+
+* Fixed sandbox crash
+* Fixed native error handling
+
 ## 6.0.1
 
 * Updated RuStore billing SDK to 6.0.0

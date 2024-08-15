@@ -6,18 +6,6 @@ import 'package:flutter_rustore_billing/pigeons/rustore.dart';
 import 'package:flutter_rustore_billing_ex/PurchaseWidget.dart';
 import 'package:flutter_rustore_billing_ex/ProductWidget.dart';
 
-final List<String?> ids = [
-  "KebabSub2",
-  "KebabSub3",
-  "KebabSub4",
-  "KebabSub5",
-  "KebabCon1",
-  "KebabCon2",
-  "KebabCon3",
-  "KebabNonCon5",
-  "KebabNonCon6",
-];
-
 void main() {
   runApp(const MyApp());
 }
@@ -51,7 +39,7 @@ class _MyAppState extends State<MyApp>
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> billing() async {
-    RustoreBillingClient.initialize("3405520", "rustore.sdk.kebab.scheme", true)
+    RustoreBillingClient.initialize("184062", "example", true)
         .then((value) {
       print("initialize success: $value");
       RustoreBillingClient.available().then((value) {

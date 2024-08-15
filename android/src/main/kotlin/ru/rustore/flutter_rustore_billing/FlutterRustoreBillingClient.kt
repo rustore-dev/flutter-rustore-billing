@@ -143,7 +143,8 @@ class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling
             .addOnSuccessListener { result ->
                 val paymentResult = when (result) {
                     is PaymentResult.Cancelled -> {
-                        throw Throwable(message = result.toString())
+                        callback(Result.failure(Throwable(message = result.toString())))
+                        return@addOnSuccessListener
                     }
                     is PaymentResult.Failure -> {
                         FlutterPaymentResult(

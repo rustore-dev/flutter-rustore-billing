@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_rustore_billing/const.dart';
 import 'package:flutter_rustore_billing/flutter_rustore_billing.dart';
 import 'package:flutter_rustore_billing/pigeons/rustore.dart';
 
 final List<String?> ids = [
-  "KebabSub2",
-  "KebabSub3",
-  "KebabSub4",
-  "KebabSub5",
-  "KebabCon1",
-  "KebabCon2",
-  "KebabCon3",
-  "KebabNonCon5",
-  "KebabNonCon6",
+  "product1",
+  "product2",
+  "product3",
 ];
 
 class ProductWidget extends StatefulWidget {
