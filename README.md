@@ -31,7 +31,7 @@ flutter pub add flutter_rustore_billing
 
 ```
 dependencies:
-    flutter_rustore_billing: ^6.0.2
+    flutter_rustore_billing: ^6.1.0
 ```
 
 ### Обработка deeplink
