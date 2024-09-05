@@ -4,19 +4,95 @@ Flutter RuStoreSDK для подключения платежей
 
 ## [Документация RuStore](https://help.rustore.ru/rustore/for_developers/developer-documentation/sdk_payments/sdk_payments_flutter)
 
-## Общее
+### Содержание
+
+- [flutter\_rustore\_billing](#flutter_rustore_billing)
+  - [Документация RuStore](#документация-rustore)
+    - [Содержание](#содержание)
+    - [Подготовка требуемых параметров](#подготовка-требуемых-параметров)
+    - [Пример реализации](#пример-реализации)
+    - [Настройка примера приложения](#настройка-примера-приложения)
+    - [Условия работы платежей](#условия-работы-платежей)
+  - [Подключение в проект](#подключение-в-проект)
+    - [Обработка deeplink](#обработка-deeplink)
+  - [Инициализация](#инициализация)
+  - [Проверка доступности работы с платежами](#проверка-доступности-работы-с-платежами)
+  - [Работа с продуктами](#работа-с-продуктами)
+    - [Получение списка продуктов](#получение-списка-продуктов)
+  - [Работа с покупками](#работа-с-покупками)
+    - [Получение списка покупок](#получение-списка-покупок)
+    - [Покупка продукта](#покупка-продукта)
+    - [Потребление (подтверждение) покупки](#потребление-подтверждение-покупки)
+  - [Тестовые данные](#тестовые-данные)
+  - [Условия распространения](#условия-распространения)
+    - [Техническая поддержка](#техническая-поддержка)
+
+### Подготовка требуемых параметров
+
+Для корректной настройки примера приложения вам следует подготовить:
+
+1. `consoleApplicationId` - код приложения из консоли разработчика RuStore (пример: <https://console.rustore.ru/apps/123456>), тут `consoleApplicationId` = 123456
+2. `applicationId` - из приложения, которое вы публиковали в консоль RuStore, находится в файле build.gradle вашего проекта
+
+   ```
+    android {
+       defaultConfig {
+       applicationId = "ru.rustore.sdk.billingexample"
+       }
+    }
+   ```
+
+3. `availableProductIds` - [подписки](https://www.rustore.ru/help/developers/monetization/create-app-subscription/) и [разовые покупки](https://www.rustore.ru/help/developers/monetization/create-paid-product-in-application/) доступные в вашем приложении
+4. `release.keystore` - подпись, которой было подписано приложение, опубликованное в консоль RuStore.
+5. `release.properties` - в этом файле должны быть указаны параметры подписи, которой было подписано приложение, опубликованное в консоль RuStore. [Как работать с ключами подписи APK-файлов](https://www.rustore.ru/help/developers/publishing-and-verifying-apps/app-publication/apk-signature/)
 
 ### Пример реализации
 
 Для того, чтобы узнать как правильно интегрировать платежи, рекомендуется ознакомиться с [приложением-примером](https://gitflic.ru/project/rustore/flutter-rustore-review/file?file=example)
 
+### Настройка примера приложения
+
+Для проверки работы приложения вы можете воспользоваться функционалом [тестовых платежей](https://www.rustore.ru/help/developers/monetization/sandbox).
+
+1. Указать `consoleApplicationId` своего приложения в `RuStoreBillingClientFactory.create()`:
+
+   ```
+   RustoreBillingClient.initialize(
+    "2063535084", // Заменить на свой consoleApplicationId (https://console.rustore.ru/apps/111111
+    "example", 
+    true // Логи для дебаг сборки
+    )
+   ```
+
+2. Замените `applicationId`, в файле example/android/app/build.gradle, на applicationId apk-файла, который вы публиковали в консоль RuStore:
+
+   ```
+   android {
+       defaultConfig {
+          applicationId = "ru.rustore.sdk.billingexample" // Зачастую в buildTypes приписывается .debug
+       }
+   }
+   ```
+
+3. В файла `key.properties` выполните настройку параметров `key_alias`, `key_password`, `store_password`. Подпись `release.keystore` должна совпадать с подписью, которой было подписано приложение, опубликованное в консоль RuStore. Убедитесь, что используемый `buildType` (пр. debug) использует такую же подпись, что и опубликованное приложение (пр. release).
+4. В `ProductWidget` в переменной `ids` перечислите подписки и разовые продукты доступные в вашем приложении:
+
+   ```
+   final List<String?> ids = [
+        "product1",
+        "product2",
+        "product3",
+    ];
+   ```
+
+5. Запустите проект и проверьте работу приложения
+
 ### Условия работы платежей
+
 Для работы проведения платежей необходимо соблюдение следующих условий:
 
-- На устройстве пользователя должен быть установлен RuStore.
 - RuStore должен поддерживать функциональность платежей.  
-- Пользователь должен быть авторизован в RuStore.
-- Пользователь и приложение не должны быть заблокированы в RuStore.
+- Приложение не должно быть заблокированы в RuStore.
 - Для приложения должна быть включена возможность покупок в консоли разработчика RuStore.
 
 ## Подключение в проект
@@ -62,6 +138,7 @@ android:name=".sample.MainActivity">
 Эта схема должна совпадать со схемой, передаваемым в методе `initialize()`.
 
 ## Инициализация
+
 Перед вызовом методов библиотеки необходимо выполнить ее инициализацию. Для инициализации вызовете метод `RustoreBillingClient.initialize()`:
 
 ```
@@ -75,7 +152,7 @@ RustoreBillingClient.initialize(
 });
 ```
 
-123456 - код приложения из консоли разработчика RuStore (пример: https://console.rustore.ru/apps/123456).
+123456 - код приложения из консоли разработчика RuStore (пример: <https://console.rustore.ru/apps/123456>).
 yourappscheme://iamback - cхема deeplink, необходимая для возврата в ваше приложение после оплаты через стороннее приложение (например, SberPay или СБП). SDK генерирует свой хост к данной схеме.
 Важно, чтобы схема deeplink, передаваемая в deeplinkScheme, совпадала со схемой, указанной в AndroidManifest.xml в разделе "Обработка deeplink".
 
@@ -113,9 +190,11 @@ RustoreBillingClient.products(ids).then((response) {
         print("products err: $err");
 });
 ```
+
 `ids: List<String?>` - список идентификаторов продуктов.
 
 Метод возвращает `ProductsResponse`:
+
 ```
 class ProductsResponse {
     int code;
@@ -134,7 +213,6 @@ class ProductsResponse {
 - errors - список ошибок.
 - products - список продуктов.
 
-
 Структура ошибки `DigitalShopGeneralError`:
 
 ```
@@ -148,7 +226,6 @@ class DigitalShopGeneralError {
 - name - имя ошибки.
 - code - код ошибки.
 - description - описание ошибки.
-
 
 Структура продукта `Product`:
 
@@ -201,7 +278,6 @@ class Subscription {
 - introductoryPrice - отформатированная вступительная цена подписки, включая знак валюты, на языке product:language.
 - introductoryPriceAmount - вступительная цена в минимальных единицах валюты (в копейках).
 - introductoryPricePeriod - расчетный период вступительной цены.
-
 
 Структура периода подписки `SubscriptionPeriod`:
 
@@ -267,8 +343,8 @@ class DigitalShopGeneralError {
 - code - код ошибки.
 - description - описание ошибки.
 
-
 Структура покупки `Purchase`:
+
 ```
 class Purchase {
     String? purchaseId;
@@ -285,6 +361,7 @@ class Purchase {
     String? developerPayload;
 }
 ```
+
 - purchaseId - идентификатор покупки.
 - productId - идентификатор продукта.
 - description - описание покупки.
@@ -296,13 +373,13 @@ class Purchase {
 - currency - код валюты ISO 4217.
 - quantity - количество продукта.
 - purchaseState - состояние покупки.
-    - CREATED - создана.
-    - INVOICE_CREATED - создана, ожидает оплаты.
-    - CONFIRMED - подтверждена.
-    - PAID - оплачена.
-    - CANCELLED - покупка отменена.
-    - CONSUMED - потребление покупки подтверждено.
-    - CLOSED - подписка была отменена.
+  - CREATED - создана.
+  - INVOICE_CREATED - создана, ожидает оплаты.
+  - CONFIRMED - подтверждена.
+  - PAID - оплачена.
+  - CANCELLED - покупка отменена.
+  - CONSUMED - потребление покупки подтверждено.
+  - CLOSED - подписка была отменена.
 - developerPayload - указанная разработчиком строка, содержащая дополнительную информацию о заказе.
 
 ### Покупка продукта
@@ -316,6 +393,7 @@ RustoreBillingClient.purchase(id).then((response) {
         print("purchase err: $err");
 });
 ```
+
 - id - идентификатор продукта.
 
 Структура результата покупки PaymentResult:
@@ -440,4 +518,12 @@ class DigitalShopGeneralError {
 
 ## Тестовые данные
 
-[Ссылка](https://securepayments.sberbank.ru/wiki/doku.php/test_cards) на тестовые банковские карты. 
+[Ссылка](https://securepayments.sberbank.ru/wiki/doku.php/test_cards) на тестовые банковские карты.
+
+## Условия распространения
+
+Данное программное обеспечение, включая исходные коды, бинарные библиотеки и другие файлы распространяется под лицензией MIT. Информация о лицензировании доступна в документе `MIT-LICENSE.txt`
+
+### Техническая поддержка
+
+Если появились вопросы по интеграции SDK платежей, обратитесь по [ссылке](https://www.rustore.ru/help/sdk/payments).
