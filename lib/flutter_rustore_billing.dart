@@ -52,4 +52,8 @@ class RustoreBillingClient {
   static Future<void> offNativeErrorHandling() async {
     return _api.offNativeErrorHandling();
   }
+
+  static Future<bool> isRustoreInstalled() async {
+    return _api.isRustoreInstalled();
+  }
 }

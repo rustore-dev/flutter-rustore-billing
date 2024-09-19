@@ -26,6 +26,9 @@ import ru.rustore.sdk.billingclient.model.product.SubscriptionPeriod
 import PaymentResult as FlutterPaymentResult
 import SubscriptionPeriod as SdkSubscriptionPeriod
 import ru.rustore.sdk.billingclient.model.purchase.PaymentResult
+import ru.rustore.sdk.core.Constants
+import ru.rustore.sdk.core.util.RuStoreUtils
+import ru.rustore.sdk.core.util.isAppInstalled
 
 
 class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling {
@@ -36,7 +39,8 @@ class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling
         private var allowNativeErrorHandling = true
     }
 
-    override fun initialize(id: String,
+    override fun initialize(
+        id: String,
         prefix: String,
         debugLogs: Boolean,
         callback: (Result<String>) -> Unit
@@ -146,6 +150,7 @@ class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling
                         callback(Result.failure(Throwable(message = result.toString())))
                         return@addOnSuccessListener
                     }
+
                     is PaymentResult.Failure -> {
                         FlutterPaymentResult(
                             invalidPurchase = InvalidPurchase(
@@ -159,6 +164,7 @@ class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling
                             )
                         )
                     }
+
                     is PaymentResult.Success -> {
                         FlutterPaymentResult(
                             successPurchase = SuccessPurchase(
@@ -171,6 +177,7 @@ class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling
                             )
                         )
                     }
+
                     is PaymentResult.InvalidPaymentState -> TODO()
                 }
                 callback(Result.success(paymentResult))
@@ -229,6 +236,10 @@ class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling
     override fun offNativeErrorHandling() {
         allowNativeErrorHandling = false
     }
+
+    override fun isRustoreInstalled(): Boolean =
+        context?.let { RuStoreUtils.isRuStoreInstalled(it) } ?: false
+
 
     fun onNewIntent(intent: Intent) {
         client.onNewIntent(intent)

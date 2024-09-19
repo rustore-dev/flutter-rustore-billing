@@ -145,4 +145,6 @@ abstract class RustoreBilling {
   void deletePurchase(String purchaseId);
 
   void offNativeErrorHandling();
+
+  bool isRustoreInstalled();
 }

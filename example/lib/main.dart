@@ -17,8 +17,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp>
-    with SingleTickerProviderStateMixin {
+class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   // define your tab controller here
   late TabController _tabController;
 
@@ -34,13 +33,12 @@ class _MyAppState extends State<MyApp>
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
     billing();
-   // RustoreBillingClient.offNativeErrorHandling();
+    // RustoreBillingClient.offNativeErrorHandling();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> billing() async {
-    RustoreBillingClient.initialize("184062", "example", true)
-        .then((value) {
+    RustoreBillingClient.initialize("184050", "example", true).then((value) {
       print("initialize success: $value");
       RustoreBillingClient.available().then((value) {
         print("available $value");
@@ -59,54 +57,69 @@ class _MyAppState extends State<MyApp>
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-          appBar: AppBar(
-            leading: const Icon(
-              Icons.menu,
-              color: Colors.black,
-            ),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            title: const Text(
-              'Flutter RuStore Billing',
-              style: TextStyle(color: Colors.black),
+      appBar: AppBar(
+        leading: const Icon(
+          Icons.menu,
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: const Text(
+          'Flutter RuStore Billing',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FutureBuilder<bool>(
+              future: RustoreBillingClient.isRustoreInstalled(),
+              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator(); // Показываем индикатор загрузки пока ждем
+                } else if (snapshot.hasError) {
+                  return Text(
+                      'Error: ${snapshot.error}'); // Показываем ошибку, если она произошла
+                } else {
+                  bool isInstalled = snapshot.data ?? false;
+                  return Text(
+                      'Is RuStore installed: $isInstalled'); // Используем результат
+                }
+              },
             ),
           ),
-          body: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                child: TabBar(
-                  controller: _tabController,
-                  labelColor: Colors.green,
-                  isScrollable: true,
-                  indicatorColor: Colors.transparent,
-                  unselectedLabelColor: Colors.grey,
-                  unselectedLabelStyle: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  labelStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  tabs: const <Widget>[
-                    Text('PRODUCTS'),
-                    Text('PURCHASES'),
-                  ],
-                ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+            child: TabBar(
+              controller: _tabController,
+              labelColor: Colors.green,
+              isScrollable: true,
+              indicatorColor: Colors.transparent,
+              unselectedLabelColor: Colors.grey,
+              unselectedLabelStyle: const TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+                fontWeight: FontWeight.w700,
               ),
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: const <Widget>[
-                    ProductWidget(),
-                    PurchaseWidget()
-                  ],
-                ),
+              labelStyle: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
               ),
-            ],
+              tabs: const <Widget>[
+                Text('PRODUCTS'),
+                Text('PURCHASES'),
+              ],
+            ),
           ),
-        ));
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: const <Widget>[ProductWidget(), PurchaseWidget()],
+            ),
+          ),
+        ],
+      ),
+    ));
   }
 }
