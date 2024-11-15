@@ -1,3 +1,8 @@
+## 7.0.0
+
+* Updated RuStore billing SDK to 7.0.0
+* Removed conflicting dependencies
+
 ## 6.1.0
 
 * Updated RuStore billing SDK to 6.1.0
