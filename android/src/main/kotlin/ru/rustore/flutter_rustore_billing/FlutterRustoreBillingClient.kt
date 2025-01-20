@@ -214,8 +214,9 @@ class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling
                 val purchase = Purchase(
                     purchaseId = result.purchaseId,
                     productId = result.productId,
+                    productType = result.productType.toString(),
                     language = result.language,
-                    purchaseTime = result.purchaseTime?.time.toString(),
+                    purchaseTime = result.purchaseTime.toString(),
                     orderId = result.orderId,
                     amountLabel = result.amountLabel,
                     amount = result.amount?.toLong(),

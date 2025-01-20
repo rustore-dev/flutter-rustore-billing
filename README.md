@@ -70,7 +70,7 @@ flutter pub add flutter_rustore_billing
 
 ```
 dependencies:
-    flutter_rustore_billing: ^7.0.0
+    flutter_rustore_billing: ^7.0.1
 ```
 
 ### Обработка deeplink
@@ -212,7 +212,7 @@ class Product {
 - productId - идентификатор продукта.
 - productType - тип продукта.
 - productStatus - статус продукта.
-- priceLable - отформатированная цена товара, включая валютный знак на языке [language].
+- priceLabel - отформатированная цена товара, включая валютный знак на языке [language].
 - price - цена в минимальных единицах.
 - currency - код валюты ISO 4217.
 - language - язык, указанный с помощью BCP 47 кодирования.
@@ -322,16 +322,19 @@ class Purchase {
     int? quantity;
     String? purchaseState;
     String? developerPayload;
+    String? invoiceId;
+    String? subscriptionToken;
 }
 ```
 
 - purchaseId - идентификатор покупки.
 - productId - идентификатор продукта.
+- productType - тип продукта.
 - description - описание покупки.
 - language - язык, указанный с помощью BCP 47 кодирования.
 - purchaseTime - время покупки (в формате RFC 3339).
 - orderId - уникальный идентификатор оплаты, сформированный приложением (uuid).
-- amountLable - отформатированная цена покупки, включая валютный знак на языке [language].
+- amountLabel - отформатированная цена покупки, включая валютный знак на языке [language].
 - amount - цена в минимальных единицах валюты.
 - currency - код валюты ISO 4217.
 - quantity - количество продукта.
@@ -344,6 +347,8 @@ class Purchase {
   - CONSUMED - потребление покупки подтверждено.
   - CLOSED - подписка была отменена.
 - developerPayload - указанная разработчиком строка, содержащая дополнительную информацию о заказе.
+- invoiceId - идентификатор счёта.
+- subscriptionToken - токен для валидации покупки на сервере.
 
 ### Покупка продукта
 
