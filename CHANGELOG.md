@@ -1,3 +1,8 @@
+## 7.0.1
+
+* Add support gradle 8
+* Fix purchaseInfo func
+
 ## 7.0.0
 
 * Updated RuStore billing SDK to 7.0.0
