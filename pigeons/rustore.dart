@@ -118,13 +118,33 @@ class DigitalShopGeneralError {
   late String? description;
 }
 
+class RuStoreExceptionFlutter {
+  final String message;
+
+  RuStoreExceptionFlutter({required this.message});
+}
+
+class PurchaseAvailabilityResultFlutter {
+  bool? isAvailable;
+  bool? isUnknown;
+  RuStoreExceptionFlutter? unavailableCause;
+
+  PurchaseAvailabilityResultFlutter({
+    this.isAvailable,
+    this.isUnknown,
+    this.unavailableCause,
+  });
+}
+
 @HostApi()
 abstract class RustoreBilling {
   @async
   String initialize(String id, String prefix, bool debugLogs);
 
+  @Deprecated(
+      "Данный метод работает только для флоу с авторизированным пользователем в RuStore")
   @async
-  bool available();
+  PurchaseAvailabilityResultFlutter available();
 
   @async
   ProductsResponse products(List<String?> ids);

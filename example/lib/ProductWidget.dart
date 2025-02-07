@@ -4,9 +4,11 @@ import 'package:flutter_rustore_billing/flutter_rustore_billing.dart';
 import 'package:flutter_rustore_billing/pigeons/rustore.dart';
 
 final List<String?> ids = [
-  "product1",
-  "product2",
-  "product3",
+  "unity_non_con_1",
+  "unity_con_2"
+  // "product1",
+  // "product2",
+  // "product3",
 ];
 
 class ProductWidget extends StatefulWidget {

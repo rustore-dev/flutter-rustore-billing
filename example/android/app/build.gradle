@@ -49,7 +49,8 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "ru.rustore.flutter_rustore_billing_ex"
+//        applicationId "ru.rustore.flutter_rustore_billing_ex"
+        applicationId "ru.rustore.payunity"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdk 23
@@ -60,10 +61,14 @@ android {
 
     signingConfigs {
         debug {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-            storePassword keystoreProperties['storePassword']
+            storeFile file('/Users/e.dudin/certDev13/rustore-dev13.keystore')
+            storePassword 'kn5ox!u7'
+            keyAlias 'rustore'
+            keyPassword 'kn5ox!u7'
+//            keyAlias keystoreProperties['keyAlias']
+//            keyPassword keystoreProperties['keyPassword']
+//            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+//            storePassword keystoreProperties['storePassword']
         }
         release {
             keyAlias keystoreProperties['keyAlias']

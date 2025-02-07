@@ -4,6 +4,7 @@ version '1.0-SNAPSHOT'
 buildscript {
     ext.kotlin_version = '2.0.20'
     repositories {
+        mavenLocal()
         google()
         mavenCentral()
     }
@@ -16,6 +17,7 @@ buildscript {
 
 rootProject.allprojects {
     repositories {
+        mavenLocal()
          maven {
              url = uri("https://artifactory-external.vkpartner.ru/artifactory/maven")
          }
@@ -51,5 +53,5 @@ android {
 }
 
 dependencies {
-    implementation("ru.rustore.sdk:billingclient:7.0.0")
+    implementation("ru.rustore.sdk:billingclient:8.0.0")
 }

@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> billing() async {
-    RustoreBillingClient.initialize("184050", "example", true).then((value) {
+    RustoreBillingClient.initialize("198332", "example", true).then((value) {
       print("initialize success: $value");
       RustoreBillingClient.available().then((value) {
         print("available $value");

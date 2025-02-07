@@ -1,6 +1,54 @@
 import 'dart:async';
 import 'package:flutter_rustore_billing/pigeons/rustore.dart';
 
+abstract class PurchaseAvailabilityResultFlutter {
+  const PurchaseAvailabilityResultFlutter();
+
+  T when<T>({
+    required T Function() available,
+    required T Function() unknown,
+    required T Function(RuStoreExceptionFlutter) unavailable,
+  });
+}
+
+class Available extends PurchaseAvailabilityResultFlutter {
+  const Available();
+
+  @override
+  T when<T>({
+    required T Function() available,
+    required T Function() unknown,
+    required T Function(RuStoreExceptionFlutter) unavailable,
+  }) =>
+      available();
+}
+
+class Unknown extends PurchaseAvailabilityResultFlutter {
+  const Unknown();
+
+  @override
+  T when<T>({
+    required T Function() available,
+    required T Function() unknown,
+    required T Function(RuStoreExceptionFlutter) unavailable,
+  }) =>
+      unknown();
+}
+
+class Unavailable extends PurchaseAvailabilityResultFlutter {
+  final RuStoreExceptionFlutter cause;
+
+  const Unavailable(this.cause);
+
+  @override
+  T when<T>({
+    required T Function() available,
+    required T Function() unknown,
+    required T Function(RuStoreExceptionFlutter) unavailable,
+  }) =>
+      unavailable(cause);
+}
+
 class RustoreBillingClient {
   static final RustoreBilling _api = RustoreBilling();
 
@@ -9,10 +57,16 @@ class RustoreBillingClient {
     return _api.initialize(id, deeplinkScheme, debugLogs);
   }
 
-  static Future<bool> available() async {
+  static Future<PurchaseAvailabilityResultFlutter> available() async {
     final result = await _api.available();
 
-    return result;
+    if (result.isAvailable == true) return const Available();
+    if (result.isUnknown == true) return const Unknown();
+    if (result.unavailableCause != null) {
+      return Unavailable(result.unavailableCause!);
+    }
+
+    throw Exception("Invalid result");
   }
 
   static Future<ProductsResponse> products(List<String?> ids) async {
