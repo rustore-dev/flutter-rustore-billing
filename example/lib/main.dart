@@ -33,24 +33,50 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
     billing();
-    // RustoreBillingClient.offNativeErrorHandling();
+    isAvailable();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> billing() async {
     RustoreBillingClient.initialize("184050", "example", true).then((value) {
       print("initialize success: $value");
-      RustoreBillingClient.available().then((value) {
-        print("available $value");
-      }, onError: (err) {
-        print("available err: $err");
-      });
     }, onError: (err) {
       print("initialize err: $err");
-      RustoreBillingClient.available().then((value) {
-        print("available $value");
-      });
     });
+  }
+
+  Future<void> isAvailable() async {
+    RustoreBillingClient.available().then((value) {
+      value.when(
+        available: () => print('available'),
+        unknown: () => print('unknown'),
+        unavailable: (e) => print('unavailable: $e'),
+      );
+    }, onError: (err) {
+      print("isAvailable err: $err");
+    });
+  }
+
+  Widget _buildFutureResultWidget<T>({
+    required Future<T> future,
+    required String title,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: FutureBuilder<T>(
+        future: future,
+        builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            final result = snapshot.data;
+            return Text('$title: ${result.toString()}');
+          }
+        },
+      ),
+    );
   }
 
   @override
@@ -71,23 +97,13 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       ),
       body: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: FutureBuilder<bool>(
-              future: RustoreBillingClient.isRustoreInstalled(),
-              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator(); // Показываем индикатор загрузки пока ждем
-                } else if (snapshot.hasError) {
-                  return Text(
-                      'Error: ${snapshot.error}'); // Показываем ошибку, если она произошла
-                } else {
-                  bool isInstalled = snapshot.data ?? false;
-                  return Text(
-                      'Is RuStore installed: $isInstalled'); // Используем результат
-                }
-              },
-            ),
+          _buildFutureResultWidget<bool>(
+            future: RustoreBillingClient.isRustoreInstalled(),
+            title: 'Is RuStore installed',
+          ),
+          _buildFutureResultWidget<bool>(
+            future: RustoreBillingClient.getAuthorizationStatus(),
+            title: 'Authorization Status',
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),

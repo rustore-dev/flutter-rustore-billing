@@ -51,7 +51,7 @@ class _ProductWidget extends State<ProductWidget> {
   void reloadProducts() {
     RustoreBillingClient.products(ids).then((response) {
       setState(() {
-        products = response.products ?? [];
+        products = response.products;
       });
 
       for (final product in response.products) {

@@ -8,6 +8,7 @@ import PurchasesResponse
 import RustoreBilling
 import Subscription
 import Product
+import PurchaseAvailabilityResultFlutter
 import ProductsResponse
 import android.app.Activity
 import android.app.Application
@@ -26,9 +27,8 @@ import ru.rustore.sdk.billingclient.model.product.SubscriptionPeriod
 import PaymentResult as FlutterPaymentResult
 import SubscriptionPeriod as SdkSubscriptionPeriod
 import ru.rustore.sdk.billingclient.model.purchase.PaymentResult
-import ru.rustore.sdk.core.Constants
+import ru.rustore.sdk.billingclient.model.purchase.PurchaseAvailabilityResult
 import ru.rustore.sdk.core.util.RuStoreUtils
-import ru.rustore.sdk.core.util.isAppInstalled
 
 
 class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling {
@@ -61,12 +61,19 @@ class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling
         )
     }
 
-    override fun available(callback: (Result<Boolean>) -> Unit) {
+    override fun available(callback: (Result<PurchaseAvailabilityResultFlutter>) -> Unit) {
         client.purchases.checkPurchasesAvailability()
             .addOnSuccessListener { value ->
                 val result = when (value) {
-                    FeatureAvailabilityResult.Available -> true
-                    is FeatureAvailabilityResult.Unavailable -> false
+                    is PurchaseAvailabilityResult.Available ->
+                        PurchaseAvailabilityResultFlutter(isAvailable = true)
+
+                    is PurchaseAvailabilityResult.Unknown ->
+                        PurchaseAvailabilityResultFlutter(isUnknown = true)
+
+                    is PurchaseAvailabilityResult.Unavailable -> {
+                        PurchaseAvailabilityResultFlutter(unavailableCause = value.cause.message.toString())
+                    }
                 }
                 callback(Result.success(result))
             }
@@ -202,6 +209,16 @@ class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling
         client.purchases.deletePurchase(purchaseId)
             .addOnSuccessListener {
                 callback(Result.success(Unit))
+            }
+            .addOnFailureListener { error ->
+                callback(Result.failure(error))
+            }
+    }
+
+    override fun getAuthorizationStatus(callback: (Result<Boolean>) -> Unit) {
+        client.userInfo.getAuthorizationStatus()
+            .addOnSuccessListener { status ->
+                callback(Result.success(status.authorized))
             }
             .addOnFailureListener { error ->
                 callback(Result.failure(error))
