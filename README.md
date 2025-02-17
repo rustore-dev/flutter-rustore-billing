@@ -70,7 +70,7 @@ flutter pub add flutter_rustore_billing
 
 ```
 dependencies:
-    flutter_rustore_billing: ^7.0.1
+    flutter_rustore_billing: ^8.0.0
 ```
 
 ### Обработка deeplink
@@ -128,15 +128,52 @@ yourappscheme://iamback - cхема deeplink, необходимая для во
 - Пользователь должен быть авторизован в RuStore.
 - Пользователь и приложение не должны быть заблокированы в RuStore.  
 - Для приложения должна быть включена возможность покупок в консоли разработчика RuStore.
-- Если все условия выполняются, метод `RustoreBillingClient.available()` возвращает значение true.
+- В данной версии SDK метод будет возвращать сообщение о доступности платежа.
 
 ```
 RustoreBillingClient.available().then((value) {
-        print("available success $value");
+     value.when(
+        available: () => // Process purchases available,
+        unknown: () => // Process purchases unknown,
+        unavailable: (e) => // Process purchases unavailable,
+      );
     }, onError: (err) {
         print("available err: $err");
 });
 ```
+
+## Проверка наличия RuStore на устройстве
+
+Метод isRuStoreInstalled применяется для проверки, установлен ли RuStore на устройстве пользователя.
+Эта проверка нужна для реализации корректной логики работы с товарами и покупками.
+
+```
+RustoreBillingClient.isRustoreInstalled().then((value) {
+        print("isRustoreInstalled $value");
+    }, onError: (err) {
+        print("isRustoreInstalled err: $err");
+});
+```
+
+Приведённые ниже методы SDK платежей требуют авторизации пользователя:
+
+- RustoreBillingClient.products(ids)
+- RustoreBillingClient.purchases()
+- RustoreBillingClient.purchase(id)
+
+Если на устройстве пользователя не установлен RuStore, всякий раз будет отображаться шторка веб-авторизаци, что может негативно сказаться на пользовательском опыте.
+
+
+## Определение наличия авторизации у пользователя
+
+```
+RustoreBillingClient.getAuthorizationStatus().then((value) {
+        print("getAuthorizationStatus $value");
+    }, onError: (err) {
+        print("getAuthorizationStatus err: $err");
+});
+```
+
 
 ## Работа с продуктами
 
