@@ -1,3 +1,10 @@
+## 8.0.0
+
+* Updated RuStore billing SDK to 8.0.0
+* `available` method returns the `PurchaseAvailabilityResult` class
+* `available` method is marked as deprecated
+* Added getAuthorizationStatus method
+
 ## 7.0.1
 
 * Add support gradle 8

@@ -6,6 +6,20 @@ import 'package:pigeon/pigeon.dart';
     kotlinOut:
         'android/src/main/kotlin/ru/rustore/flutter_rustore_billing/pigeons/Rustore.kt',
     kotlinOptions: KotlinOptions()))
+
+@Deprecated("Будет удалён в следующей версии SDK")
+class PurchaseAvailabilityResultFlutter {
+  bool? isAvailable;
+  bool? isUnknown;
+  String? unavailableCause;
+
+  PurchaseAvailabilityResultFlutter({
+    this.isAvailable,
+    this.isUnknown,
+    this.unavailableCause,
+  });
+}
+
 class SubscriptionPeriod {
   late int years;
   late int months;
@@ -123,8 +137,10 @@ abstract class RustoreBilling {
   @async
   String initialize(String id, String prefix, bool debugLogs);
 
+  @Deprecated(
+      "Данный метод работает только для флоу с авторизированным пользователем в RuStore")
   @async
-  bool available();
+  PurchaseAvailabilityResultFlutter available();
 
   @async
   ProductsResponse products(List<String?> ids);
@@ -144,7 +160,11 @@ abstract class RustoreBilling {
   @async
   void deletePurchase(String purchaseId);
 
+  @Deprecated("Будет удалён в следующей версии SDK")
   void offNativeErrorHandling();
 
   bool isRustoreInstalled();
+
+  @async
+  bool getAuthorizationStatus();
 }
