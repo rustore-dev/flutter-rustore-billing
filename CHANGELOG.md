@@ -1,3 +1,8 @@
+## 9.0.1
+
+* Updated RuStore billing SDK to 9.0.1
+* Removing the `offNativeErrorHandling()` method
+
 ## 8.0.0
 
 * Updated RuStore billing SDK to 8.0.0
