@@ -18,10 +18,7 @@ import ru.rustore.flutter_rustore_billing.utils.BillingClientThemeProviderImpl
 import ru.rustore.flutter_rustore_billing.utils.PaymentLogger
 import ru.rustore.sdk.billingclient.RuStoreBillingClient
 import ru.rustore.sdk.billingclient.RuStoreBillingClientFactory
-import ru.rustore.sdk.billingclient.utils.resolveForBilling
 import ru.rustore.sdk.core.config.SdkType
-import ru.rustore.sdk.core.exception.RuStoreException
-import ru.rustore.sdk.core.feature.model.FeatureAvailabilityResult
 import ru.rustore.sdk.billingclient.model.product.ProductSubscription
 import ru.rustore.sdk.billingclient.model.product.SubscriptionPeriod
 import PaymentResult as FlutterPaymentResult
@@ -34,10 +31,6 @@ import ru.rustore.sdk.core.util.RuStoreUtils
 class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling {
     private lateinit var client: RuStoreBillingClient
     private var context: Context? = null
-
-    companion object {
-        private var allowNativeErrorHandling = true
-    }
 
     override fun initialize(
         id: String,
@@ -107,7 +100,6 @@ class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling
                 callback(Result.success(response))
             }
             .addOnFailureListener { throwable ->
-                handleError(throwable)
                 callback(Result.failure(throwable))
             }
     }
@@ -140,7 +132,6 @@ class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling
                 callback(Result.success(response))
             }
             .addOnFailureListener { throwable ->
-                handleError(throwable)
                 callback(Result.failure(throwable))
             }
     }
@@ -190,7 +181,6 @@ class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling
                 callback(Result.success(paymentResult))
             }
             .addOnFailureListener { throwable ->
-                handleError(throwable)
                 callback(Result.failure(throwable))
             }
     }
@@ -251,10 +241,6 @@ class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling
             }
     }
 
-    override fun offNativeErrorHandling() {
-        allowNativeErrorHandling = false
-    }
-
     override fun isRustoreInstalled(): Boolean =
         context?.let { RuStoreUtils.isRuStoreInstalled(it) } ?: false
 
@@ -269,12 +255,6 @@ class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling
 
     fun resetActivityContext() {
         context = null
-    }
-
-    private fun handleError(throwable: Throwable) {
-        if (allowNativeErrorHandling && throwable is RuStoreException) {
-            context?.let { throwable.resolveForBilling(it) }
-        }
     }
 
     private fun ProductSubscription.toSubscription(): Subscription {

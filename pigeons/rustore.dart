@@ -160,9 +160,6 @@ abstract class RustoreBilling {
   @async
   void deletePurchase(String purchaseId);
 
-  @Deprecated("Будет удалён в следующей версии SDK")
-  void offNativeErrorHandling();
-
   bool isRustoreInstalled();
 
   @async
