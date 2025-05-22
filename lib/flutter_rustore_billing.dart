@@ -60,11 +60,6 @@ class RustoreBillingClient {
     return _api.deletePurchase(id);
   }
 
-  @Deprecated("Будет удалён в следующей версии SDK")
-  static Future<void> offNativeErrorHandling() async {
-    return _api.offNativeErrorHandling();
-  }
-
   static Future<bool> isRustoreInstalled() async {
     return _api.isRustoreInstalled();
   }

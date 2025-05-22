@@ -662,7 +662,6 @@ interface RustoreBilling {
   fun purchaseInfo(id: String, callback: (Result<Purchase>) -> Unit)
   fun confirm(id: String, callback: (Result<ConfirmPurchaseResponse>) -> Unit)
   fun deletePurchase(purchaseId: String, callback: (Result<Unit>) -> Unit)
-  fun offNativeErrorHandling()
   fun isRustoreInstalled(): Boolean
   fun getAuthorizationStatus(callback: (Result<Boolean>) -> Unit)
 
@@ -827,23 +826,6 @@ interface RustoreBilling {
                 reply.reply(wrapResult(null))
               }
             }
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.flutter_rustore_billing.RustoreBilling.offNativeErrorHandling", codec)
-        if (api != null) {
-          channel.setMessageHandler { _, reply ->
-            var wrapped: List<Any?>
-            try {
-              api.offNativeErrorHandling()
-              wrapped = listOf<Any?>(null)
-            } catch (exception: Throwable) {
-              wrapped = wrapError(exception)
-            }
-            reply.reply(wrapped)
           }
         } else {
           channel.setMessageHandler(null)
