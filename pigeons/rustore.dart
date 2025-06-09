@@ -149,7 +149,7 @@ abstract class RustoreBilling {
   PurchasesResponse purchases();
 
   @async
-  PaymentResult purchase(String id, String? developerPayload);
+  PaymentResult purchase(String id, {String? developerPayload, String? orderId});
 
   @async
   Purchase purchaseInfo(String id);

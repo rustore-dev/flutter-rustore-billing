@@ -1,3 +1,8 @@
+## 9.0.2
+
+* Updated RuStore billing SDK to 9.0.2
+* Added the ability to set orderId for purchase
+
 ## 9.0.1
 
 * Updated RuStore billing SDK to 9.0.1

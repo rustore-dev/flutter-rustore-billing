@@ -658,7 +658,7 @@ interface RustoreBilling {
   fun available(callback: (Result<PurchaseAvailabilityResultFlutter>) -> Unit)
   fun products(ids: List<String?>, callback: (Result<ProductsResponse>) -> Unit)
   fun purchases(callback: (Result<PurchasesResponse>) -> Unit)
-  fun purchase(id: String, developerPayload: String?, callback: (Result<PaymentResult>) -> Unit)
+  fun purchase(id: String, developerPayload: String?, orderId: String?, callback: (Result<PaymentResult>) -> Unit)
   fun purchaseInfo(id: String, callback: (Result<Purchase>) -> Unit)
   fun confirm(id: String, callback: (Result<ConfirmPurchaseResponse>) -> Unit)
   fun deletePurchase(purchaseId: String, callback: (Result<Unit>) -> Unit)
@@ -758,7 +758,8 @@ interface RustoreBilling {
             val args = message as List<Any?>
             val idArg = args[0] as String
             val developerPayloadArg = args[1] as String?
-            api.purchase(idArg, developerPayloadArg) { result: Result<PaymentResult> ->
+            val orderIdArg = args[2] as String?
+            api.purchase(idArg, developerPayloadArg, orderIdArg) { result: Result<PaymentResult> ->
               val error = result.exceptionOrNull()
               if (error != null) {
                 reply.reply(wrapError(error))

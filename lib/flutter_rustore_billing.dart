@@ -33,8 +33,8 @@ class RustoreBillingClient {
   }
 
   static Future<PaymentResult> purchase(
-      String id, String? developerPayload) async {
-    final result = _api.purchase(id, developerPayload);
+      String id, {String? developerPayload, String? orderId}) async {
+    final result = _api.purchase(id, developerPayload: developerPayload);
 
     return result;
   }

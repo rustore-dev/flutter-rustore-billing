@@ -28,7 +28,7 @@ class _ProductWidget extends State<ProductWidget> {
   }
 
   void purchase(String id, String? developerPayload) {
-    RustoreBillingClient.purchase(id, developerPayload).then((value) {
+    RustoreBillingClient.purchase(id, developerPayload: developerPayload).then((value) {
       setState(() {
         payment = value;
       });
