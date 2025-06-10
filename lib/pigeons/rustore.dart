@@ -843,7 +843,7 @@ class RustoreBilling {
     }
   }
 
-  Future<PaymentResult> purchase(String id, String? developerPayload) async {
+  Future<PaymentResult> purchase(String id, {String? developerPayload, String? orderId,}) async {
     const String __pigeon_channelName = 'dev.flutter.pigeon.flutter_rustore_billing.RustoreBilling.purchase';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -851,7 +851,7 @@ class RustoreBilling {
       binaryMessenger: __pigeon_binaryMessenger,
     );
     final List<Object?>? __pigeon_replyList =
-        await __pigeon_channel.send(<Object?>[id, developerPayload]) as List<Object?>?;
+        await __pigeon_channel.send(<Object?>[id, developerPayload, orderId]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {

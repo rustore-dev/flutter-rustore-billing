@@ -70,7 +70,7 @@ flutter pub add flutter_rustore_billing
 
 ```
 dependencies:
-    flutter_rustore_billing: ^9.0.1
+    flutter_rustore_billing: ^9.0.2
 ```
 
 ### Обработка deeplink
@@ -392,7 +392,7 @@ class Purchase {
 Для вызова покупки продукта используйте метод `RustoreBillingClient.purchase(id)`:
 
 ```
-RustoreBillingClient.purchase(id).then((response) {
+RustoreBillingClient.purchase(id, developerPayload: developerPayload, orderId: orderId).then((response) {
         print("purchase success: $response");
     }, onError: (err) {
         print("purchase err: $err");
@@ -400,6 +400,8 @@ RustoreBillingClient.purchase(id).then((response) {
 ```
 
 - id - идентификатор продукта.
+- developerPayload — строка с дополнительной информацией о заказе, которую вы можете установить при инициализации процесса покупки.
+- orderId — уникальный идентификатор оплаты, сформированный приложением (опциональный параметр). Если вы укажете этот параметр в вашей системе, вы получите его в ответе при работе с API. Если не укажете, он будет сгенерирован автоматически (uuid). Максимальная длина 150 символов.
 
 Структура результата покупки PaymentResult:
 
