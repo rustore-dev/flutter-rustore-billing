@@ -139,9 +139,14 @@ class FlutterRustoreBillingClient(private val app: Application) : RustoreBilling
     override fun purchase(
         id: String,
         developerPayload: String?,
+        orderId: String?,
         callback: (Result<FlutterPaymentResult>) -> Unit
     ) {
-        client.purchases.purchaseProduct(productId = id, developerPayload = developerPayload)
+        client.purchases.purchaseProduct(
+            productId = id,
+            developerPayload = developerPayload,
+            orderId = orderId,
+        )
             .addOnSuccessListener { result ->
                 val paymentResult = when (result) {
                     is PaymentResult.Cancelled -> {
