@@ -31,7 +31,7 @@ Flutter RuStoreSDK для подключения платежей
 
 Для корректной настройки примера приложения вам следует подготовить:
 
-1. `consoleApplicationId` - код приложения из консоли разработчика RuStore (пример: <https://console.rustore.ru/apps/123456>), тут `consoleApplicationId` = 123456
+1. `consoleApplicationId` - код приложения из консоли разработчика RuStore (пример: [https://console.rustore.ru/apps/123456](https://console.rustore.ru/apps/123456)), тут `consoleApplicationId` = 123456
 2. `applicationId` - из приложения, которое вы публиковали в консоль RuStore, находится в файле build.gradle вашего проекта
 
    ```
@@ -41,7 +41,6 @@ Flutter RuStoreSDK для подключения платежей
        }
     }
    ```
-
 3. `availableProductIds` - [подписки](https://www.rustore.ru/help/developers/monetization/create-app-subscription/) и [разовые покупки](https://www.rustore.ru/help/developers/monetization/create-paid-product-in-application/) доступные в вашем приложении
 4. `release.keystore` - подпись, которой было подписано приложение, опубликованное в консоль RuStore.
 5. `release.properties` - в этом файле должны быть указаны параметры подписи, которой было подписано приложение, опубликованное в консоль RuStore. [Как работать с ключами подписи APK-файлов](https://www.rustore.ru/help/developers/publishing-and-verifying-apps/app-publication/apk-signature/)
@@ -54,7 +53,7 @@ Flutter RuStoreSDK для подключения платежей
 
 Для работы проведения платежей необходимо соблюдение следующих условий:
 
-- RuStore должен поддерживать функциональность платежей.  
+- RuStore должен поддерживать функциональность платежей.
 - Приложение не должно быть заблокированы в RuStore.
 - Для приложения должна быть включена возможность покупок в консоли разработчика RuStore.
 
@@ -70,7 +69,7 @@ flutter pub add flutter_rustore_billing
 
 ```
 dependencies:
-    flutter_rustore_billing: ^9.0.2
+    flutter_rustore_billing: ^9.1.0
 ```
 
 ### Обработка deeplink
@@ -115,7 +114,7 @@ RustoreBillingClient.initialize(
 });
 ```
 
-123456 - код приложения из консоли разработчика RuStore (пример: <https://console.rustore.ru/apps/123456>).
+123456 - код приложения из консоли разработчика RuStore (пример: [https://console.rustore.ru/apps/123456](https://console.rustore.ru/apps/123456)).
 yourappscheme://iamback - cхема deeplink, необходимая для возврата в ваше приложение после оплаты через стороннее приложение (например, SberPay или СБП). SDK генерирует свой хост к данной схеме.
 Важно, чтобы схема deeplink, передаваемая в deeplinkScheme, совпадала со схемой, указанной в AndroidManifest.xml в разделе "Обработка deeplink".
 
@@ -124,9 +123,9 @@ yourappscheme://iamback - cхема deeplink, необходимая для во
 Для проверки доступности платежей необходимы следующие условия:
 
 - На устройстве пользователя должен быть установлен RuStore.
-- RuStore должен поддерживать функциональность платежей.  
+- RuStore должен поддерживать функциональность платежей.
 - Пользователь должен быть авторизован в RuStore.
-- Пользователь и приложение не должны быть заблокированы в RuStore.  
+- Пользователь и приложение не должны быть заблокированы в RuStore.
 - Для приложения должна быть включена возможность покупок в консоли разработчика RuStore.
 - В данной версии SDK метод будет возвращать сообщение о доступности платежа.
 
@@ -163,7 +162,6 @@ RustoreBillingClient.isRustoreInstalled().then((value) {
 
 Если на устройстве пользователя не установлен RuStore, всякий раз будет отображаться шторка веб-авторизаци, что может негативно сказаться на пользовательском опыте.
 
-
 ## Определение наличия авторизации у пользователя
 
 ```
@@ -173,7 +171,6 @@ RustoreBillingClient.getAuthorizationStatus().then((value) {
         print("getAuthorizationStatus err: $err");
 });
 ```
-
 
 ## Работа с продуктами
 
